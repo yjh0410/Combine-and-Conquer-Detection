@@ -256,7 +256,7 @@ if __name__ == "__main__":
     pixel_std = [58.395, 57.12, 57.375]
     img_size = 640
     random_size = [320, 416, 480, 512, 544, 640]
-    is_train = True
+    is_train = False
     trans_config = [{'name': 'DistortTransform',
                      'hue': 0.1,
                      'saturation': 1.5,
@@ -265,7 +265,8 @@ if __name__ == "__main__":
                     {'name': 'JitterCrop', 'jitter_ratio': 0.3},
                     {'name': 'ToTensor'},
                     {'name': 'Resize'},
-                    {'name': 'Normalize'}]
+                    {'name': 'Normalize'},
+                    {'name': 'PadImage'}]
     transform = TrainTransforms(trans_config=trans_config,
                                 img_size=img_size,
                                 random_size=random_size,
