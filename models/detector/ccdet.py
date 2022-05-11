@@ -10,6 +10,9 @@ from ..head import build_head
 from .loss import Criterion
 
 
+DEFAULT_SCALE_CLAMP = np.log(1000.)
+
+
 # Combine-and-Conquer Detector
 class CCDet(nn.Module):
     def __init__(self,
@@ -212,13 +215,14 @@ class CCDet(nn.Module):
         input box :  [wl, ht, wr, hb]
         output box : [x1, y1, x2, y2]
         """
+        reg_pred = reg_pred.clamp(max=DEFAULT_SCALE_CLAMP).exp()
         output = torch.zeros_like(reg_pred)
         # x1 = x - wl
         # y1 = y - ht
-        output[..., :2] = anchors - F.relu(reg_pred[..., :2])
+        output[..., :2] = anchors - reg_pred[..., :2]
         # x2 = x + wr
         # y2 = y + hb
-        output[..., 2:] = anchors + F.relu(reg_pred[..., 2:])
+        output[..., 2:] = anchors + reg_pred[..., 2:]
         
         # rescale
         output = output * self.stride

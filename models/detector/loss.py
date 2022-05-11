@@ -133,10 +133,6 @@ class Criterion(object):
                 losses = losses
         )
 
-        if torch.isnan(losses):
-            print('loss is NAN !!')
-            print(num_foreground)
-
         return loss_dict
     
 

@@ -42,10 +42,6 @@ def train_with_warmup(epoch,
         # check loss
         if torch.isnan(losses):
             print('loss is NAN !!')
-            log = ''
-            for k in loss_dict_reduced.keys():
-                log += '[{}: {:.2f}]'.format(k, loss_dict[k])
-            print(log)
             continue
 
         # Backward and Optimize
