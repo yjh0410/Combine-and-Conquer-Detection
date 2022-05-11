@@ -215,10 +215,10 @@ class CCDet(nn.Module):
         output = torch.zeros_like(reg_pred)
         # x1 = x - wl
         # y1 = y - ht
-        output[..., :2] = anchors - reg_pred[..., :2].exp()
+        output[..., :2] = anchors - F.relu(reg_pred[..., :2])
         # x2 = x + wr
         # y2 = y + hb
-        output[..., 2:] = anchors + reg_pred[..., 2:].exp()
+        output[..., 2:] = anchors + F.relu(reg_pred[..., 2:])
         
         # rescale
         output = output * self.stride
