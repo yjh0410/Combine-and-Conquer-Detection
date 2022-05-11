@@ -72,6 +72,7 @@ def get_ious(bboxes1,
         raise NotImplementedError
 
     eps = torch.finfo(torch.float32).eps
+    print(eps)
 
     bboxes1_area = (bboxes1[..., 2] - bboxes1[..., 0]).clamp_(min=0) \
         * (bboxes1[..., 3] - bboxes1[..., 1]).clamp_(min=0)
