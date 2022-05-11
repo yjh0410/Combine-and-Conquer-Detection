@@ -255,6 +255,7 @@ if __name__ == "__main__":
     pixel_mean = [123.675, 116.28, 103.53]
     pixel_std = [58.395, 57.12, 57.375]
     img_size = 640
+    random_size = [320, 416, 480, 512, 544, 640]
     is_train = True
     trans_config = [{'name': 'DistortTransform',
                      'hue': 0.1,
@@ -267,6 +268,7 @@ if __name__ == "__main__":
                     {'name': 'Normalize'}]
     transform = TrainTransforms(trans_config=trans_config,
                                 img_size=img_size,
+                                random_size=random_size,
                                 format=format)
 
     dataset = VOCDetection(data_root='D:\\python_work\\object-detection\\dataset\\VOCdevkit',

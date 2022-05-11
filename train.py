@@ -226,7 +226,7 @@ def train():
                 args=args, 
                 model=ema.ema if args.ema else model_without_ddp, 
                 evaluator=evaluator,
-                ptimizer=optimizer,
+                optimizer=optimizer,
                 epoch=epoch,
                 best_map=best_map,
                 path_to_save=path_to_save)
