@@ -2,8 +2,8 @@
 
 d_config = {
     'voc':{
-        # 'data_root': '/mnt/share/ssd2/dataset/VOCdevkit',
-        'data_root': 'D:\\python_work\\object-detection\\dataset\\VOCdevkit',
+        'data_root': '/mnt/share/ssd2/dataset/VOCdevkit',
+        # 'data_root': 'D:\\python_work\\object-detection\\dataset\\VOCdevkit',
         'num_classes': 20,
         'train_size': 640,
         'test_size': 640,
