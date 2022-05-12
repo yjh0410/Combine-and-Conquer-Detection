@@ -137,9 +137,6 @@ if __name__ == '__main__':
         print('fuse conv and bn ...')
         model = fuse_conv_bn(model)
 
-    # transform
-    transform = ValTransforms(img_size=args.img_size, format=cfg['format'])
-
     # run
     test(
         model=model, 
