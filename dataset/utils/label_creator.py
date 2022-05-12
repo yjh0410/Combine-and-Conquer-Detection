@@ -64,6 +64,7 @@ class HMPCreator(object):
 
             gt_heatmaps[y1s:y2s, x1s:x2s, label] = np.maximum(cur_hmp, prev_hmp)
 
+            # multi positive samples
             for i in range(grid_x - 1, grid_x + 2):
                 for j in range(grid_y - 1, grid_y + 2):
                     if (j >=0 and j < gt_bboxes.shape[0]) and \
@@ -71,10 +72,7 @@ class HMPCreator(object):
                         gt_bboxes[j, i] = np.array([x1, y1, x2, y2])
                         img_area = (img_h * img_w)
                         box_area = (x2 - x1) * (y2 - y1)
-                        gt_bboxes_weights[j, i] = np.exp(
-                            -(i - grid_x)**2 / (2*(rw)**2) \
-                            -(j - grid_y)**2 / (2*(rh)**2)
-                        )
+                        gt_bboxes_weights[j, i] = 2.0 - box_area / img_area
         
         targets = np.concatenate([
             gt_heatmaps, 
