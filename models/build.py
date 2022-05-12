@@ -10,9 +10,7 @@ def build_model(cfg,
                 is_train=False,
                 coco_pretrained=None,
                 use_nms=False):
-    print('==============================')
-    print('Model Configuration: \n', cfg)
-
+    # build CC-Det    
     model = CCDet(
         cfg=cfg,
         device=device,
