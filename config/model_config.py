@@ -323,7 +323,7 @@ m_config = {
     
     'ccdet_s': {
         # backbone
-        'backbone': 'cspdarknet',
+        'backbone': 'yolox_backbone',
         'pretrained': True,
         'stride': 4,
         'depthwise': False,
@@ -378,7 +378,7 @@ m_config = {
     
     'ccdet_m': {
         # backbone
-        'backbone': 'cspdarknet',
+        'backbone': 'yolox_backbone',
         'pretrained': True,
         'stride': 4,
         'depthwise': False,
@@ -433,7 +433,7 @@ m_config = {
     
     'ccdet_l': {
         # backbone
-        'backbone': 'cspdarknet',
+        'backbone': 'yolox_backbone',
         'pretrained': True,
         'stride': 4,
         'depthwise': False,
@@ -488,7 +488,7 @@ m_config = {
     
     'ccdet_x': {
         # backbone
-        'backbone': 'cspdarknet',
+        'backbone': 'yolox_backbone',
         'pretrained': True,
         'stride': 4,
         'depthwise': False,
@@ -543,7 +543,7 @@ m_config = {
     
     'ccdet_t': {
         # backbone
-        'backbone': 'cspdarknet',
+        'backbone': 'yolox_backbone',
         'pretrained': True,
         'stride': 8,
         'depthwise': False,
@@ -598,7 +598,7 @@ m_config = {
     
     'ccdet_n': {
         # backbone
-        'backbone': 'cspdarknet',
+        'backbone': 'yolox_backbone',
         'pretrained': True,
         'stride': 8,
         'depthwise': True,
