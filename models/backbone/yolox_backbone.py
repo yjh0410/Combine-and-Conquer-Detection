@@ -318,7 +318,7 @@ def build_cspdarknet(depth=1.0, width=1.0,
                           wid_mul=width, 
                           depthwise=depthwise, 
                           act=act_type)
-    basic_feat_dims = [256, 512, 1024]
+    basic_feat_dims = [128, 256, 512, 1024]
     feat_dims = [int(f * width) for f in basic_feat_dims]
 
     # load weight

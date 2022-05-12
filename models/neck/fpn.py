@@ -19,7 +19,6 @@ class BasicFPN(nn.Module):
         self.smooth_layers = nn.ModuleList()
         self.deconv_layers = nn.ModuleList()
 
-        print(in_dims, out_dims)
         assert len(in_dims) == len(out_dims)
 
         # input project layers
