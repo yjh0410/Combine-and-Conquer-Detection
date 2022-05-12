@@ -32,7 +32,7 @@ class BasicFPN(nn.Module):
             # extra module for C5
             else:
                 print('==============================')
-                print('Extra Module: {}'.format(extra_module_cfg['neck_name'].upper()))
+                print('Extra Module: {}'.format(extra_module_cfg['neck_name']))
                 
                 if extra_module_cfg['neck_name'] == 'SPP':
                     self.proj_layers.append(
