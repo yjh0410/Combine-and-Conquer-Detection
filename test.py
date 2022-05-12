@@ -132,11 +132,11 @@ def test(model,
 
     for index in range(num_images):
         print('Testing image {:d}/{:d}....'.format(index+1, num_images))
-        img, _ = testset.pull_image(index)
-        h, w, _ = img.shape
+        image, _ = testset.pull_image(index)
+        h, w, _ = image.shape
 
         # to tensor
-        x = transform(img)[0]
+        x = transform(image)[0]
         x = x.unsqueeze(0).to(device)
 
         t0 = time.time()
@@ -156,7 +156,7 @@ def test(model,
 
         # vis detection
         img_processed = visualize(
-            img=img,
+            image=image,
             bboxes=bboxes,
             scores=scores,
             labels=labels,
@@ -170,7 +170,10 @@ def test(model,
             cv2.imshow('detection', img_processed)
             cv2.waitKey(0)
         # save result
-        cv2.imwrite(os.path.join(save_path, str(index).zfill(6) +'.jpg'), img_processed)
+        cv2.imwrite(
+            os.path.join(save_path, str(index).zfill(6) +'.jpg'), 
+            img_processed
+            )
 
 
 if __name__ == '__main__':
