@@ -121,7 +121,8 @@ class Criterion(object):
 
         # iou loss
         matched_pred_iou = pred_iou[foreground_idxs]
-        matched_tgt_iou = ious.clone().detach() * gt_bboxes_weights
+        matched_tgt_iou = ious.clone().detach() * \
+                            gt_bboxes_weights[foreground_idxs]
         loss_ious = self.loss_ious(
             matched_pred_iou, 
             matched_tgt_iou, 
