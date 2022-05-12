@@ -94,7 +94,7 @@ m_config = {
         'loss_reg_weight': 1.0,
         'loss_iou_weight': 1.0,
         # training configuration
-        'max_epoch': 200,
+        'max_epoch': 150,
         'no_aug_epoch': 15,
         'batch_size': 32,
         'base_lr': 0.01 / 64.,
@@ -147,7 +147,7 @@ m_config = {
         'loss_reg_weight': 1.0,
         'loss_iou_weight': 1.0,
         # training configuration
-        'max_epoch': 200,
+        'max_epoch': 150,
         'no_aug_epoch': 15,
         'batch_size': 16,
         'base_lr': 0.01 / 64.,
@@ -362,7 +362,7 @@ m_config = {
         'loss_reg_weight': 1.0,
         'loss_iou_weight': 1.0,
         # training configuration
-        'max_epoch': 200,
+        'max_epoch': 150,
         'no_aug_epoch': 15,
         'batch_size': 64,
         'base_lr': 0.01 / 64.,
@@ -418,7 +418,7 @@ m_config = {
         'loss_reg_weight': 1.0,
         'loss_iou_weight': 1.0,
         # training configuration
-        'max_epoch': 200,
+        'max_epoch': 150,
         'no_aug_epoch': 15,
         'batch_size': 32,
         'base_lr': 0.01 / 64.,
@@ -474,7 +474,7 @@ m_config = {
         'loss_reg_weight': 1.0,
         'loss_iou_weight': 1.0,
         # training configuration
-        'max_epoch': 200,
+        'max_epoch': 150,
         'no_aug_epoch': 15,
         'batch_size': 32,
         'base_lr': 0.01 / 64.,
@@ -530,7 +530,7 @@ m_config = {
         'loss_reg_weight': 1.0,
         'loss_iou_weight': 1.0,
         # training configuration
-        'max_epoch': 200,
+        'max_epoch': 150,
         'no_aug_epoch': 15,
         'batch_size': 16,
         'base_lr': 0.01 / 64.,
@@ -586,7 +586,7 @@ m_config = {
         'loss_reg_weight': 1.0,
         'loss_iou_weight': 1.0,
         # training configuration
-        'max_epoch': 200,
+        'max_epoch': 150,
         'no_aug_epoch': 15,
         'batch_size': 64,
         'base_lr': 0.01 / 64.,
@@ -642,7 +642,7 @@ m_config = {
         'loss_reg_weight': 1.0,
         'loss_iou_weight': 1.0,
         # training configuration
-        'max_epoch': 200,
+        'max_epoch': 150,
         'no_aug_epoch': 15,
         'batch_size': 64,
         'base_lr': 0.01 / 64.,
@@ -749,7 +749,7 @@ m_config = {
         'loss_reg_weight': 1.0,
         'loss_iou_weight': 1.0,
         # training configuration
-        'max_epoch': 200,
+        'max_epoch': 150,
         'no_aug_epoch': 15,
         'batch_size': 32,
         'base_lr': 0.01 / 64.,
