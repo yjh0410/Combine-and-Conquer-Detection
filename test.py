@@ -274,7 +274,8 @@ if __name__ == '__main__':
         ) if args.test_aug else None
 
     # test
-    test(model=model, 
+    test(args=args,
+         model=model, 
          device=device, 
          testset=dataset,
          transform=transform,
