@@ -4,8 +4,11 @@ from .model_config import m_config
 
 def build_config(dataset, model_name):
     # build dataset config
-    dataset_config = d_config[dataset]
-    print(dataset_config)
+    if dataset is not None:
+        dataset_config = d_config[dataset]
+        print(dataset_config)
+    else:
+        dataset_config == None
 
     # build model config
     model_config = m_config[model_name]

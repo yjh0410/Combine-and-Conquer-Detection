@@ -5,37 +5,30 @@ import os
 import torch
 import torch.backends.cudnn as cudnn
 
-from dataset.transforms import ValTransforms
 from dataset.coco import COCODataset, coco_class_index, coco_class_labels
-from utils.com_flops_params import FLOPs_and_Params
-from utils import fuse_conv_bn
+from dataset.utils.transforms import ValTransforms
 from utils.misc import load_weight
+from utils.com_paras_flops import FLOPs_and_Params
+from utils.fuse_conv_bn import fuse_conv_bn
 
 from config import build_config
-from models.detector import build_model
+from models.build import build_model
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='FreeYOLO')
+    parser = argparse.ArgumentParser(description='CCDet')
     # Model
-    parser.add_argument('-v', '--version', default='yolo_s', type=str,
-                        help='build yolo')
+    parser.add_argument('-v', '--version', default='ccdet_r18', type=str,
+                        help='build ccdet')
     parser.add_argument('--fuse_conv_bn', action='store_true', default=False,
                         help='fuse conv and bn')
-    parser.add_argument('--conf_thresh', default=0.1, type=float,
-                        help='confidence threshold')
-    parser.add_argument('--nms_thresh', default=0.45, type=float,
-                        help='NMS threshold')
-    parser.add_argument('--topk', default=100, type=int,
-                        help='NMS threshold')
-    # data root
-    parser.add_argument('--root', default='/mnt/share/ssd2/dataset',
-                        help='data root')
+
     # basic
     parser.add_argument('--img_size', default=640, type=int,
                         help='the min size of input image')
     parser.add_argument('--weight', default=None,
                         type=str, help='Trained state_dict file path to open')
+
     # cuda
     parser.add_argument('--cuda', action='store_true', default=False, 
                         help='use cuda.')
@@ -43,9 +36,9 @@ def parse_args():
     return parser.parse_args()
 
 
-def test(net, device, img_size, testset, transform):
+def test(model, device, img_size, testset, transform):
     # Step-1: Compute FLOPs and Params
-    FLOPs_and_Params(model=net, 
+    FLOPs_and_Params(model=model, 
                      img_size=img_size, 
                      device=device)
 
@@ -60,8 +53,9 @@ def test(net, device, img_size, testset, transform):
             image, _ = testset.pull_image(index)
 
             orig_h, orig_w, _ = image.shape
+            orig_size = np.array([[orig_w, orig_h, orig_w, orig_h]])
 
-            # prepare
+            # pre-process
             x = transform(image)[0]
             x = x.unsqueeze(0).to(device)
 
@@ -70,10 +64,10 @@ def test(net, device, img_size, testset, transform):
             start_time = time.perf_counter()    
 
             # inference
-            bboxes, scores, cls_inds = net(x)
+            scores, labels, bboxes = model(x)
             
             # rescale
-            bboxes *= max(orig_h, orig_w)
+            bboxes *= orig_size
 
             # end time
             torch.cuda.synchronize()
@@ -110,19 +104,32 @@ if __name__ == '__main__':
                 img_size=args.img_size)
 
     # config
-    cfg = build_config(args)
+    d_cfg, m_cfg = build_config('coco', args.version)
 
     # build model
-    model = build_model(args=args, 
-                        cfg=cfg,
-                        device=device, 
-                        num_classes=num_classes, 
-                        trainable=False)
+    model = build_model(
+        cfg=m_cfg,
+        device=device,
+        img_size=args.img_size,
+        num_classes=num_classes,
+        is_train=False,
+        use_nms=args.use_nms
+        )
 
     # load trained weight
-    model = load_weight(device=device, 
-                        model=model, 
-                        path_to_ckpt=args.weight)
+    model = load_weight(
+        device=device, 
+        model=model, 
+        path_to_ckpt=args.weight
+        )
+
+    # transform
+    transform = ValTransforms(
+        img_size=args.img_size,
+        format=d_cfg['format'],
+        pixel_mean=d_cfg['pixel_mean'],
+        pixel_std=d_cfg['pixel_std']
+        )
 
 
     # fuse conv bn
@@ -134,7 +141,8 @@ if __name__ == '__main__':
     transform = ValTransforms(img_size=args.img_size, format=cfg['format'])
 
     # run
-    test(net=model, 
+    test(
+        model=model, 
         img_size=args.img_size,
         device=device, 
         testset=dataset,

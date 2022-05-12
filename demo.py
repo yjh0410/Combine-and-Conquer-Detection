@@ -5,8 +5,11 @@ import time
 import os
 import torch
 
-from dataset import coco_class_index, coco_class_labels
-from dataset.transforms import ValTransforms
+
+from config import build_config
+from dataset.coco import coco_class_index, coco_class_labels
+from dataset.utils.transforms import ValTransforms
+from utils.misc import load_weight
 
 from models.build import build_model
 
@@ -14,6 +17,8 @@ from models.build import build_model
 def parse_args():
     parser = argparse.ArgumentParser(description='Combine-and-Conquer Object Detection')
     # basic
+    parser.add_argument('-size', '--img_size', default=640, type=int,
+                        help='img_size')
     parser.add_argument('--mode', default='image',
                         type=str, help='Use the data from image, video or camera')
     parser.add_argument('--cuda', action='store_true', default=False,
@@ -22,67 +27,54 @@ def parse_args():
                         type=str, help='The path to image files')
     parser.add_argument('--path_to_vid', default='data/demo/videos/',
                         type=str, help='The path to video files')
-    parser.add_argument('--path_to_saveVid', default='data/video/result.avi',
+    parser.add_argument('--path_to_save', default='det_results/demo/',
                         type=str, help='The path to save the detection results video')
     parser.add_argument('-vs', '--visual_threshold', default=0.5,
                         type=float, help='visual threshold')
-    parser.add_argument('-dist', '--distributed', action='store_true', default=False,
-                    help='distributed training')
-    parser.add_argument('--local_rank', type=int, default=0, 
-                        help='local_rank')
     # model
-    parser.add_argument('-v', '--version', default='baseline',
+    parser.add_argument('-v', '--version', default='ccdet_r18',
                         help='baseline.')
-    parser.add_argument('-bk', '--backbone', default='r18',
-                        help='r18, r34, r50, r101')
-    parser.add_argument('--stride', type=int, default=4, 
-                        help='output stride')
     parser.add_argument('--weight', default='weights/',
                         type=str, help='Trained state_dict file path to open')
-    parser.add_argument('-size', '--img_size', default=512, type=int,
-                        help='img_size')
-    parser.add_argument('--nms_thresh', default=0.45, type=float,
-                        help='NMS threshold')
     parser.add_argument('-nms', '--use_nms', action='store_true', default=False,
                         help='use nms.')
     
     return parser.parse_args()
                     
 
-def plot_bbox_labels(img, bbox, label, cls_color, test_scale=0.4):
+def plot_bbox_labels(image, bbox, label, cls_color, test_scale=0.4):
     x1, y1, x2, y2 = bbox
     x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
     t_size = cv2.getTextSize(label, 0, fontScale=1, thickness=2)[0]
     # plot bbox
-    cv2.rectangle(img, (x1, y1), (x2, y2), cls_color, 2)
+    cv2.rectangle(image, (x1, y1), (x2, y2), cls_color, 2)
     # plot title bbox
-    cv2.rectangle(img, (x1, y1-t_size[1]), (int(x1 + t_size[0] * test_scale), y1), cls_color, -1)
+    cv2.rectangle(image, (x1, y1-t_size[1]), (int(x1 + t_size[0] * test_scale), y1), cls_color, -1)
     # put the test on the title bbox
-    cv2.putText(img, label, (int(x1), int(y1 - 5)), 0, test_scale, (0, 0, 0), 1, lineType=cv2.LINE_AA)
+    cv2.putText(image, label, (int(x1), int(y1 - 5)), 0, test_scale, (0, 0, 0), 1, lineType=cv2.LINE_AA)
 
-    return img
+    return image
 
 
-def visualize(img, bboxes, scores, cls_inds, class_colors, vis_thresh=0.3):
+def visualize(image, bboxes, scores, labels, class_colors, vis_thresh=0.5):
     ts = 0.4
     for i, bbox in enumerate(bboxes):
         if scores[i] > vis_thresh:
-            cls_color = class_colors[int(cls_inds[i])]
-            cls_id = coco_class_index[int(cls_inds[i])]
+            cls_color = class_colors[int(labels[i])]
+            cls_id = coco_class_index[int(labels[i])]
             mess = '%s: %.2f' % (coco_class_labels[cls_id], scores[i])
-            img = plot_bbox_labels(img, bbox, mess, cls_color, test_scale=ts)
+            image = plot_bbox_labels(image, bbox, mess, cls_color, test_scale=ts)
 
-    return img
+    return image
 
 
-def detect(net, 
-           device, 
-           transform, 
-           vis_thresh, 
-           mode='image', 
-           path_to_img=None, 
-           path_to_vid=None, 
-           path_to_save=None):
+@torch.no_grad()
+def detect(
+    model, device, transform, vis_thresh, mode='image', 
+    path_to_img=None, path_to_vid=None, path_to_save=None
+    ):
+
+    np.random.seed(0)
     class_colors = [(np.random.randint(255),
                      np.random.randint(255),
                      np.random.randint(255)) for _ in range(80)]
@@ -98,26 +90,32 @@ def detect(net,
             if ret:
                 if cv2.waitKey(1) == ord('q'):
                     break
+                orig_h, orig_w = frame.shape[:2]
+                orig_size = np.array([[orig_w, orig_h, orig_w, orig_h]])
+
+                # pre-process
                 x = transform(frame)[0]
                 x = x.unsqueeze(0).to(device)
 
                 t0 = time.time()
-                bboxs, scores, cls_inds = net(x)
-                t1 = time.time()
-                print("detection time used ", t1-t0, "s")
-                # rescale
-                img_h, img_w = frame.shape[:2]
-                scale = np.array([[img_w, img_h, img_w, img_h]])
-                bboxs *= scale
+                scores, labels, bboxes = model(x)
+                print("Infer: {:.6f} s".format(time.time() - t0))
 
-                frame_processed = visualize(img=frame, 
-                                            bboxs=bboxs,
+                # rescale
+                bboxs *= orig_size
+
+                # visualization
+                frame_processed = visualize(image=frame, 
+                                            bboxes=bboxes,
                                             scores=scores, 
-                                            cls_inds=cls_inds,
+                                            labels=labels,
                                             class_colors=class_colors,
                                             vis_thresh=vis_thresh)
-                cv2.imshow('detection result', frame_processed)
+                cv2.imshow('Detection', frame_processed)
                 cv2.waitKey(1)
+
+                # To DO:
+                # Save the detection video
             else:
                 break
         cap.release()
@@ -126,27 +124,36 @@ def detect(net,
     # ------------------------- Image ----------------------------
     elif mode == 'image':
         for i, img_id in enumerate(os.listdir(path_to_img)):
-            img = cv2.imread(path_to_img + '/' + img_id, cv2.IMREAD_COLOR)
-            x = transform(img)[0]
+            img_file = os.path.join(path_to_img, img_id)
+            image = cv2.imread(img_file, cv2.IMREAD_COLOR)
+
+            orig_h, orig_w = image.shape[:2]
+            orig_size = np.array([[orig_w, orig_h, orig_w, orig_h]])
+
+            # pre-process
+            x = transform(image)[0]
             x = x.unsqueeze(0).to(device)
 
             t0 = time.time()
-            bboxs, scores, cls_inds = net(x)
-            t1 = time.time()
-            print("detection time used ", t1-t0, "s")
-            # rescale
-            img_h, img_w = img.shape[:2]
-            scale = np.array([[img_w, img_h, img_w, img_h]])
-            bboxs *= scale
+            # inference
+            scores, labels, bboxes = model(x)
+            print("Infer: {:.6f} s".format(time.time() - t0))
 
-            img_processed = visualize(img=img, 
-                                        bboxs=bboxs,
-                                        scores=scores, 
-                                        cls_inds=cls_inds,
-                                        class_colors=class_colors,
-                                        vis_thresh=vis_thresh)
-            cv2.imshow('detection', img_processed)
-            cv2.imwrite(os.path.join(save_path, str(i).zfill(6)+'.jpg'), img_processed)
+            # rescale
+            bboxes *= orig_size
+
+            # visualization
+            img_processed = visualize(
+                image=image, 
+                bboxs=bboxs,
+                scores=scores, 
+                labels=labels,
+                class_colors=class_colors,
+                vis_thresh=vis_thresh
+                )
+            cv2.imshow('Detection', img_processed)
+
+            cv2.imwrite(os.path.join(save_path, 'images', str(i).zfill(6)+'.jpg'), img_processed)
             cv2.waitKey(0)
 
     # ------------------------- Video ---------------------------
@@ -154,7 +161,8 @@ def detect(net,
         video = cv2.VideoCapture(path_to_vid)
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
         save_size = (640, 480)
-        save_path = os.path.join(save_path, 'det.avi')
+        cur_time = time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time()))
+        save_path = os.path.join(save_path, 'videos', cur_time+'.avi')
         fps = 15.0
         out = cv2.VideoWriter(save_path, fourcc, fps, save_size)
 
@@ -163,33 +171,38 @@ def detect(net,
             
             if ret:
                 # ------------------------- Detection ---------------------------
-                t0 = time.time()
+                orig_h, orig_w = frame.shape[:2]
+                orig_size = np.array([[orig_w, orig_h, orig_w, orig_h]])
+
+                # pre-process
                 x = transform(frame)[0]
                 x = x.unsqueeze(0).to(device)
 
                 t0 = time.time()
                 # inference
-                bboxs, scores, cls_inds = net(x)
-                t1 = time.time()
-                print("detection time used ", t1-t0, "s")
+                scores, labels, bboxes = model(x)
+                print("Infer: {:.6f} s".format(time.time() - t0))
 
                 # rescale
-                img_h, img_w = frame.shape[:2]
-                scale = np.array([[img_w, img_h, img_w, img_h]])
-                bboxs *= scale
+                bboxes *= orig_size
                 
-                frame_processed = visualize(img=frame, 
-                                            bboxs=bboxs,
-                                            scores=scores, 
-                                            cls_inds=cls_inds,
-                                            class_colors=class_colors,
-                                            vis_thresh=vis_thresh)
+                # visualization
+                frame_processed = visualize(
+                    img=frame, 
+                    bboxes=bboxes,
+                    scores=scores, 
+                    labels=labels,
+                    class_colors=class_colors,
+                    vis_thresh=vis_thresh
+                    )
                 frame_processed_resize = cv2.resize(frame_processed, save_size)
+
                 out.write(frame_processed_resize)
-                cv2.imshow('detection', frame_processed)
+                cv2.imshow('Detection', frame_processed)
                 cv2.waitKey(1)
             else:
                 break
+
         video.release()
         out.release()
         cv2.destroyAllWindows()
@@ -198,28 +211,52 @@ def detect(net,
 def run():
     args = parse_args()
 
-    # use cuda
+    # get device
     if args.cuda:
+        print('use cuda')
         device = torch.device("cuda")
     else:
         device = torch.device("cpu")
 
-    # load model
-    model = build_model(args, device, num_classes=80, local_rank=0, train=False)
+    # config
+    d_cfg, m_cfg = build_config('coco', args.version)
     
-    model.load_state_dict(torch.load(args.weight, map_location=device), strict=False)
-    model = model.to(device).eval()
-    print('Finished loading model!')
+    # build model
+    model = build_model(
+        cfg=m_cfg,
+        device=device,
+        img_size=args.img_size,
+        num_classes=80,
+        is_train=False,
+        use_nms=args.use_nms
+        )
+
+    # load trained weight
+    model = load_weight(
+        device=device, 
+        model=model, 
+        path_to_ckpt=args.weight
+        )
+
+    # transform
+    transform = ValTransforms(
+        img_size=args.img_size,
+        format=d_cfg['format'],
+        pixel_mean=d_cfg['pixel_mean'],
+        pixel_std=d_cfg['pixel_std']
+        )
 
     # run
-    detect(net=model, 
-            device=device,
-            transform=ValTransforms(args.img_size),
-            mode=args.mode,
-            path_to_img=args.path_to_img,
-            path_to_vid=args.path_to_vid,
-            path_to_save=args.path_to_save,
-            thresh=args.visual_threshold)
+    detect(
+        model=model,
+        device=device,
+        transform=transform,
+        vis_thresh=args.visual_threshold,
+        mode=args.mode,
+        path_to_img=args.path_to_img,
+        path_to_vid=args.path_to_vid,
+        path_to_save=args.path_to_save,
+        )
 
 
 if __name__ == '__main__':

@@ -113,9 +113,11 @@ if __name__ == '__main__':
         )
 
     # load weight
-    model = load_weight(device=device, 
-                        model=model, 
-                        path_to_ckpt=args.weight)
+    model = load_weight(
+        device=device, 
+        model=model, 
+        path_to_ckpt=args.weight
+        )
     
     # transform
     transform = ValTransforms(

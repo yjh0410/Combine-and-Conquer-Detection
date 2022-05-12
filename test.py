@@ -7,7 +7,6 @@ from numpy import random
 import torch
 import torch.backends.cudnn as cudnn
 
-from config import build_config
 from evaluator.utils import TestTimeAugmentation
 
 from dataset.voc import VOCDetection, VOC_CLASSES
@@ -15,45 +14,46 @@ from dataset.coco import COCODataset, coco_class_index, coco_class_labels
 from dataset.widerface import WIDERFaceDetection
 from dataset.crowdhuman import CrowdHumanDetection
 from dataset.utils.transforms import ValTransforms
-from utils.misc import load_weight, build_dataset
+from utils.misc import load_weight
 
+from config import build_config
 from models.build import build_model
 
+def parse_args():
+    parser = argparse.ArgumentParser(description='Combine-and-Conquer Object Detection')
+    # basic
+    parser.add_argument('-size', '--img_size', default=640, type=int,
+                        help='img_size')
+    parser.add_argument('--show', action='store_true', default=False,
+                        help='show the visulization results.')
+    parser.add_argument('-vs', '--visual_threshold', default=0.5, type=float,
+                        help='Final confidence threshold')
+    parser.add_argument('--cuda', action='store_true', default=False, 
+                        help='use cuda.')
+    parser.add_argument('--save_folder', default='det_results/', type=str,
+                        help='Dir to save results')
 
-parser = argparse.ArgumentParser(description='Combine-and-Conquer Object Detection')
-# basic
-parser.add_argument('-size', '--img_size', default=640, type=int,
-                    help='img_size')
-parser.add_argument('--show', action='store_true', default=False,
-                    help='show the visulization results.')
-parser.add_argument('-vs', '--visual_threshold', default=0.5, type=float,
-                    help='Final confidence threshold')
-parser.add_argument('--cuda', action='store_true', default=False, 
-                    help='use cuda.')
-parser.add_argument('--save_folder', default='det_results/', type=str,
-                    help='Dir to save results')
+    # dataset
+    parser.add_argument('-d', '--dataset', default='voc',
+                        help='voc, coco.')
 
-# dataset
-parser.add_argument('-d', '--dataset', default='voc',
-                    help='voc, coco.')
+    # model
+    parser.add_argument('-v', '--version', default='ccdet',
+                        help='ccdet')
+    parser.add_argument('--weight', default='weight/',
+                        type=str, help='Trained state_dict file path to open')
+    parser.add_argument('--nms_thresh', default=0.45, type=float,
+                        help='NMS threshold')
+    parser.add_argument('-nms', '--use_nms', action='store_true', default=False,
+                        help='use nms.')
+    parser.add_argument('--topk', default=100, type=int,
+                        help='topk prediction')
+                        
+    # TTA
+    parser.add_argument('-tta', '--test_aug', action='store_true', default=False,
+                        help='use test time augmentation.')
 
-# model
-parser.add_argument('-v', '--version', default='ccdet',
-                    help='ccdet')
-parser.add_argument('--weight', default='weight/',
-                    type=str, help='Trained state_dict file path to open')
-parser.add_argument('--nms_thresh', default=0.45, type=float,
-                    help='NMS threshold')
-parser.add_argument('-nms', '--use_nms', action='store_true', default=False,
-                    help='use nms.')
-parser.add_argument('--topk', default=100, type=int,
-                    help='topk prediction')
-                    
-# TTA
-parser.add_argument('-tta', '--test_aug', action='store_true', default=False,
-                    help='use test time augmentation.')
-
-args = parser.parse_args()
+    return parser.parse_args()
 
 
 
@@ -115,17 +115,11 @@ def visualize(image,
     return image
         
 
-def test(model, 
-         device, 
-         testset,
-         transform, 
-         vis_thresh, 
-         class_colors=None, 
-         class_names=None, 
-         class_indexs=None, 
-         show=False,
-         test_aug=None, 
-         dataset='voc'):
+@torch.no_grad()
+def test(args, model, device, testset, transform, 
+         class_colors=None, class_names=None, class_indexs=None, 
+         show=False, vis_thresh=0.5, test_aug=None, dataset='voc'
+         ):
     num_images = len(testset)
     save_path = os.path.join(args.save_folder, args.dataset, args.version)
     os.makedirs(save_path, exist_ok=True)
@@ -133,26 +127,24 @@ def test(model,
     for index in range(num_images):
         print('Testing image {:d}/{:d}....'.format(index+1, num_images))
         image, _ = testset.pull_image(index)
-        h, w, _ = image.shape
+        orig_h, orig_w, _ = image.shape
+        orig_size = np.array([[orig_w, orig_h, orig_w, orig_h]])
 
         # to tensor
         x = transform(image)[0]
         x = x.unsqueeze(0).to(device)
 
         t0 = time.time()
-        # forward
-        # test augmentation:
+        # inference
         if test_aug is not None:
+            # test augmentation:
             scores, labels, bboxes = test_aug(x, model)
         else:
-            # inference
             scores, labels, bboxes = model(x)
-        print("detection time used ", time.time() - t0, "s")
+        print("Infer: {:.6f} s".format(time.time() - t0))
         
-        # scale each detection back up to the image
-        scale = np.array([[w, h, w, h]])
-        # map the boxes to origin image scale
-        bboxes *= scale
+        # rescale
+        bboxes *= orig_size
 
         # vis detection
         img_processed = visualize(
@@ -177,7 +169,8 @@ def test(model,
 
 
 if __name__ == '__main__':
-    random.seed(0)
+    args = parse_args()
+
     # get device
     if args.cuda:
         print('use cuda')
@@ -242,9 +235,11 @@ if __name__ == '__main__':
         num_classes = 1
 
     np.random.seed(0)
-    class_colors = [(np.random.randint(255),
-                     np.random.randint(255),
-                     np.random.randint(255)) for _ in range(num_classes)]
+    class_colors = [
+        (np.random.randint(255),
+        np.random.randint(255),
+        np.random.randint(255)
+        ) for _ in range(num_classes)]
 
     # build model
     model = build_model(
@@ -257,13 +252,11 @@ if __name__ == '__main__':
         )
 
     # load trained weight
-    model = load_weight(device=device, 
-                        model=model, 
-                        path_to_ckpt=args.weight)
-
-    test_aug = TestTimeAugmentation(num_classes=num_classes,
-                                    nms_thresh=ta_nms,
-                                    scale_range=scale_range) if args.test_aug else None
+    model = load_weight(
+        device=device, 
+        model=model, 
+        path_to_ckpt=args.weight
+        )
 
     # transform
     transform = ValTransforms(
@@ -272,6 +265,13 @@ if __name__ == '__main__':
         pixel_mean=d_cfg['pixel_mean'],
         pixel_std=d_cfg['pixel_std']
         )
+
+    # TTA
+    test_aug = TestTimeAugmentation(
+        num_classes=num_classes,
+        nms_thresh=ta_nms,
+        scale_range=scale_range
+        ) if args.test_aug else None
 
     # test
     test(model=model, 
