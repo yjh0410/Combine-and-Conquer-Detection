@@ -97,7 +97,7 @@ def train():
     d_cfg, m_cfg = build_config(args.dataset, args.version)
 
     # dataset and evaluator
-    dataset, evaluator, num_classes = build_dataset(d_cfg, m_cfg, args, device)
+    dataset, evaluator = build_dataset(d_cfg, m_cfg, args, device)
 
     # dataloader
     batch_size = m_cfg['batch_size'] * distributed_utils.get_world_size()
@@ -108,7 +108,7 @@ def train():
         cfg=m_cfg,
         device=device,
         img_size=d_cfg['train_size'],
-        num_classes=num_classes,
+        num_classes=d_cfg['num_classes'],
         is_train=True,
         coco_pretrained=args.coco_pretrained,
         use_nms=False

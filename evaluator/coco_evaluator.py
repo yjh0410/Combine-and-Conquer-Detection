@@ -20,7 +20,7 @@ class COCOEvaluator():
     and evaluated by COCO API.
     """
     def __init__(self, 
-                 data_dir, 
+                 data_root, 
                  device, 
                  img_size, 
                  testset=False, 
@@ -28,7 +28,7 @@ class COCOEvaluator():
                  test_aug=False):
         """
         Args:
-            data_dir (str): dataset root directory
+            data_root (str): dataset root directory
             img_size (int): image size after preprocess. images are resized \
                 to squares whose shape is (img_size, img_size).
             confthre (float):
@@ -44,10 +44,12 @@ class COCOEvaluator():
         else:
             image_set='val2017'
 
-        self.dataset = COCODataset(data_dir=data_dir,
+        self.dataset = COCODataset(data_root=data_root,
                                    img_size=img_size,
                                    image_set=image_set,
-                                   transform=None)
+                                   transform=None,
+                                   mosaic_prob=0.,
+                                   mixup_prob=0.)
 
         self.img_size = img_size
         self.transform = transform

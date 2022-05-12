@@ -110,7 +110,7 @@ def build_dataset(d_cfg, m_cfg, args, device):
     print('Training model on:', args.dataset)
     print('The dataset size:', len(dataset))
 
-    return dataset, evaluator, num_classes
+    return dataset, evaluator
 
 
 def build_dataloader(args, dataset, batch_size, collate_fn=None):

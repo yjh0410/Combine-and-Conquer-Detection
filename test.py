@@ -15,7 +15,7 @@ from dataset.coco import COCODataset, coco_class_index, coco_class_labels
 from dataset.widerface import WIDERFaceDetection
 from dataset.crowdhuman import CrowdHumanDetection
 from dataset.utils.transforms import ValTransforms
-from utils.misc import load_weight
+from utils.misc import load_weight, build_dataset
 
 from models.build import build_model
 
@@ -189,7 +189,6 @@ if __name__ == '__main__':
     # config
     d_cfg, m_cfg = build_config(args.dataset, args.version)
 
-    # dataset
     if args.dataset == 'voc':
         print('test on voc ...')
         dataset = VOCDetection(
