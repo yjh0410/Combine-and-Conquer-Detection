@@ -161,51 +161,15 @@ class DarkNet_53(nn.Module):
         return outputs
 
 
-def darknet19(pretrained=False, hr=False, **kwargs):
-    """Constructs a darknet-19 model.
-    Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
-    """
-    model = DarkNet_19()
-    if pretrained:
-        print('Loading the pretrained model ...')
-        path_to_dir = os.path.dirname(os.path.abspath(__file__))
-        if hr:
-            print('Loading the hi-res darknet19-448 ...')
-            model.load_state_dict(torch.load(path_to_dir + '/weights/darknet19/darknet19_hr_75.52.pth', map_location='cuda'), strict=False)
-        else:
-            print('Loading the darknet19 ...')
-            model.load_state_dict(torch.load(path_to_dir + '/weights/darknet19/darknet19_72.96.pth', map_location='cuda'), strict=False)
-    return model
-
-
-def darknet53(pretrained=False, hr=False, **kwargs):
-    """Constructs a darknet-53 model.
-    Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
-    """
-    model = DarkNet_53()
-    if pretrained:
-        print('Loading the pretrained model ...')
-        path_to_dir = os.path.dirname(os.path.abspath(__file__))
-        if hr:
-            print('Loading the hi-res darknet53-448 ...')
-            model.load_state_dict(torch.load(path_to_dir + '/weights/darknet53/darknet53_hr_77.76.pth', map_location='cuda'), strict=False)
-        else:
-            print('Loading the darknet53 ...')
-            model.load_state_dict(torch.load(path_to_dir + '/weights/darknet53/darknet53_75.42.pth', map_location='cuda'), strict=False)
-    return model
-
-
-# Build CSPDarkNet
+# Build DarkNet
 def build_darknet(model_name='darknet_19', pretrained=False):
     # build backbone
     if model_name == 'darknet_19':
         backbone = DarkNet_19()
-        feat_dims = [256, 512, 1024]
+        feat_dims = [128, 256, 512, 1024]
     elif model_name == 'darknet_53':
         backbone = DarkNet_53()
-        feat_dims = [256, 512, 1024]
+        feat_dims = [128, 256, 512, 1024]
 
     # load weight
     if pretrained:
@@ -223,6 +187,7 @@ def build_darknet(model_name='darknet_19', pretrained=False):
                 shape_checkpoint = tuple(checkpoint_state_dict[k].shape)
                 if shape_model != shape_checkpoint:
                     checkpoint_state_dict.pop(k)
+                    print(k)
             else:
                 checkpoint_state_dict.pop(k)
                 print(k)
