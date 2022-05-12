@@ -103,7 +103,6 @@ class Criterion(object):
         loss_hmp = self.loss_heatmap(pred_hmp, gt_heatmaps)
 
         # bboxes loss
-        
         matched_pred_delta = pred_box[foreground_idxs]
         matched_tgt_delta = gt_bboxes[foreground_idxs]
         loss_bboxes, ious = self.loss_bboxes(

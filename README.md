@@ -42,14 +42,14 @@ Main results on VOC.
 ## CC-Det:
 Main results on COCO.
 
-|  Model      | Size | FPS | FLOPs(B) |  AP  | AP50 | AP75 |  Weight  |
-|-------------|------|-----|----------|------|------|------|----------|
-| CCDet-R18   | 640  | 164 |          |      |      |      | [github] |
-| CCDet-R50   | 640  | 92  |          |      |      |      | [github] |
-| CCDet-R101  | 640  | 63  |          |      |      |      | [github] |
-| CCDet-D19   | 640  | 164 |          |      |      |      | [github] |
-| CCDet-D53   | 640  | 52  |          |      |      |      | [github] |
-| CCDet-VGG16 | 640  | 92  |          |      |      |      | [github] |
+|  Model      | Size | FPS | Param(M) | FLOPs(B) |  AP  | AP50 |  Weight  |
+|-------------|------|-----|----------|----------|------|------|----------|
+| CCDet-R18   | 640  |     |          |          |      |      | [github] |
+| CCDet-R50   | 640  |     |          |          |      |      | [github] |
+| CCDet-R101  | 640  |     |          |          |      |      | [github] |
+| CCDet-D19   | 640  |     |          |          |      |      | [github] |
+| CCDet-D53   | 640  |     |          |          |      |      | [github] |
+| CCDet-VGG16 | 640  |     |          |          |      |      | [github] |
 
 ## CC-Det with Modified CSPDarkNet
 The Backbone of `YOLOX` is deployed in our `CCDet`.
@@ -63,22 +63,22 @@ We also follow its scaling rule to product:
 
 Main results on COCO.
 
-|  Model      | Size | FPS | FLOPs(B) |  AP  | AP50 | AP75 |  Weight  |
-|-------------|------|-----|----------|------|------|------|----------|
-| CCDet-S     | 640  |     |          |      |      |      | [github] |
-| CCDet-M     | 640  |     |          |      |      |      | [github] |
-| CCDet-L     | 640  |     |          |      |      |      | [github] |
-| CCDet-X     | 640  |     |          |      |      |      | [github] |
-| CCDet-T     | 640  |     |          |      |      |      | [github] |
-| CCDet-N     | 640  |     |          |      |      |      | [github] |
+|  Model      | Size | FPS | Param(M) | FLOPs(B) |  AP  | AP50 |  Weight  |
+|-------------|------|-----|----------|----------|------|------|----------|
+| CCDet-S     | 640  |     |          |          |      |      | [github] |
+| CCDet-M     | 640  |     |          |          |      |      | [github] |
+| CCDet-L     | 640  |     |          |          |      |      | [github] |
+| CCDet-X     | 640  |     |          |          |      |      | [github] |
+| CCDet-T     | 640  |     |          |          |      |      | [github] |
+| CCDet-N     | 640  |     |          |          |      |      | [github] |
 
 ## CC-Det-E:
 Main results on COCO.
 
-|  Backbone    | Size | FPS | FLOPs(B) |  AP  | AP50 | AP75 |  Weight  |
-|--------------|------|-----|----------|------|------|------|----------|
-| CCDet-E-R18  | 640  | 164 |          |      |      |      | [github] |
-| CCDet-E-R50  | 640  | 92  |          |      |      |      | [github] |
+|  Model      | Size | FPS | Param(M) | FLOPs(B) |  AP  | AP50 |  Weight  |
+|-------------|------|-----|----------|----------|------|------|----------|
+| CCDet-E-R18 | 640  |     |          |          |      |      | [github] |
+| CCDet-E-R50 | 640  |     |          |          |      |      | [github] |
 
 </table></tbody>
 
