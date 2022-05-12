@@ -71,7 +71,10 @@ class HMPCreator(object):
                         gt_bboxes[j, i] = np.array([x1, y1, x2, y2])
                         img_area = (img_h * img_w)
                         box_area = (x2 - x1) * (y2 - y1)
-                        gt_bboxes_weights[j, i] = 2.0 - box_area / img_area
+                        gt_bboxes_weights[j, i] = np.exp(
+                            -(i - grid_x)**2 / (2*(rw)**2) \
+                            -(j - grid_y)**2 / (2*(rh)**2)
+                        )
         
         targets = np.concatenate([
             gt_heatmaps, 
