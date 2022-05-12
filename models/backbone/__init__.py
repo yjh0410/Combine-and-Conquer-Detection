@@ -18,7 +18,7 @@ def build_backbone(cfg, model_name='resnet18', pretrained=False):
         backbone, bk_feats = build_darknet(
             model_name=model_name, pretrained=pretrained)
 
-    elif 'yolox_backbone' in model_name:
+    elif 'cspdarknet' in model_name:
         backbone, bk_feats = build_cspdarknet(
             depth=cfg['depth'],
             width=cfg['width'],
