@@ -25,24 +25,46 @@ conda activate ccdet
 ```Shell
 pip install -r requirements.txt 
 ```
-PyTorch >= 1.1.0 and Torchvision >= 0.3.0
+PyTorch >= 1.9.1 and Torchvision >= 0.10.1
 
 
 # Experiments
 
-![Image](https://github.com/yjh0410/Simple-Baseline-Detector/blob/master/img_files/speed_accuracy.jpg)
+## CC-Det:
+Main results on VOC.
+
+|  Model      | Size | FPS | FLOPs(B) |  AP  | AP50 | AP75 |  Weight  |
+|-------------|------|-----|----------|------|------|------|----------|
+| CCDet-R18   | 640  | 164 |          |      |      |      | [github] |
+| CCDet-R50   | 640  | 92  |          |      |      |      | [github] |
+| CCDet-R101  | 640  | 63  |          |      |      |      | [github] |
 
 ## CC-Det:
 Main results on COCO.
 
 |  Model      | Size | FPS | FLOPs(B) |  AP  | AP50 | AP75 |  Weight  |
 |-------------|------|-----|----------|------|------|------|----------|
-| CCDet-R18   | 512  | 164 |          |      |      |      | [github] |
+| CCDet-R18   | 640  | 164 |          |      |      |      | [github] |
 | CCDet-R50   | 640  | 92  |          |      |      |      | [github] |
 | CCDet-R101  | 640  | 63  |          |      |      |      | [github] |
 | CCDet-D19   | 640  | 164 |          |      |      |      | [github] |
 | CCDet-D53   | 640  | 52  |          |      |      |      | [github] |
 | CCDet-VGG16 | 640  | 92  |          |      |      |      | [github] |
+
+## CC-Det with Modified CSPDarkNet
+The Backbone of `YOLOX` is deployed in our `CCDet`.
+We also follow its scaling rule to product:
+- `CCDet-S` 
+- `CCDet-M`
+- `CCDet-L`
+- `CCDet-X`
+- `CCDet-T`
+- `CCDet-N`
+
+Main results on COCO.
+
+|  Model      | Size | FPS | FLOPs(B) |  AP  | AP50 | AP75 |  Weight  |
+|-------------|------|-----|----------|------|------|------|----------|
 | CCDet-S     | 640  |     |          |      |      |      | [github] |
 | CCDet-M     | 640  |     |          |      |      |      | [github] |
 | CCDet-L     | 640  |     |          |      |      |      | [github] |
