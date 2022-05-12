@@ -14,7 +14,7 @@ d_config = {
         'pixel_std': [58.395, 57.12, 57.375],
         'format': 'RGB',
         'mosaic_prob': 0.5,
-        'mixup_prob': 0.5,
+        'mixup_prob': 0.1,
         'transforms': [{'name': 'DistortTransform',
                         'hue': 0.1,
                         'saturation': 1.5,

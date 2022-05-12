@@ -7,12 +7,15 @@ from numpy import random
 import torch
 import torch.backends.cudnn as cudnn
 
+from config import build_config
+from evaluator.utils import TestTimeAugmentation
+
 from dataset.voc import VOCDetection, VOC_CLASSES
 from dataset.coco import COCODataset, coco_class_index, coco_class_labels
 from dataset.widerface import WIDERFaceDetection
 from dataset.crowdhuman import CrowdHumanDetection
-from dataset.transforms import ValTransforms
-from utils.misc import TestTimeAugmentation
+from dataset.utils.transforms import ValTransforms
+from utils.misc import load_weight
 
 from models.build import build_model
 
@@ -29,18 +32,14 @@ parser.add_argument('--cuda', action='store_true', default=False,
                     help='use cuda.')
 parser.add_argument('--save_folder', default='det_results/', type=str,
                     help='Dir to save results')
-parser.add_argument('-dist', '--distributed', action='store_true', default=False,
-                help='distributed training')
-parser.add_argument('--local_rank', type=int, default=0, 
-                    help='local_rank')
+
+# dataset
+parser.add_argument('-d', '--dataset', default='voc',
+                    help='voc, coco.')
 
 # model
 parser.add_argument('-v', '--version', default='ccdet',
                     help='ccdet')
-parser.add_argument('--stride', type=int, default=4, 
-                    help='output stride')
-parser.add_argument('-bk', '--backbone', default='r18',
-                    help='r18, r50, r101')
 parser.add_argument('--weight', default='weight/',
                     type=str, help='Trained state_dict file path to open')
 parser.add_argument('--nms_thresh', default=0.45, type=float,
@@ -50,11 +49,6 @@ parser.add_argument('-nms', '--use_nms', action='store_true', default=False,
 parser.add_argument('--topk', default=100, type=int,
                     help='topk prediction')
                     
-# dataset
-parser.add_argument('--root', default='/mnt/share/ssd2/dataset',
-                    help='data root')
-parser.add_argument('-d', '--dataset', default='coco',
-                    help='coco.')
 # TTA
 parser.add_argument('-tta', '--test_aug', action='store_true', default=False,
                     help='use test time augmentation.')
@@ -175,13 +169,18 @@ if __name__ == '__main__':
     else:
         device = torch.device("cpu")
 
+    # config
+    d_cfg, m_cfg = build_config(args.dataset, args.version)
+
     # dataset
     if args.dataset == 'voc':
         print('test on voc ...')
-        data_dir = os.path.join(args.root, 'VOCdevkit')
-        dataset = VOCDetection(root=data_dir, 
-                               image_sets=[('2007', 'test')], 
-                               transform=None)
+        dataset = VOCDetection(
+            img_size=d_cfg['test_size'],
+            data_root=d_cfg['data_root'],
+            image_sets=[('2007', 'test')],
+            is_train=False)
+        
         class_names = VOC_CLASSES
         class_indexs = None
         num_classes = 20
@@ -226,30 +225,47 @@ if __name__ == '__main__':
         class_indexs = None
         num_classes = 1
 
+    np.random.seed(0)
     class_colors = [(np.random.randint(255),
                      np.random.randint(255),
                      np.random.randint(255)) for _ in range(num_classes)]
 
-    # load model
-    model = build_model(args, device, num_classes, local_rank=0, train=False)
-                         
-    model.load_state_dict(torch.load(args.weight, map_location=device), strict=False)
-    model = model.to(device).eval()
-    print('Finished loading model!')
+    # build model
+    model = build_model(
+        cfg=m_cfg,
+        device=device,
+        img_size=d_cfg['test_size'],
+        num_classes=num_classes,
+        is_train=False,
+        use_nms=args.use_nms
+        )
+
+    # load trained weight
+    model = load_weight(device=device, 
+                        model=model, 
+                        path_to_ckpt=args.weight)
 
     test_aug = TestTimeAugmentation(num_classes=num_classes,
                                     nms_thresh=ta_nms,
                                     scale_range=scale_range) if args.test_aug else None
 
+    # transform
+    transform = ValTransforms(
+        img_size=d_cfg['test_size'],
+        format=d_cfg['format'],
+        pixel_mean=d_cfg['pixel_mean'],
+        pixel_std=d_cfg['pixel_std']
+        )
+
     # test
-    test(net=model, 
-        device=device, 
-        testset=dataset,
-        transform=ValTransforms(args.img_size),
-        vis_thresh=args.visual_threshold,
-        class_colors=class_colors,
-        class_names=class_names,
-        class_indexs=class_indexs,
-        show=args.show,
-        test_aug=test_aug,
-        dataset=args.dataset)
+    test(model=model, 
+         device=device, 
+         testset=dataset,
+         transform=transform,
+         vis_thresh=args.visual_threshold,
+         class_colors=class_colors,
+         class_names=class_names,
+         class_indexs=class_indexs,
+         show=args.show,
+         test_aug=test_aug,
+         dataset=args.dataset)
