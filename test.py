@@ -57,26 +57,36 @@ args = parser.parse_args()
 
 
 
-def plot_bbox_labels(img, bbox, label=None, cls_color=None, text_scale=0.4):
+def plot_bbox_labels(image, bbox, label=None, cls_color=None, text_scale=0.4):
     x1, y1, x2, y2 = bbox
     x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
     t_size = cv2.getTextSize(label, 0, fontScale=1, thickness=2)[0]
     # plot bbox
-    cv2.rectangle(img, (x1, y1), (x2, y2), cls_color, 2)
+    cv2.rectangle(image, (x1, y1), (x2, y2), cls_color, 2)
     
     if label is not None:
         # plot title bbox
-        cv2.rectangle(img, (x1, y1-t_size[1]), (int(x1 + t_size[0] * text_scale), y1), cls_color, -1)
+        cv2.rectangle(
+            image, 
+            (x1, y1-t_size[1]), 
+            (int(x1 + t_size[0] * text_scale), y1), 
+            cls_color, -1
+            )
         # put the test on the title bbox
-        cv2.putText(img, label, (int(x1), int(y1 - 5)), 0, text_scale, (0, 0, 0), 1, lineType=cv2.LINE_AA)
+        cv2.putText(
+            image, label, 
+            (int(x1), int(y1 - 5)), 0, 
+            text_scale, (0, 0, 0), 1, 
+            lineType=cv2.LINE_AA
+            )
 
-    return img
+    return image
 
 
-def visualize(img, 
+def visualize(image, 
               bboxes, 
               scores, 
-              cls_inds, 
+              labels, 
               vis_thresh, 
               class_colors, 
               class_names, 
@@ -86,10 +96,10 @@ def visualize(img,
     for i, bbox in enumerate(bboxes):
         if scores[i] > vis_thresh:
             if dataset == 'coco-val' or dataset == 'coco-test':
-                cls_color = class_colors[int(cls_inds[i])]
-                cls_id = class_indexs[int(cls_inds[i])]
+                cls_color = class_colors[int(labels[i])]
+                cls_id = class_indexs[int(labels[i])]
             else:
-                cls_id = int(cls_inds[i])
+                cls_id = int(labels[i])
                 cls_color = class_colors[cls_id]
                 
             if len(class_names) > 1:
@@ -97,12 +107,15 @@ def visualize(img,
             else:
                 cls_color = [255, 0, 0]
                 mess = None
-            img = plot_bbox_labels(img, bbox, mess, cls_color, text_scale=ts)
+            image = plot_bbox_labels(
+                image, bbox, mess, 
+                cls_color, text_scale=ts
+                )
 
-    return img
+    return image
         
 
-def test(net, 
+def test(model, 
          device, 
          testset,
          transform, 
@@ -130,10 +143,10 @@ def test(net,
         # forward
         # test augmentation:
         if test_aug is not None:
-            bboxes, scores, cls_inds = test_aug(x, net)
+            scores, labels, bboxes = test_aug(x, model)
         else:
             # inference
-            bboxes, scores, cls_inds = net(x)
+            scores, labels, bboxes = model(x)
         print("detection time used ", time.time() - t0, "s")
         
         # scale each detection back up to the image
@@ -142,16 +155,17 @@ def test(net,
         bboxes *= scale
 
         # vis detection
-        img_processed = visualize(img=img,
-                            bboxes=bboxes,
-                            scores=scores,
-                            cls_inds=cls_inds,
-                            vis_thresh=vis_thresh,
-                            class_colors=class_colors,
-                            class_names=class_names,
-                            class_indexs=class_indexs,
-                            dataset=dataset
-                            )
+        img_processed = visualize(
+            img=img,
+            bboxes=bboxes,
+            scores=scores,
+            labels=labels,
+            vis_thresh=vis_thresh,
+            class_colors=class_colors,
+            class_names=class_names,
+            class_indexs=class_indexs,
+            dataset=dataset
+            )
         if show:
             cv2.imshow('detection', img_processed)
             cv2.waitKey(0)
