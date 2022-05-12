@@ -35,7 +35,7 @@ Main results on VOC.
 
 |  Model      | Size | FPS | Param(M) | FLOPs(B) | AP50 |  Weight  |
 |-------------|------|-----|----------|----------|------|----------|
-| CCDet-R18   | 640  | 164 |  20      |  24      | 81.0 | [github] |
+| CCDet-R18   | 640  | 164 |  20      |  24      | 81.0 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r18_81.0.pth) |
 | CCDet-R50   | 640  | 92  |  34      |  44      |      | [github] |
 | CCDet-R101  | 640  | 63  |          |          |      | [github] |
 
