@@ -49,30 +49,23 @@ class Criterion(object):
         return loss
 
 
-    def loss_bboxes(self, pred_box, tgt_box, num_targets):
-        gious = get_ious(pred_box,
+    def loss_bboxes(self, pred_box, tgt_box, num_bboxes):
+        ious = get_ious(pred_box,
                          tgt_box,
                          box_mode="xyxy",
                          iou_type='giou')
 
-        loss = (1.0 - gious).sum() / num_targets
-
-        # comput iou for iou-awareness
-        with torch.no_grad():
-            ious = get_ious(pred_box.clone().detach(),
-                            tgt_box,
-                            box_mode="xyxy",
-                            iou_type='iou')
+        loss = (1.0 - ious).sum() / num_bboxes
 
         return loss, ious
 
 
-    def loss_ious(self, pred_iou, tgt_iou, num_targets):
+    def loss_ious(self, pred_iou, tgt_iou, num_bboxes):
         loss = F.binary_cross_entropy_with_logits(
             pred_iou, tgt_iou, reduction='none'
             )
 
-        loss = loss.sum() / num_targets
+        loss = loss.sum() / num_bboxes
 
         return loss
 
@@ -121,7 +114,7 @@ class Criterion(object):
 
         # iou loss
         matched_pred_iou = pred_iou[foreground_idxs]
-        matched_tgt_iou = ious * gt_bboxes_weights[foreground_idxs]
+        matched_tgt_iou = ious.clone().detach().clamp(0.)
         loss_ious = self.loss_ious(
             matched_pred_iou, 
             matched_tgt_iou, 

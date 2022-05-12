@@ -112,8 +112,7 @@ if __name__ == '__main__':
         device=device,
         img_size=args.img_size,
         num_classes=num_classes,
-        is_train=False,
-        use_nms=args.use_nms
+        is_train=False
         )
 
     # load trained weight

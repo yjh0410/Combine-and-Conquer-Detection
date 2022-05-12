@@ -110,8 +110,7 @@ def train():
         img_size=d_cfg['train_size'],
         num_classes=d_cfg['num_classes'],
         is_train=True,
-        coco_pretrained=args.coco_pretrained,
-        use_nms=False
+        coco_pretrained=args.coco_pretrained
         )
     model = model.to(device).train()
 

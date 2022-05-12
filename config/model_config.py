@@ -622,14 +622,14 @@ m_config = {
         'fpn_idx': ['layer2', 'layer3', 'layer4'],
         'fpn_act': 'silu',
         'fpn_norm': 'BN',
-        'fpn_dw': False,
+        'fpn_dw': True,
         # head
         'head': 'decoupled_head',
         'head_k': 3,
         'head_dim': 32,
         'head_act': 'silu',
         'head_norm': 'BN',
-        'head_dw': False,
+        'head_dw': True,
         'num_cls_layers': 1,
         'num_reg_layers': 1,
         # post-process

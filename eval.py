@@ -26,8 +26,6 @@ def parse_args():
                         help='ccdet')
     parser.add_argument('--weight', default='weight/',
                         type=str, help='Trained state_dict file path to open')
-    parser.add_argument('-nms', '--use_nms', action='store_true', default=False,
-                        help='use nms.')
 
     # dataset
     parser.add_argument('--root', default='/mnt/share/ssd2/dataset',
@@ -108,8 +106,7 @@ if __name__ == '__main__':
         device=device,
         img_size=d_cfg['test_size'],
         num_classes=d_cfg['num_classes'],
-        is_train=False,
-        use_nms=args.use_nms
+        is_train=False
         )
 
     # load weight

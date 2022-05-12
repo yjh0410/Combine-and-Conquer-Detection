@@ -42,12 +42,6 @@ def parse_args():
                         help='ccdet')
     parser.add_argument('--weight', default='weight/',
                         type=str, help='Trained state_dict file path to open')
-    parser.add_argument('--nms_thresh', default=0.45, type=float,
-                        help='NMS threshold')
-    parser.add_argument('-nms', '--use_nms', action='store_true', default=False,
-                        help='use nms.')
-    parser.add_argument('--topk', default=100, type=int,
-                        help='topk prediction')
                         
     # TTA
     parser.add_argument('-tta', '--test_aug', action='store_true', default=False,
@@ -247,8 +241,7 @@ if __name__ == '__main__':
         device=device,
         img_size=d_cfg['test_size'],
         num_classes=num_classes,
-        is_train=False,
-        use_nms=args.use_nms
+        is_train=False
         )
 
     # load trained weight

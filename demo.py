@@ -36,8 +36,6 @@ def parse_args():
                         help='baseline.')
     parser.add_argument('--weight', default='weights/',
                         type=str, help='Trained state_dict file path to open')
-    parser.add_argument('-nms', '--use_nms', action='store_true', default=False,
-                        help='use nms.')
     
     return parser.parse_args()
                     
@@ -227,8 +225,7 @@ def run():
         device=device,
         img_size=args.img_size,
         num_classes=80,
-        is_train=False,
-        use_nms=args.use_nms
+        is_train=False
         )
 
     # load trained weight

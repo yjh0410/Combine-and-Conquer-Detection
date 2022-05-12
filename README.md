@@ -33,11 +33,11 @@ PyTorch >= 1.9.1 and Torchvision >= 0.10.1
 ## CC-Det:
 Main results on VOC.
 
-|  Model      | Size | FPS | FLOPs(B) |  AP  | AP50 | AP75 |  Weight  |
-|-------------|------|-----|----------|------|------|------|----------|
-| CCDet-R18   | 640  | 164 |          |      |      |      | [github] |
-| CCDet-R50   | 640  | 92  |          |      |      |      | [github] |
-| CCDet-R101  | 640  | 63  |          |      |      |      | [github] |
+|  Model      | Size | FPS | Param(M) | FLOPs(B) | AP50 |  Weight  |
+|-------------|------|-----|----------|----------|------|----------|
+| CCDet-R18   | 640  | 164 |  20      |  24      | 81.0 | [github] |
+| CCDet-R50   | 640  | 92  |  34      |  44      |      | [github] |
+| CCDet-R101  | 640  | 63  |          |          |      | [github] |
 
 ## CC-Det:
 Main results on COCO.

@@ -22,8 +22,7 @@ class CCDet(nn.Module):
                  num_classes=20,
                  topk=100,
                  nms_thresh = 0.6,
-                 trainable=False,
-                 use_nms=False):
+                 trainable=False):
         super(CCDet, self).__init__()
         self.cfg = cfg
         self.device = device
@@ -35,7 +34,6 @@ class CCDet(nn.Module):
         self.trainable = trainable
         self.nms_thresh = nms_thresh
         self.topk_candidate = topk
-        self.use_nms = use_nms
 
         # generate anchors
         self.anchors = self.generate_anchors(img_size)
@@ -100,7 +98,7 @@ class CCDet(nn.Module):
         iou_pred = self.iou_pred(reg_feat)
         
         # scores
-        scores = hmp_pred.sigmoid() * iou_pred.sigmoid()
+        scores = torch.sqrt(hmp_pred.sigmoid() * iou_pred.sigmoid())
 
         # simple nms
         scores_max = F.max_pool2d(
@@ -129,22 +127,21 @@ class CCDet(nn.Module):
         labels = topk_labels.cpu().numpy()    # [N,]
         bboxes = topk_bboxes.cpu().numpy()    # [N, 4]
 
-        if self.use_nms:
-            # nms
-            keep = np.zeros(len(bboxes), dtype=np.int)
-            for i in range(self.num_classes):
-                inds = np.where(labels == i)[0]
-                if len(inds) == 0:
-                    continue
-                c_bboxes = bboxes[inds]
-                c_scores = scores[inds]
-                c_keep = self.nms(c_bboxes, c_scores)
-                keep[inds[c_keep]] = 1
+        # nms
+        keep = np.zeros(len(bboxes), dtype=np.int)
+        for i in range(self.num_classes):
+            inds = np.where(labels == i)[0]
+            if len(inds) == 0:
+                continue
+            c_bboxes = bboxes[inds]
+            c_scores = scores[inds]
+            c_keep = self.nms(c_bboxes, c_scores)
+            keep[inds[c_keep]] = 1
 
-            keep = np.where(keep > 0)
-            bboxes = bboxes[keep]
-            scores = scores[keep]
-            labels = labels[keep]
+        keep = np.where(keep > 0)
+        bboxes = bboxes[keep]
+        scores = scores[keep]
+        labels = labels[keep]
 
         return scores, labels, bboxes
 

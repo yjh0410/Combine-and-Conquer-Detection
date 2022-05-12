@@ -8,8 +8,7 @@ def build_model(cfg,
                 img_size, 
                 num_classes, 
                 is_train=False,
-                coco_pretrained=None,
-                use_nms=False):
+                coco_pretrained=None):
     # build CC-Det    
     model = CCDet(
         cfg=cfg,
@@ -18,8 +17,7 @@ def build_model(cfg,
         num_classes=num_classes,
         topk=cfg['train_topk'] if is_train else cfg['test_topk'],
         nms_thresh=cfg['nms_thresh'],
-        trainable=is_train,
-        use_nms=use_nms) 
+        trainable=is_train) 
 
     # Load COCO pretrained weight
     if coco_pretrained is not None:
