@@ -16,7 +16,7 @@ from models.build import build_model
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='CCDet')
+    parser = argparse.ArgumentParser(description='Combine-and-Conquer Object Detection')
     # Model
     parser.add_argument('-v', '--version', default='ccdet_r18', type=str,
                         help='build ccdet')

@@ -24,7 +24,7 @@ from models.build import build_model
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='CC-Det')
+    parser = argparse.ArgumentParser(description='Combine-and-Conquer Object Detection')
     # basic
     parser.add_argument('--cuda', action='store_true', default=False,
                         help='use cuda.')

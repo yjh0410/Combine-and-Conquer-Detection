@@ -1,15 +1,6 @@
 # Combine-and-Conquer Object Detector
 A Simple Baseline for Object Detection based on CenterNet with ResNet backbone.
 
-## Weight
-You can download all my models from my BaiDuYunDisk:
-
-Link: https://pan.baidu.com/s/1czV66RfyYqdcIB8YoJmsNw 
-
-Password: 8s7e
-
-I will upload them to Google Drive.
-
 # Requirements
 - We recommend you to use Anaconda to create a conda environment:
 ```Shell
@@ -106,44 +97,52 @@ You can change the configurations of `train_ddp.sh`, according to your own situa
 
 # Test
 ```Shell
-python test.py -d coco \
-               --cuda \
-               -v yolo_s \
-               --img_size 640 \
-               --weight path/to/weight \
-               --root path/to/dataset/ \
-               --show
+python test.py -d coco --cuda -v ccdet_r18 -size 640 --weight path/to/weight --show
+                  voc            ccdet_r50
+                  ...            ...
 ```
+
+
+# Eval
+```Shell
+python eval.py -d coco-val --cuda -v ccdet_r18 -size 640 --weight path/to/weight
+                  voc                ccdet_r50
+                  ...                ...
+```
+
 
 # Demo
-I have provide some images in `data/demo/images/`, so you can run following command to run a demo:
+I have provide some images in `data/demo/images/`, 
+so you can run following command to run a demo:
 
 ```Shell
-python demo.py --mode image \
+python demo.py --cuda \
+               --mode image \
                --path_to_img data/demo/images/ \
-               -v yolo_s \
-               --img_size 640 \
-               --cuda \
+               -v ccdet_r18 \
+               -size 640 \
                --weight path/to/weight
 ```
 
-If you want run a demo of streaming video detection, you need to set `--mode` to `video`, and give the path to video `--path_to_vid`。
+If you want run a demo of streaming video detection, 
+you need to set `--mode` to `video`, and give the path to video `--path_to_vid`。
 
 ```Shell
-python demo.py --mode video \
-               --path_to_img data/demo/videos/your_video \
-               -v yolo_s \
-               --img_size 640 \
-               --cuda \
+python demo.py --cuda \
+               --mode video \
+               --path_to_img data/demo/videos/video_file \
+               -v ccdet_r18 \
+               -size 640 \
                --weight path/to/weight
 ```
 
-If you want run video detection with your camera, you need to set `--mode` to `camera`。
+If you want run video detection with your camera, 
+you need to set `--mode` to `camera`。
 
 ```Shell
-python demo.py --mode camera \
-               -v yolo_s \
-               --img_size 640 \
-               --cuda \
+python demo.py --cuda \
+               --mode camera \
+               -v ccdet_r18 \
+               -size 640 \
                --weight path/to/weight
 ```

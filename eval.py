@@ -104,7 +104,7 @@ if __name__ == '__main__':
     model = build_model(
         cfg=m_cfg,
         device=device,
-        img_size=d_cfg['test_size'],
+        img_size=args.img_size,
         num_classes=d_cfg['num_classes'],
         is_train=False
         )
@@ -118,7 +118,7 @@ if __name__ == '__main__':
     
     # transform
     transform = ValTransforms(
-        img_size=d_cfg['test_size'],
+        img_size=args.img_size,
         format=d_cfg['format'],
         pixel_mean=d_cfg['pixel_mean'],
         pixel_std=d_cfg['pixel_std']

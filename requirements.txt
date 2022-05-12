@@ -1,0 +1,17 @@
+torch
+
+torchvision
+
+opencv-python
+
+thop
+
+tqdm
+
+scipy
+
+matplotlib
+
+numpy
+
+pycocotools
