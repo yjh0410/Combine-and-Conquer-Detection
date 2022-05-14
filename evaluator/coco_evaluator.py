@@ -22,7 +22,6 @@ class COCOEvaluator():
     def __init__(self, 
                  data_root, 
                  device, 
-                 img_size, 
                  testset=False, 
                  transform=None,
                  test_aug=False):
@@ -45,13 +44,11 @@ class COCOEvaluator():
             image_set='val2017'
 
         self.dataset = COCODataset(data_root=data_root,
-                                   img_size=img_size,
                                    image_set=image_set,
                                    transform=None,
                                    mosaic_prob=0.,
                                    mixup_prob=0.)
 
-        self.img_size = img_size
         self.transform = transform
         if test_aug:
             print('Use Test Augmentation Trick ...')
