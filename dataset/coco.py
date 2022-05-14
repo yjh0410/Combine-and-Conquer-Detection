@@ -271,7 +271,7 @@ if __name__ == "__main__":
     np.random.seed(0)
     class_colors = [(np.random.randint(255),
                      np.random.randint(255),
-                     np.random.randint(255)) for _ in range(20)]
+                     np.random.randint(255)) for _ in range(80)]
     print('Data length: ', len(dataset))
 
     for i in range(1000):
@@ -281,7 +281,6 @@ if __name__ == "__main__":
         # to BGR format
         if format == 'RGB':
             # denormalize
-            print(image)
             image = image * pixel_std + pixel_mean
             image = image[:, :, (2, 1, 0)].astype(np.uint8)
         elif format == 'BGR':
