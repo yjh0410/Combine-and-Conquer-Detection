@@ -193,11 +193,10 @@ if __name__ == '__main__':
 
     elif args.dataset == 'coco':
         print('test on coco-val ...')
-        data_dir = os.path.join(args.root, 'COCO')
         dataset = COCODataset(
-                    data_dir=data_dir,
-                    image_set='val2017',
-                    img_size=args.img_size)
+                    img_size=d_cfg['test_size'],
+                    data_root=d_cfg['data_root'],
+                    image_set='val2017')
         class_names = coco_class_labels
         class_indexs = coco_class_index
         num_classes = 80
