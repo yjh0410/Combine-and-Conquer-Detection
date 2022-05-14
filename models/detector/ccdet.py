@@ -100,7 +100,7 @@ class CCDet(nn.Module):
         # simple nms
         hmp_pred = hmp_pred.sigmoid()
         hmp_max = F.max_pool2d(
-            scores, kernel_size=self.nms_kernel,
+            hmp_pred, kernel_size=self.nms_kernel,
             padding=self.nms_kernel//2, stride=1
             )
         keep = (hmp_max == hmp_pred).float()
