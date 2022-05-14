@@ -97,17 +97,16 @@ class CCDet(nn.Module):
         reg_pred = self.reg_pred(reg_feat)
         iou_pred = self.iou_pred(reg_feat)
         
+        # scores
+        scores = torch.sqrt(hmp_pred.sigmoid() * iou_pred.sigmoid())
+
         # simple nms
-        hmp_pred = hmp_pred.sigmoid()
-        hmp_max = F.max_pool2d(
-            hmp_pred, kernel_size=self.nms_kernel,
+        scores_max = F.max_pool2d(
+            scores, kernel_size=self.nms_kernel,
             padding=self.nms_kernel//2, stride=1
             )
-        keep = (hmp_max == hmp_pred).float()
-        hmp_pred *= keep
-
-        # scores
-        scores = torch.sqrt(hmp_pred * iou_pred.sigmoid())
+        keep = (scores_max == scores).float()
+        scores *= keep
 
         # topk: [B, N]
         topk_scores, topk_inds, topk_labels = self.topk(scores)
@@ -128,21 +127,21 @@ class CCDet(nn.Module):
         labels = topk_labels.cpu().numpy()    # [N,]
         bboxes = topk_bboxes.cpu().numpy()    # [N, 4]
 
-        # # nms
-        # keep = np.zeros(len(bboxes), dtype=np.int)
-        # for i in range(self.num_classes):
-        #     inds = np.where(labels == i)[0]
-        #     if len(inds) == 0:
-        #         continue
-        #     c_bboxes = bboxes[inds]
-        #     c_scores = scores[inds]
-        #     c_keep = self.nms(c_bboxes, c_scores)
-        #     keep[inds[c_keep]] = 1
+        # nms
+        keep = np.zeros(len(bboxes), dtype=np.int)
+        for i in range(self.num_classes):
+            inds = np.where(labels == i)[0]
+            if len(inds) == 0:
+                continue
+            c_bboxes = bboxes[inds]
+            c_scores = scores[inds]
+            c_keep = self.nms(c_bboxes, c_scores)
+            keep[inds[c_keep]] = 1
 
-        # keep = np.where(keep > 0)
-        # bboxes = bboxes[keep]
-        # scores = scores[keep]
-        # labels = labels[keep]
+        keep = np.where(keep > 0)
+        bboxes = bboxes[keep]
+        scores = scores[keep]
+        labels = labels[keep]
 
         return scores, labels, bboxes
 
