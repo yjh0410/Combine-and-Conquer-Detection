@@ -99,15 +99,7 @@ class COCODataset(Dataset):
 
         if self.is_train:
             # create heatmap
-            (
-                gt_heatmaps, 
-                gt_bboxes, 
-                gt_bboxes_weights
-                ) = self.gt_creator(self.img_size, target)
-            target = {
-                'heatmaps': gt_heatmaps,
-                'gt_bboxes': gt_bboxes,
-                'gt_bboxes_weights': gt_bboxes_weights}
+            target = self.gt_creator(self.img_size, target)
         
         return image, target
 
