@@ -83,9 +83,9 @@ class COCOEvaluator():
             if index % 500 == 0:
                 print('[Eval: %d / %d]'%(index, num_images))
 
-            img, id_ = self.dataset.pull_image(index)  # load a batch
-            img_h, img_w = img.shape[:2]
-            scale = np.array([[img_w, img_h, img_w, img_h]])
+            img, id_ = self.dataset.pull_image(index)
+            orig_h, orig_w = img.shape[:2]
+            orig_size = np.array([[orig_w, orig_h, orig_w, orig_h]])
 
             # to tensor
             x = self.transform(img)[0]
@@ -101,7 +101,7 @@ class COCOEvaluator():
                     # inference
                     scores, labels, bboxes = model(x)
                 # rescale
-                bboxes *= scale
+                bboxes *= orig_size
             for i, box in enumerate(bboxes):
                 x1 = float(box[0])
                 y1 = float(box[1])
@@ -123,25 +123,26 @@ class COCOEvaluator():
             cocoGt = self.dataset.coco
             # workaround: temporarily write data to json file because pycocotools can't process dict in py36.
             if self.testset:
-                json.dump(data_dict, open('coco_2017.json', 'w'))
-                cocoDt = cocoGt.loadRes('coco_2017.json')
+                json.dump(data_dict, open('coco_test-dev.json', 'w'))
+                cocoDt = cocoGt.loadRes('coco_test-dev.json')
+                return -1, -1
             else:
                 _, tmp = tempfile.mkstemp()
                 json.dump(data_dict, open(tmp, 'w'))
                 cocoDt = cocoGt.loadRes(tmp)
-            cocoEval = COCOeval(self.dataset.coco, cocoDt, annType[1])
-            cocoEval.params.imgIds = ids
-            cocoEval.evaluate()
-            cocoEval.accumulate()
-            cocoEval.summarize()
+                cocoEval = COCOeval(self.dataset.coco, cocoDt, annType[1])
+                cocoEval.params.imgIds = ids
+                cocoEval.evaluate()
+                cocoEval.accumulate()
+                cocoEval.summarize()
 
-            ap50_95, ap50 = cocoEval.stats[0], cocoEval.stats[1]
-            print('ap50_95 : ', ap50_95)
-            print('ap50 : ', ap50)
-            self.map = ap50_95
-            self.ap50_95 = ap50_95
-            self.ap50 = ap50
+                ap50_95, ap50 = cocoEval.stats[0], cocoEval.stats[1]
+                print('ap50_95 : ', ap50_95)
+                print('ap50 : ', ap50)
+                self.map = ap50_95
+                self.ap50_95 = ap50_95
+                self.ap50 = ap50
 
-            return ap50, ap50_95
+                return ap50, ap50_95
         else:
-            return -1, -1
+            return 0, 0
