@@ -178,8 +178,7 @@ class COCODataset(Dataset):
             # MixUp
             if random.random() < self.mixup_prob:
                 new_index = np.random.randint(0, len(self.ids))
-                new_img_id = self.ids[new_index]
-                new_image, new_target = self.load_image_target(new_img_id)
+                new_image, new_target = self.load_mosaic(new_index)
 
                 image, target = mixup_augment(image, target, new_image, new_target)
 
@@ -242,6 +241,7 @@ if __name__ == "__main__":
     pixel_mean = [123.675, 116.28, 103.53]
     pixel_std = [58.395, 57.12, 57.375]
     img_size = 640
+    random_size = [320, 416, 480, 512, 544, 640]
     is_train = False
     trans_config = [{'name': 'DistortTransform',
                      'hue': 0.1,
@@ -251,9 +251,11 @@ if __name__ == "__main__":
                     {'name': 'JitterCrop', 'jitter_ratio': 0.3},
                     {'name': 'ToTensor'},
                     {'name': 'Resize'},
-                    {'name': 'Normalize'}]
+                    {'name': 'Normalize'},
+                    {'name': 'PadImage'}]
     transform = TrainTransforms(trans_config=trans_config,
                                 img_size=img_size,
+                                random_size=random_size,
                                 format=format)
 
     dataset = COCODataset(data_root='/mnt/share/ssd2/dataset/COCO', #E:\\python_work\\object_detection\\dataset\\COCO',
