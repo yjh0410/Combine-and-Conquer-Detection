@@ -172,15 +172,6 @@ def train():
         if args.distributed:
             dataloader.batch_sampler.sampler.set_epoch(epoch)            
 
-        best_map = val_one_epoch(
-            args=args, 
-            model=ema.ema if args.ema else model_without_ddp, 
-            evaluator=evaluator,
-            optimizer=optimizer,
-            epoch=epoch,
-            best_map=best_map,
-            path_to_save=path_to_save)
-
         # train one epoch
         if epoch < m_cfg['wp_epoch']:
             # warmup training loop
