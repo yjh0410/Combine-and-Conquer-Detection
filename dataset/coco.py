@@ -242,7 +242,7 @@ if __name__ == "__main__":
     pixel_std = [58.395, 57.12, 57.375]
     img_size = 640
     random_size = [320, 416, 480, 512, 544, 640]
-    is_train = False
+    is_train = True
     trans_config = [{'name': 'DistortTransform',
                      'hue': 0.1,
                      'saturation': 1.5,
