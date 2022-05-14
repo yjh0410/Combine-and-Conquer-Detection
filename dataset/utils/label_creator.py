@@ -67,8 +67,7 @@ class HMPCreator(object):
             # multi positive samples
             for i in range(grid_x - 1, grid_x + 2):
                 for j in range(grid_y - 1, grid_y + 2):
-                    if (j >=0 and j < gt_bboxes.shape[0]) and \
-                        (i >=0 and i < gt_bboxes.shape[1]):
+                    if (j >=y1s and j <= y2s) and (i >=x1s and i <= x2s):
                         gt_bboxes[j, i] = np.array([x1, y1, x2, y2])
                         img_area = (img_h * img_w)
                         box_area = (x2 - x1) * (y2 - y1)
