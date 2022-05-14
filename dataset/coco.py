@@ -165,7 +165,7 @@ class COCODataset(Dataset):
             image_list.append(img_i)
             target_list.append(target_i)
 
-        image, target = mosaic_augment(image_list, target_list, self.img_size, self.affine_params)
+        image, target = mosaic_augment(image_list, target_list, self.img_size)
 
         return image, target
 
@@ -181,8 +181,7 @@ class COCODataset(Dataset):
                 new_img_id = self.ids[new_index]
                 new_image, new_target = self.load_image_target(new_img_id)
 
-                image, target = mixup_augment(image, target, new_image, new_target, 
-                                            self.img_size, self.affine_params['mixup_scale'])
+                image, target = mixup_augment(image, target, new_image, new_target)
 
             # augment
             image, target = self.color_augment(image, target)
@@ -257,7 +256,7 @@ if __name__ == "__main__":
                                 img_size=img_size,
                                 format=format)
 
-    dataset = COCODataset(data_root='E:\\python_work\\object_detection\\dataset\\COCO',
+    dataset = COCODataset(data_root='/mnt/share/ssd2/dataset/COCO', #E:\\python_work\\object_detection\\dataset\\COCO',
                           img_size=img_size,
                           stride=4,
                           image_set='train2017',
