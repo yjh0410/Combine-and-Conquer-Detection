@@ -264,8 +264,8 @@ if __name__ == "__main__":
                           image_set='train2017',
                           transform=transform,
                           color_augment=BaseTransforms(),
-                          mosaic_prob=0.5,
-                          mixup_prob=0.5,
+                          mosaic_prob=0.0,
+                          mixup_prob=0.0,
                           is_train=is_train)
     
     np.random.seed(0)
