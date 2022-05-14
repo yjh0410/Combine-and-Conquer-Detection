@@ -28,7 +28,7 @@ Main results on VOC.
 |-------------|------|-----|----------|----------|------|----------|
 | CCDet-R18   | 640  | 164 |  20      |  24      | 81.0 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r18_81.0.pth) |
 | CCDet-R50   | 640  | 92  |  34      |  44      | 84.0 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r50_84.0.pth) |
-| CCDet-R101  | 640  | 63  |  53      |  74      |      | [github] |
+| CCDet-R101  | 640  | 63  |  53      |  74      | 85.3 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r101_85.3.pth) |
 
 ## CC-Det:
 Main results on COCO.
