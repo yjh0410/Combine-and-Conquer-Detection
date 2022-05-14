@@ -28,7 +28,7 @@ def parse_args():
     # basic
     parser.add_argument('--cuda', action='store_true', default=False,
                         help='use cuda.')
-    parser.add_argument('--num_workers', default=4, type=int, 
+    parser.add_argument('--num_workers', default=10, type=int, 
                         help='Number of workers used in dataloading')
     parser.add_argument('--tfboard', action='store_true', default=False,
                         help='use tensorboard')
