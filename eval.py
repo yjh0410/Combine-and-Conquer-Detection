@@ -128,8 +128,8 @@ if __name__ == '__main__':
     with torch.no_grad():
         if args.dataset == 'voc':
             voc_test(d_cfg, model, device, transform)
-        elif args.dataset == 'coco-val':
-            coco_test(d_cfg, model, device, transform,test=False, test_aug=args.test_aug)
+        elif args.dataset == 'coco':
+            coco_test(d_cfg, model, device, transform, test=False, test_aug=args.test_aug)
         elif args.dataset == 'coco-test':
             coco_test(d_cfg, model, device, transform, test=True, test_aug=args.test_aug)
         elif args.dataset == 'widerface-val':
