@@ -97,16 +97,17 @@ class CCDet(nn.Module):
         reg_pred = self.reg_pred(reg_feat)
         iou_pred = self.iou_pred(reg_feat)
         
-        # scores
-        scores = torch.sqrt(hmp_pred.sigmoid() * iou_pred.sigmoid())
-
         # simple nms
-        scores_max = F.max_pool2d(
+        hmp_pred = hmp_pred.sigmoid()
+        hmp_max = F.max_pool2d(
             scores, kernel_size=self.nms_kernel,
             padding=self.nms_kernel//2, stride=1
             )
-        keep = (scores_max == scores).float()
-        scores *= keep
+        keep = (hmp_max == hmp_pred).float()
+        hmp_pred *= keep
+
+        # scores
+        scores = torch.sqrt(hmp_pred * iou_pred.sigmoid())
 
         # topk: [B, N]
         topk_scores, topk_inds, topk_labels = self.topk(scores)
