@@ -34,10 +34,8 @@ class Criterion(object):
         neg_weights = torch.pow(1.0 - target, 4)
         # pred = torch.max(pred, torch.ones_like(pred) * 1e-12)
 
-        print((1.0 - pred).min())
-        print(torch.log(pred).sum(), torch.log(1.0 - pred).sum(),)
-        pos_loss = torch.log(pred) * torch.pow(1 - pred, 2) * pos_inds
-        neg_loss = torch.log(1 - pred) * torch.pow(pred, 2) * neg_weights * neg_inds
+        pos_loss = torch.log(pred + 1e-10) * torch.pow(1 - pred, 2) * pos_inds
+        neg_loss = torch.log(1 - pred  + 1e-10) * torch.pow(pred, 2) * neg_weights * neg_inds
 
         num_pos  = pos_inds.float().sum()
         pos_loss = pos_loss.sum()
