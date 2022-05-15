@@ -99,7 +99,8 @@ class Criterion(object):
         num_foreground = torch.clamp(num_foreground / get_world_size(), min=1).item()
 
         # heatmap loss
-        loss_hmp = self.loss_heatmap(pred_hmp, gt_heatmaps)
+        with torch.cuda.amp.autocast(enabled=False):
+            loss_hmp = self.loss_heatmap(pred_hmp, gt_heatmaps)
 
         # bboxes loss
         matched_pred_delta = pred_box[foreground_idxs]
