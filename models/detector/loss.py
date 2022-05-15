@@ -26,7 +26,7 @@ class Criterion(object):
         focal loss used for CenterNet, modified from focal loss.
         but this function is a numeric stable version implementation.
         """
-        pred = pred.sigmoid().clamp(min=1e-4, max=1.0 - 1e-4)
+        pred = pred.sigmoid().clamp(min=1e-3, max=1.0 - 1e-3)
 
         pos_inds = target.eq(1).float()
         neg_inds = target.lt(1).float()
@@ -99,8 +99,7 @@ class Criterion(object):
         num_foreground = torch.clamp(num_foreground / get_world_size(), min=1).item()
 
         # heatmap loss
-        with torch.cuda.amp.autocast(enabled=False):
-            loss_hmp = self.loss_heatmap(pred_hmp, gt_heatmaps)
+        loss_hmp = self.loss_heatmap(pred_hmp, gt_heatmaps)
 
         # bboxes loss
         matched_pred_delta = pred_box[foreground_idxs]
