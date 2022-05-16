@@ -27,7 +27,7 @@ class Criterion(object):
         but this function is a numeric stable version implementation.
         """
         pred = pred.sigmoid().clamp(min=1e-4, max=1.0 - 1e-4)
-        print(pred.min(), pred.max(), 1e-4, 1.0-1e-4)
+        # print(pred.min(), pred.max(), 1e-4, 1.0-1e-4)
 
         pos_inds = target.eq(1).float()
         neg_inds = target.lt(1).float()
