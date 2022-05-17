@@ -20,8 +20,8 @@ PyTorch >= 1.9.1 and Torchvision >= 0.10.1
 
 
 # Experiments
-
-## CC-Det:
+## Object Detection
+### CCDet:
 Main results on VOC.
 
 |  Model      | Size | FPS | Param(M) | FLOPs(B) | AP50 |  Weight  |
@@ -30,7 +30,7 @@ Main results on VOC.
 | CCDet-R50   | 640  | 92  |  34      |  44      | 84.0 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r50_84.0.pth) |
 | CCDet-R101  | 640  | 63  |  53      |  74      | 85.3 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r101_85.3.pth) |
 
-## CC-Det:
+### CCDet:
 Main results on COCO.
 
 |  Model      | Size | FPS | Param(M) | FLOPs(B) |  AP  | AP50 |  Weight  |
@@ -42,7 +42,7 @@ Main results on COCO.
 | CCDet-D53   | 640  |     |          |          |      |      | [github] |
 | CCDet-VGG16 | 640  |     |          |          |      |      | [github] |
 
-## CC-Det with Modified CSPDarkNet
+### CCDet with Modified CSPDarkNet
 The Backbone of `YOLOX` is deployed in our `CCDet`.
 We also follow its scaling rule to product:
 - `CCDet-S` 
@@ -63,15 +63,30 @@ Main results on COCO.
 | CCDet-T     | 640  |     |          |          |      |      | [github] |
 | CCDet-N     | 640  |     |          |          |      |      | [github] |
 
-## CC-Det-E:
+### CCDet-E:
 Main results on COCO.
 
-|  Model      | Size | FPS | Param(M) | FLOPs(B) |  AP  | AP50 |  Weight  |
-|-------------|------|-----|----------|----------|------|------|----------|
-| CCDet-E-R18 | 640  |     |          |          |      |      | [github] |
-| CCDet-E-R50 | 640  |     |          |          |      |      | [github] |
+|  Model       | Size | FPS | Param(M) | FLOPs(B) |  AP  | AP50 |  Weight  |
+|--------------|------|-----|----------|----------|------|------|----------|
+| CCDet-E-R50  | 640  |     |          |          |      |      | [github] |
+| CCDet-E-R101 | 640  |     |          |          |      |      | [github] |
 
-</table></tbody>
+## Face Detection
+### CCDet
+Main results on WiderFace.
+
+|  Model      | Size | FPS | AP50 |  Weight  |
+|-------------|------|-----|------|----------|
+| CCDet-R50   | 640  |     |      | [github] |
+
+## Person Detection
+### CCDet
+Main results on CrowdHuman.
+
+|  Model      | Size | FPS | AP   | MR-2 | JI   |  Weight  |
+|-------------|------|-----|------|------|------|----------|
+| CCDet-R50   | 640  |     |      |      |      | [github] |
+
 
 # Dataset
 ## MSCOCO Dataset
