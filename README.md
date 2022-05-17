@@ -35,7 +35,7 @@ Main results on COCO.
 
 |  Model      | Size | FPS | Param(M) | FLOPs(B) |  AP  | AP50 |  Weight  |
 |-------------|------|-----|----------|----------|------|------|----------|
-| CCDet-R18   | 640  |     |          |          |      |      | [github] |
+| CCDet-R18   | 640  |     |   20     |     24   | 33.0 | 53.6 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r18_33.0_53.6.pth) |
 | CCDet-R50   | 640  |     |          |          |      |      | [github] |
 | CCDet-R101  | 640  |     |          |          |      |      | [github] |
 | CCDet-D19   | 640  |     |          |          |      |      | [github] |
