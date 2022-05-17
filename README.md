@@ -1,5 +1,5 @@
 # Combine-and-Conquer Object Detector
-A Simple Baseline for Object Detection based on CenterNet with ResNet backbone.
+A Simple Baseline for Object Detection.
 
 # Requirements
 - We recommend you to use Anaconda to create a conda environment:
