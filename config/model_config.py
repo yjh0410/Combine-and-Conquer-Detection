@@ -331,7 +331,7 @@ m_config = {
         'width': 0.5,
         'depth': 0.33,
         # neck
-        'neck_name': None,
+        'neck_name': 'DE',
         'dilations': [2, 4, 6, 8],
         'expand_ratio': 0.5,
         'neck_act': 'silu',
@@ -387,7 +387,7 @@ m_config = {
         'width': 0.75,
         'depth': 0.67,
         # neck
-        'neck_name': None,
+        'neck_name': 'DE',
         'dilations': [2, 4, 6, 8],
         'expand_ratio': 0.5,
         'neck_act': 'silu',
@@ -443,7 +443,7 @@ m_config = {
         'width': 1.0,
         'depth': 1.0,
         # neck
-        'neck_name': None,
+        'neck_name': 'DE',
         'dilations': [2, 4, 6, 8],
         'expand_ratio': 0.5,
         'neck_act': 'silu',
@@ -499,7 +499,7 @@ m_config = {
         'width': 1.25,
         'depth': 1.33,
         # neck
-        'neck_name': None,
+        'neck_name': 'DE',
         'dilations': [2, 4, 6, 8],
         'expand_ratio': 0.5,
         'neck_act': 'silu',
@@ -555,7 +555,7 @@ m_config = {
         'width': 0.25,
         'depth': 0.33,
         # neck
-        'neck_name': None,
+        'neck_name': 'DE',
         'dilations': [2, 4, 6, 8],
         'expand_ratio': 0.5,
         'neck_act': 'silu',
@@ -611,7 +611,7 @@ m_config = {
         'width': 0.25,
         'depth': 0.33,
         # neck
-        'neck_name': None,
+        'neck_name': 'DE',
         'dilations': [2, 4, 6, 8],
         'expand_ratio': 0.5,
         'neck_act': 'silu',
