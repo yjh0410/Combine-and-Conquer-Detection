@@ -321,6 +321,7 @@ m_config = {
         'wp_epoch': 1,
     },
     
+    # CCDet with Modified CSPDarkNet
     'ccdet_s': {
         # backbone
         'backbone': 'yolox_backbone',
@@ -338,7 +339,7 @@ m_config = {
         'neck_norm': 'BN',
         # fpn
         'fpn_name': 'basicfpn',
-        'fpn_dims': [64, 128, 256, 256],
+        'fpn_dims': [64, 128, 256, 512],
         'fpn_idx': ['layer1', 'layer2', 'layer3', 'layer4'],
         'fpn_act': 'silu',
         'fpn_norm': 'BN',
@@ -552,7 +553,7 @@ m_config = {
         'bk_act': 'silu',
         'stride': 8,
         'depthwise': False,
-        'width': 0.25,
+        'width': 0.375,
         'depth': 0.33,
         # neck
         'neck_name': 'DE',
@@ -588,7 +589,7 @@ m_config = {
         # training configuration
         'max_epoch': 200,
         'no_aug_epoch': 15,
-        'batch_size': 64,
+        'batch_size': 1,
         'base_lr': 0.01 / 64.,
         'min_lr_ratio': 0.01,
         # optimizer
@@ -611,14 +612,14 @@ m_config = {
         'width': 0.25,
         'depth': 0.33,
         # neck
-        'neck_name': 'DE',
+        'neck_name': None,
         'dilations': [2, 4, 6, 8],
         'expand_ratio': 0.5,
         'neck_act': 'silu',
         'neck_norm': 'BN',
         # fpn
         'fpn_name': 'basicfpn',
-        'fpn_dims': [32, 64, 128],
+        'fpn_dims': [48, 96, 192],
         'fpn_idx': ['layer2', 'layer3', 'layer4'],
         'fpn_act': 'silu',
         'fpn_norm': 'BN',
@@ -626,7 +627,7 @@ m_config = {
         # head
         'head': 'decoupled_head',
         'head_k': 3,
-        'head_dim': 32,
+        'head_dim': 48,
         'head_act': 'silu',
         'head_norm': 'BN',
         'head_dw': True,

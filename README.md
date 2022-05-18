@@ -56,7 +56,7 @@ Main results on COCO.
 
 |  Model      | Size | FPS | Param(M) | FLOPs(B) |  AP  | AP50 |  Weight  |
 |-------------|------|-----|----------|----------|------|------|----------|
-| CCDet-S     | 640  |     |    7.9   |   12.6   |      |      | [github] |
+| CCDet-S     | 640  |     |    7.4   |   10.7   |      |      | [github] |
 | CCDet-M     | 640  |     |          |          |      |      | [github] |
 | CCDet-L     | 640  |     |          |          |      |      | [github] |
 | CCDet-X     | 640  |     |          |          |      |      | [github] |

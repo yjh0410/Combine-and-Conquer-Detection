@@ -214,25 +214,41 @@ def resnet101(pretrained=False, **kwargs):
 def build_resnet(model_name, pretrained=False):
     if model_name == 'resnet18':
         backbone = resnet18(pretrained=pretrained)
-        feats = [64, 128, 256, 512]
+        feat_dims = {'layer1': 64,
+                     'layer2': 128,
+                     'layer3': 256,
+                     'layer4': 512
+                     }
     elif model_name == 'resnet34':
         backbone = resnet34(pretrained=pretrained)
-        feats = [64, 128, 256, 512]
+        feat_dims = {'layer1': 64,
+                     'layer2': 128,
+                     'layer3': 256,
+                     'layer4': 512
+                     }
     elif model_name == 'resnet50':
         backbone = resnet50(pretrained=pretrained)
-        feats = [256, 512, 1024, 2048]
+        feat_dims = {'layer1': 256,
+                     'layer2': 512,
+                     'layer3': 1024,
+                     'layer4': 2048
+                     }
     elif model_name == 'resnet101':
         backbone = resnet101(pretrained=pretrained)
-        feats = [256, 512, 1024, 2048]
+        feat_dims = {'layer1': 256,
+                     'layer2': 512,
+                     'layer3': 1024,
+                     'layer4': 2048
+                     }
 
-    return backbone, feats
+    return backbone, feat_dims
 
 
 if __name__=='__main__':
     #model = torchvision.models.resnet50()
     print("found ", torch.cuda.device_count(), " GPU(s)")
     device = torch.device("cuda")
-    model = resnet101(detection=True).to(device)
+    model, bk_dims = resnet101(detection=True).to(device)
     print(model)
 
     input = torch.randn(1, 3, 512, 512).to(device)

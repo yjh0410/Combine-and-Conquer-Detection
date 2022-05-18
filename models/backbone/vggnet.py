@@ -117,7 +117,10 @@ def vgg16(pretrained: bool = False, progress: bool = True, **kwargs: Any) -> VGG
 def build_vgg(model_name, pretrained=False):
     if model_name == 'vgg16':
         backbone = vgg16(pretrained=pretrained)
-        feats = [128, 256, 512, 512]
-
-    return backbone, feats
+        feat_dims = {'layer1': 128,
+                     'layer2': 256,
+                     'layer3': 512,
+                     'layer4': 512
+                     }
+    return backbone, feat_dims
 

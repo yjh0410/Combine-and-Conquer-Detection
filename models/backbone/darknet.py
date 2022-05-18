@@ -163,14 +163,16 @@ class DarkNet_53(nn.Module):
 
 # Build DarkNet
 def build_darknet(model_name='darknet_19', pretrained=False):
-    # build backbone
+    # backbone
     if model_name == 'darknet_19':
         backbone = DarkNet_19()
-        feat_dims = [128, 256, 512, 1024]
     elif model_name == 'darknet_53':
         backbone = DarkNet_53()
-        feat_dims = [128, 256, 512, 1024]
-
+    feat_dims = {'layer1': 128,
+                 'layer2': 256,
+                 'layer3': 512,
+                 'layer4': 1024
+                 }
     # load weight
     if pretrained:
         print('Loading pretrained {} ...'.format(model_name))

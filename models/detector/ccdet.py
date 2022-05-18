@@ -44,6 +44,7 @@ class CCDet(nn.Module):
             model_name=cfg['backbone'],
             pretrained=cfg['pretrained'] and trainable
             )
+        bk_dims = [bk_dims[layer_idx] for layer_idx in self.fpn_idx]
 
         # neck
         self.fpn = build_fpn(
