@@ -1,7 +1,7 @@
 python train.py \
             --cuda \
             -d coco \
-            -v ccdet_l \
+            -v ccdet_s \
             --ema \
             --fp16 \
             --eval_epoch 10

@@ -338,7 +338,7 @@ m_config = {
         'neck_norm': 'BN',
         # fpn
         'fpn_name': 'basicfpn',
-        'fpn_dims': [64, 128, 256, 512],
+        'fpn_dims': [64, 128, 256, 256],
         'fpn_idx': ['layer1', 'layer2', 'layer3', 'layer4'],
         'fpn_act': 'silu',
         'fpn_norm': 'BN',
@@ -346,7 +346,7 @@ m_config = {
         # head
         'head': 'decoupled_head',
         'head_k': 3,
-        'head_dim': 64,
+        'head_dim': 32,
         'head_act': 'silu',
         'head_norm': 'BN',
         'head_dw': False,
@@ -402,7 +402,7 @@ m_config = {
         # head
         'head': 'decoupled_head',
         'head_k': 3,
-        'head_dim': 64,
+        'head_dim': 48,
         'head_act': 'silu',
         'head_norm': 'BN',
         'head_dw': False,
@@ -476,7 +476,7 @@ m_config = {
         # training configuration
         'max_epoch': 200,
         'no_aug_epoch': 15,
-        'batch_size': 1,
+        'batch_size': 32,
         'base_lr': 0.01 / 64.,
         'min_lr_ratio': 0.01,
         # optimizer
