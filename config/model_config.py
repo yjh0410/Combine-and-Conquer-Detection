@@ -476,7 +476,7 @@ m_config = {
         # training configuration
         'max_epoch': 200,
         'no_aug_epoch': 15,
-        'batch_size': 32,
+        'batch_size': 1,
         'base_lr': 0.01 / 64.,
         'min_lr_ratio': 0.01,
         # optimizer
