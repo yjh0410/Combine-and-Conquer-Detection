@@ -99,7 +99,7 @@ class CCDet(nn.Module):
         iou_pred = self.iou_pred(reg_feat)
         
         # scores
-        scores = torch.sqrt(hmp_pred.sigmoid() * iou_pred.sigmoid())
+        scores = hmp_pred.sigmoid()# * iou_pred.sigmoid())
 
         # simple nms
         scores_max = F.max_pool2d(
