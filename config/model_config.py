@@ -339,7 +339,7 @@ m_config = {
         'neck_norm': 'BN',
         # fpn
         'fpn_name': 'basicfpn',
-        'fpn_dims': [64, 128, 256, 512],
+        'fpn_dims': [64, 128, 256, 256],
         'fpn_idx': ['layer1', 'layer2', 'layer3', 'layer4'],
         'fpn_act': 'silu',
         'fpn_norm': 'BN',
