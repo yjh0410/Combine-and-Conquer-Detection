@@ -15,13 +15,13 @@ class HMPCreator(object):
         # prepare
         gt_heatmaps = np.zeros([fmp_h, fmp_w, self.num_classes])
         gt_bboxes = np.zeros([fmp_h, fmp_w, 4])
-        gt_bboxes_weights = np.full([fmp_h, fmp_w, 1], -1)
+        gt_bboxes_weights = np.full([fmp_h, fmp_w, 1], -1.0)
 
         bboxes = targets['boxes']
         labels = targets['labels']
 
         for bbox, label in zip(bboxes, labels):
-            x1, y1, x2, y2 = bbox
+            x1, y1, x2, y2 = bbox.tolist()
             label = int(label)
 
             # compute center, width and height
