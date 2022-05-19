@@ -34,6 +34,7 @@ def build_dataset(d_cfg, m_cfg, args, device):
     train_transform = TrainTransforms(
         trans_config=trans_config,
         img_size=d_cfg['train_size'],
+        random_size=d_cfg['random_size'],
         format=d_cfg['format'],
         pixel_mean=d_cfg['pixel_mean'],
         pixel_std=d_cfg['pixel_std']
