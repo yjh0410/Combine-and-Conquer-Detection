@@ -5,8 +5,8 @@ import os
 
 
 model_urls = {
-    "darknet_19": "https://github.com/yjh0410/PyTorch_YOLO-Family/releases/download/yolo-weight/darknet19.pth",
-    "darknet_53": "https://github.com/yjh0410/PyTorch_YOLO-Family/releases/download/yolo-weight/darknet53.pth",
+    "darknet19": "https://github.com/yjh0410/PyTorch_YOLO-Family/releases/download/yolo-weight/darknet19.pth",
+    "darknet53": "https://github.com/yjh0410/PyTorch_YOLO-Family/releases/download/yolo-weight/darknet53.pth",
 }
 
 
@@ -40,11 +40,11 @@ class ResBlock(nn.Module):
         return x
 
 
-class DarkNet_19(nn.Module):
+class DarkNet19(nn.Module):
     def __init__(self):
         print("Initializing the darknet19 network ......")
         
-        super(DarkNet_19, self).__init__()
+        super(DarkNet19, self).__init__()
         # backbone network : DarkNet-19
         # output : stride = 2, c = 32
         self.conv_1 = nn.Sequential(
@@ -111,12 +111,12 @@ class DarkNet_19(nn.Module):
         return outputs
 
 
-class DarkNet_53(nn.Module):
+class DarkNet53(nn.Module):
     """
     DarkNet-53.
     """
     def __init__(self):
-        super(DarkNet_53, self).__init__()
+        super(DarkNet53, self).__init__()
         # stride = 2
         self.layer_1 = nn.Sequential(
             Conv_BN_LeakyReLU(in_dim=3, out_dim=32, k=3, padding=1),
@@ -162,12 +162,12 @@ class DarkNet_53(nn.Module):
 
 
 # Build DarkNet
-def build_darknet(model_name='darknet_19', pretrained=False):
+def build_darknet(model_name='darknet19', pretrained=False):
     # backbone
-    if model_name == 'darknet_19':
-        backbone = DarkNet_19()
-    elif model_name == 'darknet_53':
-        backbone = DarkNet_53()
+    if model_name == 'darknet19':
+        backbone = DarkNet19()
+    elif model_name == 'darknet53':
+        backbone = DarkNet53()
     feat_dims = {'layer1': 128,
                  'layer2': 256,
                  'layer3': 512,
@@ -201,7 +201,7 @@ def build_darknet(model_name='darknet_19', pretrained=False):
 
 if __name__ == '__main__':
     import time
-    model, feat_dims = build_darknet(model_name='darknet_53', pretrained=True)
+    model, feat_dims = build_darknet(model_name='darknet53', pretrained=True)
     x = torch.randn(1, 3, 224, 224)
     t0 = time.time()
     outputs = model(x)
