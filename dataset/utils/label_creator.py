@@ -52,10 +52,12 @@ class HMPCreator(object):
             grid_x = int(xc_s)
             grid_y = int(yc_s)    
 
+            img_area = (img_h * img_w)
+            box_area = (x2 - x1) * (y2 - y1)
             # assign the target to center anchor
             gt_heatmaps[grid_y, grid_x, label] = 1.0
             gt_bboxes[grid_y, grid_x] = np.array([x1, y1, x2, y2])
-            gt_bboxes_weights[grid_y, grid_x] = 2.0 - (x2 - x1) * (y2 - y1) / (img_h * img_w)
+            gt_bboxes_weights[grid_y, grid_x] = 2.0 - box_area / img_area
 
             # create a Gauss Heatmap for the target
             prev_hmp = gt_heatmaps[y1s:y2s, x1s:x2s, label]
@@ -71,8 +73,6 @@ class HMPCreator(object):
                 for j in range(grid_y - 1, grid_y + 2):
                     if (j >=y1s and j < y2s) and (i >=x1s and i < x2s):
                         gt_bboxes[j, i] = np.array([x1, y1, x2, y2])
-                        img_area = (img_h * img_w)
-                        box_area = (x2 - x1) * (y2 - y1)
                         gt_bboxes_weights[j, i] = 2.0 - box_area / img_area
         
         targets = np.concatenate([

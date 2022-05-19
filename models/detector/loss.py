@@ -48,13 +48,15 @@ class Criterion(object):
         return loss
 
 
-    def loss_bboxes(self, pred_box, tgt_box, num_bboxes):
+    def loss_bboxes(self, pred_box, tgt_box, bbox_scale, num_bboxes):
         ious = get_ious(pred_box,
                          tgt_box,
                          box_mode="xyxy",
                          iou_type='giou')
 
-        loss = (1.0 - ious).sum() / num_bboxes
+        loss = 1.0 - ious
+        loss = loss * bbox_scale
+        loss = loss.sum() / num_bboxes
 
         return loss, ious
 
@@ -104,9 +106,11 @@ class Criterion(object):
         # bboxes loss
         matched_pred_delta = pred_box[foreground_idxs]
         matched_tgt_delta = gt_bboxes[foreground_idxs]
+        matched_box_weight = gt_bboxes_weights[foreground_idxs]
         loss_bboxes, ious = self.loss_bboxes(
             matched_pred_delta, 
-            matched_tgt_delta, 
+            matched_tgt_delta,
+            matched_box_weight,
             num_foreground
             )
 
