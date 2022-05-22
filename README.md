@@ -36,7 +36,7 @@ Main results on COCO.
 |  Model        |  Backbone     | Size | FPS | Param(M) | FLOPs(B) |  AP  | AP50 |  Weight  |
 |---------------|---------------|------|-----|----------|----------|------|------|----------|
 | CCDet-R18     | ResNet-18     | 640  |     |   20     |     24   | 33.0 | 53.6 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r18_33.0_53.6.pth) |
-| CCDet-R50     | ResNet-50     | 640  |     |          |          |      |      | [github] |
+| CCDet-R50     | ResNet-50     | 640  |     |   34     |     44   | 38.0 | 60.0 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r50_38.0_60.0.pth) |
 | CCDet-R101    | ResNet-101    | 640  |     |          |          |      |      | [github] |
 | CCDet-D19     | DarkNet-19    | 640  |     |          |          |      |      | [github] |
 | CCDet-D53     | DarkNet-53    | 640  |     |          |          |      |      | [github] |
