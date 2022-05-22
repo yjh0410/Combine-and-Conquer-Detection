@@ -21,7 +21,6 @@ PyTorch >= 1.9.1 and Torchvision >= 0.10.1
 
 # Experiments
 ## Object Detection
-### CCDet:
 Main results on VOC.
 
 |  Model      | Size | FPS | Param(M) | FLOPs(B) | AP50 |  Weight  |
@@ -30,18 +29,28 @@ Main results on VOC.
 | CCDet-R50   | 640  | 92  |  34      |  44      | 84.0 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r50_84.0.pth) |
 | CCDet-R101  | 640  | 63  |  53      |  74      | 85.3 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r101_85.3.pth) |
 
-### CCDet:
 Main results on COCO.
 
-|  Model        | Size | FPS | Param(M) | FLOPs(B) |  AP  | AP50 |  Weight  |
-|---------------|------|-----|----------|----------|------|------|----------|
-| CCDet-R18     | 640  |     |   20     |     24   | 33.0 | 53.6 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r18_33.0_53.6.pth) |
-| CCDet-R50     | 640  |     |          |          |      |      | [github] |
-| CCDet-R101    | 640  |     |          |          |      |      | [github] |
-| CCDet-D19     | 640  |     |          |          |      |      | [github] |
-| CCDet-D53     | 640  |     |          |          |      |      | [github] |
-| CCDet-VGG16   | 640  |     |          |          |      |      | [github] |
-| CCDet-CSP-D53 | 640  |     |          |          |      |      | [github] |
+### With Different Backbone for CCDet
+
+|  Model        |  Backbone     | Size | FPS | Param(M) | FLOPs(B) |  AP  | AP50 |  Weight  |
+|---------------|---------------|------|-----|----------|----------|------|------|----------|
+| CCDet-R18     | ResNet-18     | 640  |     |   20     |     24   | 33.0 | 53.6 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r18_33.0_53.6.pth) |
+| CCDet-R50     | ResNet-50     | 640  |     |          |          |      |      | [github] |
+| CCDet-R101    | ResNet-101    | 640  |     |          |          |      |      | [github] |
+| CCDet-D19     | DarkNet-19    | 640  |     |          |          |      |      | [github] |
+| CCDet-D53     | DarkNet-53    | 640  |     |          |          |      |      | [github] |
+| CCDet-VGG16   | VGG-16        | 640  |     |          |          |      |      | [github] |
+| CCDet-CSP-D53 | CSPDarkNet-53 | 640  |     |          |          |      |      | [github] |
+
+### With Different Neck for CCDet
+Due to the limitation of my computing resources, I can only use ResNet-18 as the Backbone to complete this part of the experiment.
+|  Model        |  Neck          | Size | FPS | Param(M) | FLOPs(B) |  AP  | AP50 |  Weight   |
+|---------------|----------------|------|-----|----------|----------|------|------|-----------|
+| CCDet-R18     | None           | 640  |     |          |          |      |      | [github]  |
+| CCDet-R18     | SPP            | 640  |     |          |          |      |      | [github]  |
+| CCDet-R18     | RFB            | 640  |     |          |          |      |      | [github]  |
+| CCDet-R18     | DilatedEncoder | 640  |     |    20    |    24    | 33.0 | 53.6 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r18_33.0_53.6.pth) |
 
 ### CCDet-E:
 Main results on COCO.
