@@ -40,8 +40,8 @@ Main results on COCO.
 | CCDet-R101    | ResNet-101    | 640  |     |          |          |      |      | [github] |
 | CCDet-D19     | DarkNet-19    | 640  |     |          |          |      |      | [github] |
 | CCDet-D53     | DarkNet-53    | 640  |     |          |          |      |      | [github] |
-| CCDet-VGG16   | VGG-16        | 640  |     |          |          |      |      | [github] |
 | CCDet-CSP-D53 | CSPDarkNet-53 | 640  |     |          |          |      |      | [github] |
+| CCDet-VGG16   | VGG-16        | 640  |     |          |          |      |      | [github] |
 
 ### With Different Neck for CCDet
 Due to the limitation of my computing resources, I can only use ResNet-18 as the Backbone to complete this part of the experiment.
