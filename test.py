@@ -3,9 +3,7 @@ import cv2
 import time
 import argparse
 import numpy as np
-from numpy import random
 import torch
-import torch.backends.cudnn as cudnn
 
 from evaluator.utils import TestTimeAugmentation
 
@@ -168,7 +166,6 @@ if __name__ == '__main__':
     # get device
     if args.cuda:
         print('use cuda')
-        cudnn.benchmark = True
         device = torch.device("cuda")
     else:
         device = torch.device("cpu")
