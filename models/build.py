@@ -8,7 +8,8 @@ def build_model(cfg,
                 img_size, 
                 num_classes, 
                 is_train=False,
-                coco_pretrained=None):
+                coco_pretrained=None,
+                resume=None):
     # build CC-Det    
     model = CCDet(
         cfg=cfg,
@@ -39,4 +40,11 @@ def build_model(cfg,
 
         model.load_state_dict(checkpoint_state_dict, strict=False)
 
+    if resume is not None:
+        print('keep training: ', resume)
+        checkpoint = torch.load(resume, map_location='cpu')
+        # checkpoint state dict
+        checkpoint_state_dict = checkpoint.pop("model")
+        model.load_state_dict(checkpoint_state_dict)
+                        
     return model

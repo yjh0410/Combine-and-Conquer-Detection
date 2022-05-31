@@ -44,6 +44,8 @@ def parse_args():
                         help='build CC-Det')
     parser.add_argument('-p', '--coco_pretrained', default=None, type=str,
                         help='coco pretrained weight')
+    parser.add_argument('-r', '--resume', default=None, type=str,
+                        help='keep training')
 
     # dataset
     parser.add_argument('-d', '--dataset', default='coco',
@@ -110,7 +112,8 @@ def train():
         img_size=d_cfg['train_size'],
         num_classes=d_cfg['num_classes'],
         is_train=True,
-        coco_pretrained=args.coco_pretrained
+        coco_pretrained=args.coco_pretrained,
+        resume=args.resume
         )
     model = model.to(device).train()
 
@@ -146,12 +149,13 @@ def train():
     # optimizer
     base_lr = m_cfg['base_lr'] * batch_size
     min_lr = base_lr * m_cfg['min_lr_ratio']
-    optimizer = build_optimizer(
+    optimizer, start_epoch = build_optimizer(
         model=model_without_ddp,
         base_lr=base_lr,
         name=m_cfg['optimizer'],
         momentum=m_cfg['momentum'],
-        weight_decay=m_cfg['weight_decay']
+        weight_decay=m_cfg['weight_decay'],
+        resume=args.resume
         )
     
     # warmup scheduler
@@ -163,12 +167,11 @@ def train():
         warmup_factor=m_cfg['warmup_factor']
         )
 
-
     # start training loop
     best_map = -1.0
     lr_schedule=True
     total_epochs = m_cfg['wp_epoch'] + m_cfg['max_epoch']
-    for epoch in range(total_epochs):
+    for epoch in range(start_epoch, total_epochs):
         if args.distributed:
             dataloader.batch_sampler.sampler.set_epoch(epoch)            
 
