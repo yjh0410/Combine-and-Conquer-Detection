@@ -37,7 +37,7 @@ Main results on COCO.
 |---------------|---------------|------|--------------------|-------|-------|------|------|----------|
 | CCDet-R18     | ResNet-18     | 640  |                    | 20 M  |  24 B | 33.0 | 53.6 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r18_33.0_53.6.pth) |
 | CCDet-R50     | ResNet-50     | 640  |                    | 34 M  |  44 B | 38.0 | 60.0 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r50_38.0_60.0.pth)    |
-| CCDet-R101    | ResNet-101    | 640  |                    |       |       |      |      | [github] |
+| CCDet-R101    | ResNet-101    | 640  |                    | 53 M  |  74 B | 40.0 | 61.3 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r50_40.0_61.3.pth) |
 | CCDet-D19     | DarkNet-19    | 640  |                    |       |       |      |      | [github] |
 | CCDet-D53     | DarkNet-53    | 640  |                    |       |       |      |      | [github] |
 | CCDet-CSP-D53 | CSPDarkNet-53 | 640  |                    |       |       |      |      | [github] |
@@ -65,18 +65,19 @@ Main results on COCO.
 ### CCDet
 Main results on WiderFace.
 
-|  Model      | Size | FPS | AP50 |  Weight  |
-|-------------|------|-----|------|----------|
-| CCDet-R50   | 640  |     |      | [github] |
+|  Model      | Size | FPS<sup><br>2080ti | AP50 |  Weight  |
+|-------------|------|--------------------|------|----------|
+| CCDet-R18   | 640  |                    |      | [github] |
+| CCDet-R50   | 640  |                    |      | [github] |
 
 ## Person Detection
 ### CCDet
 Main results on CrowdHuman.
 
-|  Model      | Size | FPS | AP   | MR-2 | JI   |  Weight  |
-|-------------|------|-----|------|------|------|----------|
-| CCDet-R50   | 640  |     |      |      |      | [github] |
-
+|  Model      | Size | FPS<sup><br>2080ti |  AP  | MR-2 |  JI  |  Weight  |
+|-------------|------|--------------------|------|------|------|----------|
+| CCDet-R18   | 640  |                    |      |      |      | [github] |
+| CCDet-R50   | 640  |                    |      |      |      | [github] |
 
 # Dataset
 ## MSCOCO Dataset
