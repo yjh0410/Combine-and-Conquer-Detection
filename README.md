@@ -39,7 +39,7 @@ Main results on COCO.
 | CCDet-R50     | ResNet-50     | 640  |                    | 34 M  |  44 B | 38.0 | 60.0 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r50_38.0_60.0.pth)    |
 | CCDet-R101    | ResNet-101    | 640  |                    | 53 M  |  74 B | 40.0 | 61.3 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r101_40.0_61.3.pth) |
 | CCDet-D19     | DarkNet-19    | 640  |                    | 29 M  |  32 B | 34.7 | 56.5 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_d19_34.7_56.5.pth) |
-| CCDet-D53     | DarkNet-53    | 640  |                    |       |       |      |      | [github] |
+| CCDet-D53     | DarkNet-53    | 640  |                    | 50 M  |  68 B |      |      | [github] |
 | CCDet-CSP-D53 | CSPDarkNet-53 | 640  |                    |       |       |      |      | [github] |
 | CCDet-VGG16   | VGG-16        | 640  |                    |       |       |      |      | [github] |
 
