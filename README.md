@@ -53,7 +53,6 @@ Due to the limitation of my computing resources, I can only use ResNet-18 as the
 | CCDet-R18     | RFB            | 640  |                    |       |       |      |      | [github]  |
 | CCDet-R18     | DE             | 640  |                    | 20 M  | 24 B  | 33.0 | 53.6 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r18_33.0_53.6.pth) |
 
-
 ## Face Detection
 ### CCDet
 Main results on WiderFace.
