@@ -29,8 +29,10 @@ def parse_args():
                         type=str, help='The path to video files')
     parser.add_argument('--path_to_save', default='det_results/demo/',
                         type=str, help='The path to save the detection results video')
-    parser.add_argument('-vs', '--visual_threshold', default=0.5,
+    parser.add_argument('-vs', '--visual_threshold', default=0.4,
                         type=float, help='visual threshold')
+    parser.add_argument('--show', action='store_true', default=False,
+                        help='show the visualization results.')
     # model
     parser.add_argument('-v', '--version', default='ccdet_r18',
                         help='baseline.')
