@@ -31,17 +31,18 @@ Main results on VOC.
 
 Main results on COCO.
 
-### With Different Backbone for CCDet
-
 |  Model        |  Backbone     | Size | FPS<sup><br>2080ti | Param | FLOPs |  AP  | AP50 |  Weight  |
 |---------------|---------------|------|--------------------|-------|-------|------|------|----------|
 | CCDet-R18     | ResNet-18     | 640  |                    | 20 M  |  24 B | 33.0 | 53.6 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r18_33.0_53.6.pth) |
-| CCDet-R50     | ResNet-50     | 640  |                    | 34 M  |  44 B | 38.0 | 60.0 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r50_38.0_60.0.pth)    |
-| CCDet-R101    | ResNet-101    | 640  |                    | 53 M  |  74 B | 40.0 | 61.3 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r101_40.0_61.3.pth) |
-| CCDet-D19     | DarkNet-19    | 640  |                    | 29 M  |  32 B | 34.7 | 56.5 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_d19_34.7_56.5.pth) |
+| CCDet-R50     | ResNet-50     | 640  |                    | 34 M  |  44 B | 38.0 | 60.0 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r50_38.0_60.0.pth) |
+| CCDet-R101    | ResNet-101    | 640  |                    | 53 M  |  74 B | 40.0 | 61.3 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r101_40.0_61.3.pth)|
+| CCDet-E-R18   | ResNet-18     | 640  |                    | -  M  |  -  B | -    | -    | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r18_33.0_53.6.pth) |
+| CCDet-E-R50   | ResNet-50     | 640  |                    | -  M  |  -  B | -    | -    | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r50_38.0_60.0.pth) |
+| CCDet-E-R101  | ResNet-101    | 640  |                    | -  M  |  -  B | -    | -    | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r101_40.0_61.3.pth)|
+<!-- | CCDet-D19     | DarkNet-19    | 640  |                    | 29 M  |  32 B | 34.7 | 56.5 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_d19_34.7_56.5.pth) |
 | CCDet-D53     | DarkNet-53    | 640  |                    | 50 M  |  68 B |      |      | [github] |
 | CCDet-CSP-D53 | CSPDarkNet-53 | 640  |                    |       |       |      |      | [github] |
-| CCDet-VGG16   | VGG-16        | 640  |                    |       |       |      |      | [github] |
+| CCDet-VGG16   | VGG-16        | 640  |                    |       |       |      |      | [github] | -->
 
 ### With Different Neck for CCDet
 Due to the limitation of my computing resources, I can only use ResNet-18 as the Backbone to complete this part of the experiment.
@@ -52,14 +53,6 @@ Due to the limitation of my computing resources, I can only use ResNet-18 as the
 | CCDet-R18     | RFB            | 640  |                    |       |       |      |      | [github]  |
 | CCDet-R18     | DE             | 640  |                    | 20 M  | 24 B  | 33.0 | 53.6 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r18_33.0_53.6.pth) |
 
-### CCDet-E:
-Main results on COCO.
-
-|  Model       | Size | FPS<sup><br>2080ti | Param | FLOPs |  AP  | AP50 |  Weight  |
-|--------------|------|--------------------|-------|-------|------|------|----------|
-| CCDet-E-R18  | 640  |                    |       |       |      |      | [github] |
-| CCDet-E-R50  | 640  |                    |       |       |      |      | [github] |
-| CCDet-E-R101 | 640  |                    |       |       |      |      | [github] |
 
 ## Face Detection
 ### CCDet
@@ -69,6 +62,7 @@ Main results on WiderFace.
 |-------------|------|--------------------|------|----------|
 | CCDet-R18   | 640  |                    |      | [github] |
 | CCDet-R50   | 640  |                    |      | [github] |
+| CCDet-R101  | 640  |                    |      | [github] |
 
 ## Person Detection
 ### CCDet
@@ -78,6 +72,7 @@ Main results on CrowdHuman.
 |-------------|------|--------------------|------|------|------|----------|
 | CCDet-R18   | 640  |                    |      |      |      | [github] |
 | CCDet-R50   | 640  |                    |      |      |      | [github] |
+| CCDet-R101  | 640  |                    |      |      |      | [github] |
 
 # Dataset
 ## MSCOCO Dataset
