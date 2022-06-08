@@ -165,9 +165,10 @@ def detect(
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
         save_size = (640, 480)
         cur_time = time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time()))
-        save_path = os.path.join(save_path, 'videos', cur_time+'.avi')
+        save_path = os.path.join(save_path, cur_time+'.avi')
         fps = 15.0
         out = cv2.VideoWriter(save_path, fourcc, fps, save_size)
+        print(save_path)
 
         while(True):
             ret, frame = video.read()
