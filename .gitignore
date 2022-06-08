@@ -6,3 +6,5 @@ __pycache__
 *.jpg
 *.zip
 *.json
+dataset/demo/
+det_results/

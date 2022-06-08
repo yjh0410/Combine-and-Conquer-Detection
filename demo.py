@@ -100,7 +100,7 @@ def detect(
                 print("Infer: {:.6f} s".format(time.time() - t0))
 
                 # rescale
-                bboxs *= orig_size
+                bboxes *= orig_size
 
                 # visualization
                 frame_processed = visualize(image=frame, 
@@ -143,7 +143,7 @@ def detect(
             # visualization
             img_processed = visualize(
                 image=image, 
-                bboxs=bboxs,
+                bboxes=bboxes,
                 scores=scores, 
                 labels=labels,
                 class_colors=class_colors,
