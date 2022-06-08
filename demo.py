@@ -70,7 +70,7 @@ def visualize(image, bboxes, scores, labels, class_colors, vis_thresh=0.5):
 
 @torch.no_grad()
 def detect(
-    model, device, transform, vis_thresh, mode='image', 
+    model, device, transform, vis_thresh, mode='image', show=False,
     path_to_img=None, path_to_vid=None, path_to_save=None
     ):
 
@@ -153,10 +153,11 @@ def detect(
                 class_colors=class_colors,
                 vis_thresh=vis_thresh
                 )
-            cv2.imshow('Detection', img_processed)
-
             cv2.imwrite(os.path.join(save_path, 'images', str(i).zfill(6)+'.jpg'), img_processed)
-            cv2.waitKey(0)
+
+            if show:
+                cv2.imshow('Detection', img_processed)
+                cv2.waitKey(0)
 
     # ------------------------- Video ---------------------------
     elif mode == 'video':
@@ -200,8 +201,9 @@ def detect(
                 frame_processed_resize = cv2.resize(frame_processed, save_size)
 
                 out.write(frame_processed_resize)
-                cv2.imshow('Detection', frame_processed)
-                cv2.waitKey(1)
+                if show:
+                    cv2.imshow('Detection', frame_processed)
+                    cv2.waitKey(1)
             else:
                 break
 
@@ -254,6 +256,7 @@ def run():
         transform=transform,
         vis_thresh=args.visual_threshold,
         mode=args.mode,
+        show=args.show,
         path_to_img=args.path_to_img,
         path_to_vid=args.path_to_vid,
         path_to_save=args.path_to_save,
