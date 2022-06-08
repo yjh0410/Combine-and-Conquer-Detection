@@ -103,12 +103,14 @@ def detect(
                 bboxes *= orig_size
 
                 # visualization
-                frame_processed = visualize(image=frame, 
-                                            bboxes=bboxes,
-                                            scores=scores, 
-                                            labels=labels,
-                                            class_colors=class_colors,
-                                            vis_thresh=vis_thresh)
+                frame_processed = visualize(
+                    image=frame, 
+                    bboxes=bboxes,
+                    scores=scores, 
+                    labels=labels,
+                    class_colors=class_colors,
+                    vis_thresh=vis_thresh
+                    )
                 cv2.imshow('Detection', frame_processed)
                 cv2.waitKey(1)
 
@@ -186,7 +188,7 @@ def detect(
                 
                 # visualization
                 frame_processed = visualize(
-                    img=frame, 
+                    image=frame, 
                     bboxes=bboxes,
                     scores=scores, 
                     labels=labels,
