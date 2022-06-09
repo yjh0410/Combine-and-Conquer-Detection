@@ -3,6 +3,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 
+import matplotlib.pyplot as plt
+
 from ..backbone import build_backbone
 from ..neck import build_fpn
 from ..head import build_head
@@ -97,6 +99,15 @@ class CCDet(nn.Module):
         hmp_pred = self.hmp_pred(cls_feat)
         reg_pred = self.reg_pred(reg_feat)
         iou_pred = self.iou_pred(reg_feat)
+
+        hmp = hmp_pred.sigmoid()[0]  # [C, H, W]
+        hmp = hmp.permute(1, 2, 0).contiguous().cpu().numpy()
+        for i in range(self.num_classes):
+            hmp_i = hmp[..., i]
+            plt.imshow('shmp', hmp_i)
+            plt.show()
+
+
         
         # scores
         scores = torch.sqrt(hmp_pred.sigmoid() * iou_pred.sigmoid())
