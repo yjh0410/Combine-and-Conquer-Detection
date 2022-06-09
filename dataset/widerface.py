@@ -22,41 +22,6 @@ except:
 WIDERFace_CLASSES = ['face']  # always index 0
 
 
-class WIDERFaceAnnotationTransform(object):
-    """Transforms a WIDERFace annotation into a Tensor of bbox coords and label index
-    Initilized with a dictionary lookup of classnames to indexes
-
-    Arguments:
-        class_to_ind (dict, optional): dictionary lookup of classnames -> indexes
-            (default: alphabetic indexing of VOC's 20 classes)
-        keep_difficult (bool, optional): keep difficult instances or not
-            (default: False)
-        height (int): height
-        width (int): width
-    """
-
-    def __init__(self, class_to_ind=None):
-        self.class_to_ind = class_to_ind or dict(
-            zip(WIDERFace_CLASSES, range(len(WIDERFace_CLASSES))))
-
-    def __call__(self, target, width, height):
-        """
-        Arguments:
-            target (annotation) : the target annotation to be made usable
-                will be an ET.Element
-        Returns:
-            a list containing lists of bounding boxes  [bbox coords]
-        """
-        for i in range(len(target)):
-            target[i][0] = float(target[i][0]) / width 
-            target[i][1] = float(target[i][1]) / height  
-            target[i][2] = float(target[i][2]) / width 
-            target[i][3] = float(target[i][3]) / height  
-
-            #res.append( [ target[i][0], target[i][1], target[i][2], target[i][3], target[i][4] ] )
-        return target  # [[xmin, ymin, xmax, ymax, label_ind], ... ]
-
-
 class WIDERFaceDetection(data.Dataset):
     """WIDERFace Detection Dataset Object   
     http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace/
@@ -91,7 +56,6 @@ class WIDERFaceDetection(data.Dataset):
         self.stride = stride
         self.image_set = image_sets
         self.transform = transform
-        self.target_transform = WIDERFaceAnnotationTransform()
 
         # augmentation
         self.transform = transform
@@ -199,29 +163,32 @@ class WIDERFaceDetection(data.Dataset):
 
     def load_image_target(self, index):
         # load a target
-        target = self.label_ids[index]
+        anno = self.label_ids[index]
         # load a image
-        img = cv2.imread(self.img_ids[index])
-        height, width, channels = img.shape
-
-        if self.target_transform is not None:
-            target = self.target_transform(target, width, height)
+        image = cv2.imread(self.img_ids[index])
+        height, width, channels = image.shape
 
         # check target
-        if len(target) == 0:
-            target = np.zeros([1, 5])
+        if len(anno) == 0:
+            anno = np.zeros([1, 5])
         else:
-            target = np.array(target)
+            anno = np.array(anno)
 
-        return img, target, height, width
+        target = {
+            "boxes": anno[:, :4],
+            "labels": anno[:, 4],
+            "orig_size": [height, width]
+        }
+        
+        return image, target
 
 
     def load_mosaic(self, index):
-        # load a mosaic image
-        ids_list_ = self.ids[:index] + self.ids[index+1:]
+        new_ids = np.arange(len(self.img_ids)).tolist()
+        new_ids = new_ids[:index] + new_ids[index+1:]
         # random sample other indexs
-        id1 = self.ids[index]
-        id2, id3, id4 = random.sample(ids_list_, 3)
+        id1 = index
+        id2, id3, id4 = random.sample(new_ids, 3)
         ids = [id1, id2, id3, id4]
 
         image_list = []
@@ -254,8 +221,7 @@ class WIDERFaceDetection(data.Dataset):
             
         # load an image and target
         else:
-            img_id = self.ids[index]
-            image, target = self.load_image_target(img_id)
+            image, target = self.load_image_target(index)
 
             # augment
             image, target = self.transform(image, target)
@@ -321,7 +287,7 @@ if __name__ == "__main__":
                                 format=format)
 
     dataset = WIDERFaceDetection(
-                           data_root='D:\\python_work\\object-detection\\dataset\\WiderFace',
+                           data_root='E:\\python_work\\object_detection\\dataset\\WiderFace',
                            img_size=img_size,
                            transform=transform,
                            color_augment=BaseTransforms(),

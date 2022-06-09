@@ -318,9 +318,11 @@ class WiderFaceEvaluator():
         self.gt_path = os.path.join(data_root, 'eval_tools/ground_truth/')
         self.image_set = image_set
         # create dataset
-        self.dataset = WIDERFaceDetection(root=data_root, 
-                                     train=False,
-                                     image_sets=image_set)
+        self.dataset = WIDERFaceDetection(
+            root=data_root, 
+            is_train=False,
+            image_sets=image_set
+            )
         if test_aug:
             print('Use Test Augmentation Trick ...')
             self.test_aug = TestTimeAugmentation(num_classes=1)

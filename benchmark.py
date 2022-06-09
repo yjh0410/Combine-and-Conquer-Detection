@@ -23,7 +23,7 @@ def parse_args():
                         help='fuse conv and bn')
 
     # basic
-    parser.add_argument('--img_size', default=640, type=int,
+    parser.add_argument('-size', '--img_size', default=640, type=int,
                         help='the min size of input image')
     parser.add_argument('--weight', default=None,
                         type=str, help='Trained state_dict file path to open')
@@ -90,19 +90,19 @@ if __name__ == '__main__':
     else:
         device = torch.device("cpu")
 
+    # config
+    d_cfg, m_cfg = build_config('coco', args.version)
+
     # dataset
     print('test on coco-val ...')
-    data_dir = os.path.join(args.root, 'COCO')
+    data_dir = os.path.join(d_cfg['data_root'], 'COCO')
     class_names = coco_class_labels
     class_indexs = coco_class_index
     num_classes = 80
     dataset = COCODataset(
                 data_dir=data_dir,
                 image_set='val2017',
-                img_size=args.img_size)
-
-    # config
-    d_cfg, m_cfg = build_config('coco', args.version)
+                is_train=False)
 
     # build model
     model = build_model(
