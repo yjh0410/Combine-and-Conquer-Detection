@@ -95,12 +95,12 @@ if __name__ == '__main__':
 
     # dataset
     print('test on coco-val ...')
-    data_dir = os.path.join(d_cfg['data_root'], 'COCO')
+    data_root = os.path.join(d_cfg['data_root'], 'COCO')
     class_names = coco_class_labels
     class_indexs = coco_class_index
     num_classes = 80
     dataset = COCODataset(
-                data_dir=data_dir,
+                data_root=data_root,
                 image_set='val2017',
                 is_train=False)
 
