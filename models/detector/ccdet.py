@@ -100,16 +100,6 @@ class CCDet(nn.Module):
         reg_pred = self.reg_pred(reg_feat)
         iou_pred = self.iou_pred(reg_feat)
 
-        hmp = hmp_pred.sigmoid()[0]  # [C, H, W]
-        hmp = hmp.permute(1, 2, 0).contiguous().cpu().numpy()
-        for i in range(self.num_classes):
-            hmp_i = (hmp[..., i] * 255).astype(np.uint8)
-            hmp_i = cv2.resize(hmp_i, (640, 640))
-            cv2.imshow('jiji', hmp_i)
-            cv2.waitKey(0)
-
-
-        
         # scores
         scores = torch.sqrt(hmp_pred.sigmoid() * iou_pred.sigmoid())
 
@@ -140,21 +130,21 @@ class CCDet(nn.Module):
         labels = topk_labels.cpu().numpy()    # [N,]
         bboxes = topk_bboxes.cpu().numpy()    # [N, 4]
 
-        # nms
-        keep = np.zeros(len(bboxes), dtype=np.int)
-        for i in range(self.num_classes):
-            inds = np.where(labels == i)[0]
-            if len(inds) == 0:
-                continue
-            c_bboxes = bboxes[inds]
-            c_scores = scores[inds]
-            c_keep = self.nms(c_bboxes, c_scores)
-            keep[inds[c_keep]] = 1
+        # # nms
+        # keep = np.zeros(len(bboxes), dtype=np.int)
+        # for i in range(self.num_classes):
+        #     inds = np.where(labels == i)[0]
+        #     if len(inds) == 0:
+        #         continue
+        #     c_bboxes = bboxes[inds]
+        #     c_scores = scores[inds]
+        #     c_keep = self.nms(c_bboxes, c_scores)
+        #     keep[inds[c_keep]] = 1
 
-        keep = np.where(keep > 0)
-        bboxes = bboxes[keep]
-        scores = scores[keep]
-        labels = labels[keep]
+        # keep = np.where(keep > 0)
+        # bboxes = bboxes[keep]
+        # scores = scores[keep]
+        # labels = labels[keep]
 
         return scores, labels, bboxes
 

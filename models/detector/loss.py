@@ -21,7 +21,7 @@ class Criterion(object):
         self.loss_iou_weight = loss_iou_weight
 
 
-    def loss_heatmap(self, pred, target):
+    def loss_heatmap(self, pred, target, batch_size):
         """
         focal loss used for CenterNet, modified from focal loss.
         but this function is a numeric stable version implementation.
@@ -41,9 +41,9 @@ class Criterion(object):
         neg_loss = neg_loss.sum()
 
         if num_pos == 0:
-            loss = -neg_loss
+            loss = -neg_loss / batch_size
         else:
-            loss = -(pos_loss + neg_loss) / num_pos
+            loss = -(pos_loss + neg_loss) / batch_size
 
         return loss
 

@@ -38,8 +38,8 @@ m_config = {
         'test_topk': 100,
         # loss
         'loss_hmp_weight': 1.0,
-        'loss_reg_weight': 2.0,
-        'loss_iou_weight': 0.5,
+        'loss_reg_weight': 1.0,
+        'loss_iou_weight': 1.0,
         # training configuration
         'max_epoch': 200,
         'no_aug_epoch': 15,
