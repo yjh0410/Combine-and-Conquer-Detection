@@ -79,6 +79,7 @@ class Criterion(object):
             outputs['stride']: (Int) stride of the model output
             targets: (Tensor) [B, H, W, C+4+1]
         """
+        batch_size = len(targets)
         device = outputs['pred_hmp'].device
         # targets
         gt_heatmaps = targets[..., :self.num_classes]
@@ -101,7 +102,7 @@ class Criterion(object):
         num_foreground = torch.clamp(num_foreground / get_world_size(), min=1).item()
 
         # heatmap loss
-        loss_hmp = self.loss_heatmap(pred_hmp, gt_heatmaps)
+        loss_hmp = self.loss_heatmap(pred_hmp, gt_heatmaps, batch_size)
 
         # bboxes loss
         matched_pred_delta = pred_box[foreground_idxs]
