@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 
-import matplotlib.pyplot as plt
+import cv2
 
 from ..backbone import build_backbone
 from ..neck import build_fpn
@@ -103,9 +103,10 @@ class CCDet(nn.Module):
         hmp = hmp_pred.sigmoid()[0]  # [C, H, W]
         hmp = hmp.permute(1, 2, 0).contiguous().cpu().numpy()
         for i in range(self.num_classes):
-            hmp_i = hmp[..., i]
-            plt.imshow(hmp_i)
-            plt.show()
+            hmp_i = (hmp[..., i] * 255).astype(np.uint8)
+            cv2.imshow('jiji', hmp_i)
+            cv2.show()
+            cv2.waitKey(0)
 
 
         
