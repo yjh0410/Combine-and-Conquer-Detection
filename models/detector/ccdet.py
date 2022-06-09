@@ -105,7 +105,6 @@ class CCDet(nn.Module):
         for i in range(self.num_classes):
             hmp_i = (hmp[..., i] * 255).astype(np.uint8)
             cv2.imshow('jiji', hmp_i)
-            cv2.show()
             cv2.waitKey(0)
 
 
