@@ -1,6 +1,5 @@
 from .darknet import build_darknet
 from .resnet import build_resnet
-from .vggnet import build_vgg
 from .cspdarknet import build_cspdarknet
 
 
@@ -19,10 +18,6 @@ def build_backbone(cfg, model_name='resnet18', pretrained=False):
 
     elif model_name == 'darknet19' or model_name == 'darknet53':
         backbone, bk_feats = build_darknet(
-            model_name=model_name, pretrained=pretrained)
-
-    elif model_name == 'vgg16':
-        backbone, bk_feats = build_vgg(
             model_name=model_name, pretrained=pretrained)
 
     else:
