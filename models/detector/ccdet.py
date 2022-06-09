@@ -104,6 +104,7 @@ class CCDet(nn.Module):
         hmp = hmp.permute(1, 2, 0).contiguous().cpu().numpy()
         for i in range(self.num_classes):
             hmp_i = (hmp[..., i] * 255).astype(np.uint8)
+            hmp_i = cv2.resize(hmp_i, (640, 640))
             cv2.imshow('jiji', hmp_i)
             cv2.waitKey(0)
 
