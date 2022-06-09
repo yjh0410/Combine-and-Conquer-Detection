@@ -1,6 +1,6 @@
 python train.py \
             --cuda \
-            -d coco \
+            -d voc \
             -v ccdet_r18 \
             --ema \
             --fp16 \
