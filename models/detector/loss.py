@@ -21,7 +21,7 @@ class Criterion(object):
         self.loss_iou_weight = loss_iou_weight
 
 
-    def loss_heatmap(self, pred, target, batch_size):
+    def loss_heatmap(self, pred, target):
         """
         focal loss used for CenterNet, modified from focal loss.
         but this function is a numeric stable version implementation.
@@ -41,22 +41,20 @@ class Criterion(object):
         neg_loss = neg_loss.sum()
 
         if num_pos == 0:
-            loss = -neg_loss / batch_size
+            loss = -neg_loss
         else:
-            loss = -(pos_loss + neg_loss) / batch_size
+            loss = -(pos_loss + neg_loss) / num_pos
 
         return loss
 
 
-    def loss_bboxes(self, pred_box, tgt_box, box_weight, num_bboxes):
+    def loss_bboxes(self, pred_box, tgt_box, num_bboxes):
         ious = get_ious(pred_box,
                          tgt_box,
                          box_mode="xyxy",
                          iou_type='giou')
-        # linear iou loss
-        loss = 1.0 - ious
-        loss = loss * box_weight
-        loss = loss.sum() / num_bboxes
+
+        loss = (1.0 - ious).sum() / num_bboxes
 
         return loss, ious
 
@@ -79,7 +77,6 @@ class Criterion(object):
             outputs['stride']: (Int) stride of the model output
             targets: (Tensor) [B, H, W, C+4+1]
         """
-        batch_size = len(targets)
         device = outputs['pred_hmp'].device
         # targets
         gt_heatmaps = targets[..., :self.num_classes]
@@ -102,17 +99,14 @@ class Criterion(object):
         num_foreground = torch.clamp(num_foreground / get_world_size(), min=1).item()
 
         # heatmap loss
-        loss_hmp = self.loss_heatmap(pred_hmp, gt_heatmaps, batch_size)
+        loss_hmp = self.loss_heatmap(pred_hmp, gt_heatmaps)
 
         # bboxes loss
         matched_pred_delta = pred_box[foreground_idxs]
         matched_tgt_delta = gt_bboxes[foreground_idxs]
-        matcher_box_weight = gt_fg_mask[foreground_idxs].float() \
-                            * gt_heatmaps[foreground_idxs].max(-1)[0]
         loss_bboxes, ious = self.loss_bboxes(
             matched_pred_delta, 
             matched_tgt_delta,
-            matcher_box_weight,
             num_foreground
             )
 
