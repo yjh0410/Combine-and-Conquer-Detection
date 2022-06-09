@@ -95,7 +95,7 @@ if __name__ == '__main__':
 
     # dataset
     print('test on coco-val ...')
-    data_root = os.path.join(d_cfg['data_root'], 'COCO')
+    data_root = os.path.join(d_cfg['data_root'])
     class_names = coco_class_labels
     class_indexs = coco_class_index
     num_classes = 80
