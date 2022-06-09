@@ -83,7 +83,7 @@ class Criterion(object):
         # targets
         gt_heatmaps = targets[..., :self.num_classes]
         gt_bboxes = targets[..., self.num_classes:self.num_classes+4]
-        gt_bboxes_weight = targets[..., self.num_classes+4:]
+        gt_fg_mask = targets[..., self.num_classes+4:]
 
         # [B, H, W, C] -> [BHW, C]
         pred_hmp = outputs['pred_hmp'].view(-1, self.num_classes)
@@ -92,8 +92,8 @@ class Criterion(object):
         
         gt_heatmaps = gt_heatmaps.view(-1, self.num_classes).to(device)
         gt_bboxes = gt_bboxes.view(-1, 4).to(device)
-        gt_bboxes_weight = gt_bboxes_weight.view(-1).to(device)
-        foreground_idxs = (gt_bboxes_weight > 0)
+        gt_fg_mask = gt_fg_mask.view(-1).to(device)
+        foreground_idxs = (gt_fg_mask > 0)
 
         num_foreground = foreground_idxs.sum()
         if is_dist_avail_and_initialized():
@@ -106,7 +106,7 @@ class Criterion(object):
         # bboxes loss
         matched_pred_delta = pred_box[foreground_idxs]
         matched_tgt_delta = gt_bboxes[foreground_idxs]
-        matcher_box_weight = gt_bboxes_weight[foreground_idxs]
+        matcher_box_weight = gt_fg_mask[foreground_idxs] * gt_heatmaps[foreground_idxs].max(-1)
         loss_bboxes, ious = self.loss_bboxes(
             matched_pred_delta, 
             matched_tgt_delta,
