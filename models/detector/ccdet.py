@@ -104,7 +104,7 @@ class CCDet(nn.Module):
         hmp = hmp.permute(1, 2, 0).contiguous().cpu().numpy()
         for i in range(self.num_classes):
             hmp_i = hmp[..., i]
-            plt.imshow('shmp', hmp_i)
+            plt.imshow(hmp_i)
             plt.show()
 
 
