@@ -106,7 +106,7 @@ class Criterion(object):
         # bboxes loss
         matched_pred_delta = pred_box[foreground_idxs]
         matched_tgt_delta = gt_bboxes[foreground_idxs]
-        matcher_box_weight = gt_fg_mask[foreground_idxs].float \
+        matcher_box_weight = gt_fg_mask[foreground_idxs].float() \
                             * gt_heatmaps[foreground_idxs].max(-1)[0]
         loss_bboxes, ious = self.loss_bboxes(
             matched_pred_delta, 
