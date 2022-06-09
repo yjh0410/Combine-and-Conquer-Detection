@@ -33,12 +33,9 @@ Main results on COCO.
 
 |  Model        |  Backbone     | Size | FPS<sup><br>2080ti | Param | FLOPs |  AP  | AP50 |  Weight  |
 |---------------|---------------|------|--------------------|-------|-------|------|------|----------|
-| CCDet-R18     | ResNet-18     | 640  |                    | 20 M  |  24 B | 33.0 | 53.6 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r18_33.0_53.6.pth) |
-| CCDet-R50     | ResNet-50     | 640  |                    | 34 M  |  44 B | 38.0 | 60.0 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r50_38.0_60.0.pth) |
-| CCDet-R101    | ResNet-101    | 640  |                    | 53 M  |  74 B | 40.0 | 61.3 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r101_40.0_61.3.pth)|
-<!-- | CCDet-E-R18   | ResNet-18     | 640  |                    | -  M  |  -  B | -    | -    | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r18_33.0_53.6.pth) |
-| CCDet-E-R50   | ResNet-50     | 640  |                    | -  M  |  -  B | -    | -    | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r50_38.0_60.0.pth) |
-| CCDet-E-R101  | ResNet-101    | 640  |                    | -  M  |  -  B | -    | -    | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r101_40.0_61.3.pth)| -->
+| CCDet-R18     | ResNet-18     | 640  |       143          | 20 M  |  24 B | 33.0 | 53.6 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r18_33.0_53.6.pth) |
+| CCDet-R50     | ResNet-50     | 640  |        68          | 34 M  |  44 B | 38.0 | 60.0 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r50_38.0_60.0.pth) |
+| CCDet-R101    | ResNet-101    | 640  |        46          | 53 M  |  74 B | 40.0 | 61.3 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r101_40.0_61.3.pth)|
 
 ## Face Detection
 ### CCDet
