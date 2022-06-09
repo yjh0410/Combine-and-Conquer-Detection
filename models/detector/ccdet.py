@@ -131,20 +131,21 @@ class CCDet(nn.Module):
         bboxes = topk_bboxes.cpu().numpy()    # [N, 4]
 
         # nms
-        keep = np.zeros(len(bboxes), dtype=np.int)
-        for i in range(self.num_classes):
-            inds = np.where(labels == i)[0]
-            if len(inds) == 0:
-                continue
-            c_bboxes = bboxes[inds]
-            c_scores = scores[inds]
-            c_keep = self.nms(c_bboxes, c_scores)
-            keep[inds[c_keep]] = 1
+        if self.cfg['use_nms']:
+            keep = np.zeros(len(bboxes), dtype=np.int)
+            for i in range(self.num_classes):
+                inds = np.where(labels == i)[0]
+                if len(inds) == 0:
+                    continue
+                c_bboxes = bboxes[inds]
+                c_scores = scores[inds]
+                c_keep = self.nms(c_bboxes, c_scores)
+                keep[inds[c_keep]] = 1
 
-        keep = np.where(keep > 0)
-        bboxes = bboxes[keep]
-        scores = scores[keep]
-        labels = labels[keep]
+            keep = np.where(keep > 0)
+            bboxes = bboxes[keep]
+            scores = scores[keep]
+            labels = labels[keep]
 
         return scores, labels, bboxes
 

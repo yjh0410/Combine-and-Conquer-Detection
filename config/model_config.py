@@ -32,6 +32,7 @@ m_config = {
         'num_cls_layers': 1,
         'num_reg_layers': 1,
         # post-process
+        'use_nms': True,
         'nms_kernel': 5,
         'nms_thresh': 0.5,
         'train_topk': 1000,
@@ -85,6 +86,7 @@ m_config = {
         'num_cls_layers': 1,
         'num_reg_layers': 1,
         # post-process
+        'use_nms': True,
         'nms_kernel': 5,
         'nms_thresh': 0.5,
         'train_topk': 1000,
@@ -138,6 +140,7 @@ m_config = {
         'num_cls_layers': 1,
         'num_reg_layers': 1,
         # post-process
+        'use_nms': True,
         'nms_kernel': 5,
         'nms_thresh': 0.5,
         'train_topk': 1000,
@@ -192,6 +195,7 @@ m_config = {
         'num_cls_layers': 1,
         'num_reg_layers': 1,
         # post-process
+        'use_nms': True,
         'nms_kernel': 5,
         'nms_thresh': 0.5,
         'train_topk': 1000,
@@ -245,6 +249,7 @@ m_config = {
         'num_cls_layers': 1,
         'num_reg_layers': 1,
         # post-process
+        'use_nms': True,
         'nms_kernel': 5,
         'nms_thresh': 0.5,
         'train_topk': 1000,
@@ -298,6 +303,7 @@ m_config = {
         'num_cls_layers': 1,
         'num_reg_layers': 1,
         # post-process
+        'use_nms': True,
         'nms_kernel': 5,
         'nms_thresh': 0.5,
         'train_topk': 1000,
