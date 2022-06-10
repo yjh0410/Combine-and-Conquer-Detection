@@ -39,8 +39,8 @@ class HMPCreator(object):
             bh_s = bh / self.stride
 
             # gaussian radius
-            rw = max(int(bw_s / 6), 1)
-            rh = max(int(bh_s / 6), 1)
+            rw = max(int(0.54 * bw_s / 6), 1)
+            rh = max(int(0.54 * bh_s / 6), 1)
 
             # scale box to feature size
             x1s = int(x1 / img_w * fmp_w)

@@ -4,10 +4,7 @@ from ..basic.conv import Conv
 
 
 class DecoupledHead(nn.Module):
-    def __init__(self,
-                 cfg,
-                 in_dim=1024,
-                 out_dim=256):
+    def __init__(self, cfg, in_dim=1024, out_dim=256):
         super().__init__()
 
         # input project
