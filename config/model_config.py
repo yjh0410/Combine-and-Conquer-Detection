@@ -242,7 +242,7 @@ m_config = {
         # head
         'head': 'decoupled_head',
         'head_k': 3,
-        'head_dim': 64,
+        'head_dim': 128,
         'head_act': 'relu',
         'head_norm': 'BN',
         'head_dw': False,
@@ -296,7 +296,7 @@ m_config = {
         # head
         'head': 'decoupled_head',
         'head_k': 3,
-        'head_dim': 64,
+        'head_dim': 128,
         'head_act': 'relu',
         'head_norm': 'BN',
         'head_dw': False,
