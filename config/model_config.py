@@ -192,8 +192,8 @@ m_config = {
         'head_act': 'relu',
         'head_norm': 'BN',
         'head_dw': False,
-        'num_cls_layers': 1,
-        'num_reg_layers': 1,
+        'num_cls_layers': 2,
+        'num_reg_layers': 2,
         # post-process
         'use_nms': True,
         'nms_kernel': 5,
@@ -246,8 +246,8 @@ m_config = {
         'head_act': 'relu',
         'head_norm': 'BN',
         'head_dw': False,
-        'num_cls_layers': 1,
-        'num_reg_layers': 1,
+        'num_cls_layers': 2,
+        'num_reg_layers': 2,
         # post-process
         'use_nms': True,
         'nms_kernel': 5,
@@ -300,8 +300,8 @@ m_config = {
         'head_act': 'relu',
         'head_norm': 'BN',
         'head_dw': False,
-        'num_cls_layers': 1,
-        'num_reg_layers': 1,
+        'num_cls_layers': 2,
+        'num_reg_layers': 2,
         # post-process
         'use_nms': True,
         'nms_kernel': 5,
