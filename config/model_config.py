@@ -15,12 +15,6 @@ m_config = {
         'expand_ratio': 0.5,
         'neck_act': 'relu',
         'neck_norm': 'BN',
-        # neck
-        # 'neck_name': 'SPP',
-        # 'kernel_sizes': [5, 7, 9],
-        # 'expand_ratio': 0.5,
-        # 'neck_act': 'relu',
-        # 'neck_norm': 'BN',
         # fpn
         'fpn_name': 'basicfpn',
         'fpn_dims': [64, 128, 256, 256],
@@ -35,8 +29,8 @@ m_config = {
         'head_act': 'relu',
         'head_norm': 'BN',
         'head_dw': False,
-        'num_cls_layers': 3,
-        'num_reg_layers': 3,
+        'num_cls_layers': 4,
+        'num_reg_layers': 4,
         # post-process
         'use_nms': True,
         'nms_kernel': 5,
@@ -89,8 +83,8 @@ m_config = {
         'head_act': 'relu',
         'head_norm': 'BN',
         'head_dw': False,
-        'num_cls_layers': 3,
-        'num_reg_layers': 3,
+        'num_cls_layers': 4,
+        'num_reg_layers': 4,
         # post-process
         'use_nms': True,
         'nms_kernel': 5,
@@ -143,8 +137,8 @@ m_config = {
         'head_act': 'relu',
         'head_norm': 'BN',
         'head_dw': False,
-        'num_cls_layers': 1,
-        'num_reg_layers': 1,
+        'num_cls_layers': 4,
+        'num_reg_layers': 4,
         # post-process
         'use_nms': True,
         'nms_kernel': 5,
