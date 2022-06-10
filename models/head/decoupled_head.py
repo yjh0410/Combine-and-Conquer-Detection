@@ -12,11 +12,11 @@ class DecoupledHead(nn.Module):
 
         # input project
         self.input_proj_cls = Conv(
-            in_dim, out_dim, k=1, 
+            in_dim, out_dim, k=3, p=1, 
             act_type=cfg['head_act'], 
             norm_type=cfg['head_norm'])
         self.input_proj_reg = Conv(
-            in_dim, out_dim, k=1, 
+            in_dim, out_dim, k=3, p=1, 
             act_type=cfg['head_act'], 
             norm_type=cfg['head_norm'])
 
