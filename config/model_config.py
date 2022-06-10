@@ -93,7 +93,7 @@ m_config = {
         'test_topk': 100,
         # loss
         'loss_hmp_weight': 1.0,
-        'loss_reg_weight': 1.0,
+        'loss_reg_weight': 2.0,
         'loss_iou_weight': 1.0,
         # training configuration
         'max_epoch': 200,
@@ -137,8 +137,8 @@ m_config = {
         'head_act': 'relu',
         'head_norm': 'BN',
         'head_dw': False,
-        'num_cls_layers': 1,
-        'num_reg_layers': 1,
+        'num_cls_layers': 2,
+        'num_reg_layers': 2,
         # post-process
         'use_nms': True,
         'nms_kernel': 5,
@@ -147,7 +147,7 @@ m_config = {
         'test_topk': 100,
         # loss
         'loss_hmp_weight': 1.0,
-        'loss_reg_weight': 1.0,
+        'loss_reg_weight': 2.0,
         'loss_iou_weight': 1.0,
         # training configuration
         'max_epoch': 200,
