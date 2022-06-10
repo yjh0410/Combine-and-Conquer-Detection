@@ -15,9 +15,15 @@ m_config = {
         'expand_ratio': 0.5,
         'neck_act': 'relu',
         'neck_norm': 'BN',
+        # neck
+        # 'neck_name': 'SPP',
+        # 'kernel_sizes': [5, 7, 9],
+        # 'expand_ratio': 0.5,
+        # 'neck_act': 'relu',
+        # 'neck_norm': 'BN',
         # fpn
         'fpn_name': 'basicfpn',
-        'fpn_dims': [64, 128, 256, 512],
+        'fpn_dims': [64, 128, 256, 256],
         'fpn_idx': ['layer1', 'layer2', 'layer3', 'layer4'],
         'fpn_act': 'relu',
         'fpn_norm': 'BN',
@@ -29,8 +35,8 @@ m_config = {
         'head_act': 'relu',
         'head_norm': 'BN',
         'head_dw': False,
-        'num_cls_layers': 1,
-        'num_reg_layers': 1,
+        'num_cls_layers': 3,
+        'num_reg_layers': 3,
         # post-process
         'use_nms': True,
         'nms_kernel': 5,
@@ -71,7 +77,7 @@ m_config = {
         'neck_norm': 'BN',
         # fpn
         'fpn_name': 'basicfpn',
-        'fpn_dims': [64, 128, 256, 512],
+        'fpn_dims': [64, 128, 256, 256],
         'fpn_idx': ['layer1', 'layer2', 'layer3', 'layer4'],
         'fpn_act': 'relu',
         'fpn_norm': 'BN',
@@ -83,8 +89,8 @@ m_config = {
         'head_act': 'relu',
         'head_norm': 'BN',
         'head_dw': False,
-        'num_cls_layers': 1,
-        'num_reg_layers': 1,
+        'num_cls_layers': 3,
+        'num_reg_layers': 3,
         # post-process
         'use_nms': True,
         'nms_kernel': 5,
@@ -125,7 +131,7 @@ m_config = {
         'neck_norm': 'BN',
         # fpn
         'fpn_name': 'basicfpn',
-        'fpn_dims': [64, 128, 256, 512],
+        'fpn_dims': [64, 128, 256, 256],
         'fpn_idx': ['layer1', 'layer2', 'layer3', 'layer4'],
         'fpn_act': 'relu',
         'fpn_norm': 'BN',

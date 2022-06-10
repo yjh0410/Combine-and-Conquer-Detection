@@ -61,9 +61,9 @@ class CCDet(nn.Module):
             )
 
         # pred
-        self.hmp_pred = nn.Conv2d(cfg['head_dim'], self.num_classes, kernel_size=1)
-        self.reg_pred = nn.Conv2d(cfg['head_dim'], 4, kernel_size=1)
-        self.iou_pred = nn.Conv2d(cfg['head_dim'], 1, kernel_size=1)
+        self.hmp_pred = nn.Conv2d(cfg['head_dim'], self.num_classes, kernel_size=3, padding=1)
+        self.reg_pred = nn.Conv2d(cfg['head_dim'], 4, kernel_size=3, padding=1)
+        self.iou_pred = nn.Conv2d(cfg['head_dim'], 1, kernel_size=3, padding=1)
 
         if trainable:
             # init bias

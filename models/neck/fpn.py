@@ -64,9 +64,13 @@ class BasicFPN(nn.Module):
         for i in range(1, len(out_dims)):
             # deconv layer
             self.deconv_layers.append(
-                ResizeConv(out_dims_[i-1], out_dims_[i], 
-                           act_type=act_type, norm_type=norm_type,
-                           scale_factor=2, mode='nearest'))
+                ResizeConv(
+                    out_dims_[i-1], out_dims_[i],
+                    act_type=act_type,
+                    norm_type=norm_type,
+                    scale_factor=2,
+                    mode='nearest')
+                    )
 
         # smooth layers
         for i in range(len(out_dims)):
