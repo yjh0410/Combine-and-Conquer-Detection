@@ -8,10 +8,10 @@ import os.path as osp
 
 try:
     from utils.transforms import  mosaic_augment, mixup_augment
-    from utils.label_creator import HMPCreator
+    from utils.label_creator import LabelCreator
 except:
     from .utils.transforms import  mosaic_augment, mixup_augment
-    from .utils.label_creator import HMPCreator
+    from .utils.label_creator import LabelCreator
 
 
 CrowdHuman_CLASSES = ['person']
@@ -51,7 +51,7 @@ class CrowdHumanDetection(torch.utils.data.Dataset):
             print('use Mixup Augmentation ...')
 
         self.is_train = is_train
-        self.gt_creator = HMPCreator(num_classes=20, stride=stride)
+        self.gt_creator = LabelCreator(num_classes=20, stride=stride)
 
 
     def __getitem__(self, index):

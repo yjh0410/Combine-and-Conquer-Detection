@@ -2,8 +2,8 @@ import numpy as np
 import torch
 
 
-class HMPCreator(object):
-    """ Creator for Heatmap"""
+class LabelCreator(object):
+    """ Creator for Groundtruth"""
     def __init__(self, num_classes, stride):
         self.num_classes = num_classes
         self.stride = stride
@@ -52,26 +52,25 @@ class HMPCreator(object):
             grid_x = int(xc_s)
             grid_y = int(yc_s)    
 
-            img_area = (img_h * img_w)
-            box_area = (x2 - x1) * (y2 - y1)
-            # assign the target to center anchor
-            gt_heatmaps[grid_y, grid_x, label] = 1.0
-            gt_bboxes[grid_y, grid_x] = np.array([x1, y1, x2, y2])
-            gt_fg_mask[grid_y, grid_x] = 1.0
+            # # assign the target to center anchor
+            # gt_heatmaps[grid_y, grid_x, label] = 1.0
+            # gt_bboxes[grid_y, grid_x] = np.array([x1, y1, x2, y2])
+            # gt_fg_mask[grid_y, grid_x] = 1.0
 
-            # create a Gauss Heatmap for the target
-            prev_hmp = gt_heatmaps[y1s:y2s, x1s:x2s, label]
-            grid_x_mat, grid_y_mat = np.meshgrid(np.arange(x1s, x2s), np.arange(y1s, y2s))
-            M = -(grid_x_mat - grid_x)**2 / (2*(rw)**2) \
-                -(grid_y_mat - grid_y)**2 / (2*(rh)**2)
-            cur_hmp = np.exp(M)
+            # # create a Gauss Heatmap for the target
+            # prev_hmp = gt_heatmaps[y1s:y2s, x1s:x2s, label]
+            # grid_x_mat, grid_y_mat = np.meshgrid(np.arange(x1s, x2s), np.arange(y1s, y2s))
+            # M = -(grid_x_mat - grid_x)**2 / (2*(rw)**2) \
+            #     -(grid_y_mat - grid_y)**2 / (2*(rh)**2)
+            # cur_hmp = np.exp(M)
 
-            gt_heatmaps[y1s:y2s, x1s:x2s, label] = np.maximum(cur_hmp, prev_hmp)
+            # gt_heatmaps[y1s:y2s, x1s:x2s, label] = np.maximum(cur_hmp, prev_hmp)
 
             # multi positive samples
             for i in range(grid_x - 1, grid_x + 2):
                 for j in range(grid_y - 1, grid_y + 2):
                     if (j >=y1s and j < y2s) and (i >=x1s and i < x2s):
+                        gt_heatmaps[j, i, label] = 1.0
                         gt_bboxes[j, i] = np.array([x1, y1, x2, y2])
                         gt_fg_mask[j, i] = 1.0
         

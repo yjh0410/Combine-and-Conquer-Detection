@@ -1,7 +1,11 @@
 python train.py \
             --cuda \
             -d coco \
-            -v ccdet_e_r50 \
+            -v ccdet \
+            -bk resnet18 \
+            -nk dilated_encoder \
+            -fp basicfpn \
+            -hd decoupled_head \
             --ema \
             --fp16 \
             --eval_epoch 10

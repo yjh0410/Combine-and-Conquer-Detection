@@ -6,7 +6,7 @@ import numpy as np
 import cv2
 
 from ..backbone import build_backbone
-from ..neck import build_fpn
+from ..neck import build_fpn, build_neck
 from ..head import build_head
 
 from .loss import Criterion
@@ -18,52 +18,70 @@ DEFAULT_SCALE_CLAMP = np.log(1000.)
 # Combine-and-Conquer Detector
 class CCDet(nn.Module):
     def __init__(self,
+                 args,
                  cfg,
                  device,
                  img_size=640,
                  num_classes=20,
                  topk=100,
+                 conf_thresh = 0.01,
                  nms_thresh = 0.6,
                  trainable=False):
         super(CCDet, self).__init__()
+        # config
         self.cfg = cfg
+        self.bk_cfg = cfg['backbone'][args.backbone]
+        self.neck_cfg = cfg['neck'][args.neck]
+        self.fpn_cfg = cfg['feat_aggr'][args.fpn]
+        self.head_cfg = cfg['head'][args.head]
+        # init
         self.device = device
         self.img_size = img_size
-        self.stride = cfg['stride']
-        self.fpn_idx = cfg['fpn_idx']
-        self.nms_kernel = cfg['nms_kernel']
         self.num_classes = num_classes
         self.trainable = trainable
+        self.conf_thresh = conf_thresh
         self.nms_thresh = nms_thresh
-        self.topk_candidate = topk
+        self.topk = topk
+        self.stride = self.cfg['stride']
+        self.fpn_idx = self.fpn_cfg['fpn_idx']
 
         # generate anchors
         self.anchors = self.generate_anchors(img_size)
 
         # backbone
-        self.backbone, bk_dims = build_backbone(
-            cfg=cfg,
-            model_name=cfg['backbone'],
-            pretrained=cfg['pretrained'] and trainable
-            )
+        self.backbone, bk_dims = build_backbone(bk_name=args.backbone, bk_cfg=self.bk_cfg)
         bk_dims = [bk_dims[layer_idx] for layer_idx in self.fpn_idx]
 
         # neck
-        self.fpn = build_fpn(
-            cfg=cfg, in_dims=bk_dims, 
-            out_dims=cfg['fpn_dims']
+        self.neck = build_neck(
+            neck_name=args.neck,
+            neck_cfg=self.neck_cfg,
+            in_dim=bk_dims[-1],
+            out_dim=self.fpn_cfg['fpn_dims'][-1]
             )
 
-        # head
+        # feat aggregation
+        bk_dims[-1] = self.fpn_cfg['fpn_dims'][-1]
+        self.fpn = build_fpn(
+            fpn_name=args.fpn,
+            fpn_cfg=self.fpn_cfg,
+            in_dims=bk_dims,
+            out_dims=self.fpn_cfg['fpn_dims']
+            )
+
+        # detection head
+        head_dim = self.head_cfg['head_dim']
         self.head = build_head(
-            cfg=cfg, in_dim=cfg['fpn_dims'][0], 
-            out_dim=cfg['head_dim']
+            head_name=args.head,
+            head_cfg=self.head_cfg,
+            in_dim=self.fpn_cfg['fpn_dims'][0], 
+            out_dim=head_dim
             )
 
         # pred
-        self.hmp_pred = nn.Conv2d(cfg['head_dim'], self.num_classes, kernel_size=1)
-        self.reg_pred = nn.Conv2d(cfg['head_dim'], 4, kernel_size=1)
-        self.iou_pred = nn.Conv2d(cfg['head_dim'], 1, kernel_size=1)
+        self.hmp_pred = nn.Conv2d(head_dim, self.num_classes, kernel_size=1)
+        self.reg_pred = nn.Conv2d(head_dim, 4, kernel_size=1)
+        self.iou_pred = nn.Conv2d(head_dim, 1, kernel_size=1)
 
         if trainable:
             # init bias
@@ -71,12 +89,14 @@ class CCDet(nn.Module):
 
         # criterion
         if trainable:
-            self.criterion = Criterion(cfg=cfg,
-                                       device=device,
-                                       loss_hmp_weight=cfg['loss_hmp_weight'],
-                                       loss_reg_weight=cfg['loss_reg_weight'],
-                                       loss_iou_weight=cfg['loss_iou_weight'],
-                                       num_classes=num_classes)
+            self.criterion = Criterion(
+                cfg=cfg,
+                device=device,
+                loss_hmp_weight=cfg['loss_hmp_weight'],
+                loss_reg_weight=cfg['loss_reg_weight'],
+                loss_iou_weight=cfg['loss_iou_weight'],
+                num_classes=num_classes
+                )
 
 
     @torch.no_grad()
@@ -86,9 +106,12 @@ class CCDet(nn.Module):
         """
         # backbone
         bk_feats = self.backbone(x)
-
-        # fpn
         pyramid_feats = [bk_feats[layer_idx] for layer_idx in self.fpn_idx]
+
+        # neck
+        pyramid_feats[-1] = self.neck(pyramid_feats[-1])
+        
+        # fpn
         pyramid_feats = self.fpn(pyramid_feats)
 
         # head
@@ -107,8 +130,8 @@ class CCDet(nn.Module):
         anchors = self.anchors
 
         # topk
-        if scores.shape[0] > self.topk_candidate:
-            scores, indices = torch.topk(scores, self.topk_candidate)
+        if scores.shape[0] > self.topk:
+            scores, indices = torch.topk(scores, self.topk)
             labels = labels[indices]
             reg_pred = reg_pred[indices]
             anchors = anchors[indices]
@@ -151,12 +174,15 @@ class CCDet(nn.Module):
 
             # backbone
             bk_feats = self.backbone(x)
-
-            # fpn
             pyramid_feats = [bk_feats[layer_idx] for layer_idx in self.fpn_idx]
+
+            # neck
+            pyramid_feats[-1] = self.neck(pyramid_feats[-1])
+            
+            # feat aggregation
             pyramid_feats = self.fpn(pyramid_feats)
 
-            # head
+            # detection head
             top_feat = pyramid_feats[0]
             cls_feat, reg_feat = self.head(top_feat)
 

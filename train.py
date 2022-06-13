@@ -40,8 +40,17 @@ def parse_args():
                         help="Adopting mix precision training.")
 
     # model
-    parser.add_argument('-v', '--version', default='ccdet_r18', type=str,
-                        help='build CC-Det')
+    parser.add_argument('-v', '--version', default='ccdet', type=str,
+                        help='build ccdet')
+    parser.add_argument('-bk', '--backbone', default='r18', type=str,
+                        help='build backbone')
+    parser.add_argument('-nk', '--neck', default='dilated_encoder', type=str,
+                        help='build neck')
+    parser.add_argument('-fp', '--fpn', default='basicfpn', type=str,
+                        help='build feat aggregation')
+    parser.add_argument('-hd', '--head', default='decoupled_head', type=str,
+                        help='build detection head')
+
     parser.add_argument('-p', '--coco_pretrained', default=None, type=str,
                         help='coco pretrained weight')
     parser.add_argument('-r', '--resume', default=None, type=str,
@@ -80,7 +89,7 @@ def train():
         print("git:\n  {}\n".format(distributed_utils.get_sha()))
 
     # path to save model
-    path_to_save = os.path.join(args.save_folder, args.dataset, args.version)
+    path_to_save = os.path.join(args.save_folder, args.dataset, args.version, args.backbone)
     os.makedirs(path_to_save, exist_ok=True)
 
     # cuda
@@ -96,7 +105,7 @@ def train():
 
     # d_cfg: dataset config
     # m_cfg: model config
-    d_cfg, m_cfg = build_config(args.dataset, args.version)
+    d_cfg, m_cfg = build_config(args.dataset)
 
     # dataset and evaluator
     dataset, evaluator = build_dataset(d_cfg, m_cfg, args, device)
@@ -107,6 +116,7 @@ def train():
 
     # build model
     model = build_model(
+        args=args,
         cfg=m_cfg,
         device=device,
         img_size=d_cfg['train_size'],

@@ -6,6 +6,7 @@ from copy import deepcopy
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 from evaluator.coco_evaluator import COCOEvaluator
 from evaluator.voc_evaluator import VOCEvaluator

@@ -3,7 +3,8 @@ import torch
 from .detector.ccdet import CCDet
 
 
-def build_model(cfg, 
+def build_model(args, 
+                cfg, 
                 device, 
                 img_size, 
                 num_classes, 
@@ -22,11 +23,13 @@ def build_model(cfg,
 
     # build CC-Det    
     model = CCDet(
+        args=args,
         cfg=cfg,
         device=device,
         img_size=img_size,
         num_classes=num_classes,
         topk=topk,
+        conf_thresh=cfg['conf_thresh'],
         nms_thresh=cfg['nms_thresh'],
         trainable=is_train) 
 
