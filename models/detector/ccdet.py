@@ -107,7 +107,7 @@ class CCDet(nn.Module):
         scores, labels = torch.max(torch.sqrt(hmp_pred.sigmoid() * iou_pred.sigmoid()), dim=-1)
 
         # [M, 4]
-        anchors = self.anchors
+        anchors = self.anchors.view(-1, 2)
 
         # topk
         if scores.shape[0] > self.topk_candidate:
