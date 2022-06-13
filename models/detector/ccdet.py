@@ -117,6 +117,7 @@ class CCDet(nn.Module):
             anchors = anchors[indices]
 
         # decode box: [M, 4]
+        print(anchors.shape, reg_pred.shape)
         bboxes = self.decode_boxes(anchors, reg_pred) / self.img_size
         bboxes = bboxes.clamp(0., 1.)
 
@@ -143,9 +144,9 @@ class CCDet(nn.Module):
         # topk_bboxes = topk_bboxes.clamp(0., 1.)
 
         # to cpu
-        scores = topk_scores.cpu().numpy()    # [N,]
-        labels = topk_labels.cpu().numpy()    # [N,]
-        bboxes = topk_bboxes.cpu().numpy()    # [N, 4]
+        scores = scores.cpu().numpy()    # [N,]
+        labels = labels.cpu().numpy()    # [N,]
+        bboxes = bboxes.cpu().numpy()    # [N, 4]
 
         # nms
         if self.cfg['use_nms']:
