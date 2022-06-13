@@ -4,7 +4,7 @@ python train.py \
             -v ccdet \
             -bk resnet18 \
             -nk dilated_encoder \
-            -fp yolopafpn \
+            -fp basicfpn \
             -hd decoupled_head \
             --ema \
             --fp16 \
