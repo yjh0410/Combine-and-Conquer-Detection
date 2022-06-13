@@ -28,7 +28,7 @@ m_config = {
                                 'fpn_dw': False},
                  'yolopafpn': {'fpn_dims': [128, 256, 512],
                                'fpn_idx': ['layer2', 'layer3', 'layer4'],
-                               'fpn_act': 'lrelu',
+                               'fpn_act': 'relu',
                                'fpn_norm': 'BN',
                                'fpn_dw': False,
                                'depth': 3},
@@ -39,8 +39,8 @@ m_config = {
                                 'head_act': 'relu',
                                 'head_norm': 'BN',
                                 'head_dw': False,
-                                'num_cls_layers': 2,
-                                'num_reg_layers': 2},
+                                'num_cls_layers': 4,
+                                'num_reg_layers': 4},
                                 },
     # post-process
     'use_nms': True,
@@ -51,7 +51,7 @@ m_config = {
     'eval_topk': 1000,
     # loss
     'loss_hmp_weight': 1.0,
-    'loss_reg_weight': 5.0,
+    'loss_reg_weight': 2.0,
     'loss_iou_weight': 1.0,
     # training configuration
     'max_epoch': 200,

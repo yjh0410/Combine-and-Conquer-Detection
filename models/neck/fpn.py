@@ -9,8 +9,8 @@ from ..basic.bottleneck_csp import BottleneckCSP
 # Basic FPN
 class BasicFPN(nn.Module):
     def __init__(self, 
-                 in_dims=[256, 512, 1024, 2048],  # [C2, C3, C4, C5]
-                 out_dims=[64, 128, 256, 512],    # [P2, P3, P4, P5]
+                 in_dims=[512, 1024, 2048],  # [C3, C4, C5]
+                 out_dims=[128, 256, 512],   # [P3, P4, P5]
                  act_type='relu',
                  norm_type='BN',
                  depthwise=False):
