@@ -96,8 +96,8 @@ class CCDet(nn.Module):
         cls_feat, reg_feat = self.head(top_feat)
 
         # pred
-        hmp_pred = self.hmp_pred(cls_feat)[0].contiguous().view(-1, self.num_classes)
-        reg_pred = self.reg_pred(reg_feat)[0].contiguous().view(-1, 4)
+        hmp_pred = self.hmp_pred(cls_feat)[0].permute(1, 2, 0).contiguous().view(-1, self.num_classes)
+        reg_pred = self.reg_pred(reg_feat)[0].permute(1, 2, 0).contiguous().view(-1, 4)
         iou_pred = self.iou_pred(reg_feat)[0].permute(1, 2, 0).contiguous().view(-1, 1)
 
         # # scores
