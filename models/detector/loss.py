@@ -5,27 +5,6 @@ from utils.box_ops import *
 from utils.distributed_utils import get_world_size, is_dist_avail_and_initialized
 
 
-def sigmoid_focal_loss(logits, targets, alpha=0.25, gamma=2.0, reduction='none'):
-    p = torch.sigmoid(logits)
-    ce_loss = F.binary_cross_entropy_with_logits(input=logits, 
-                                                    target=targets, 
-                                                    reduction="none")
-    p_t = p * targets + (1.0 - p) * (1.0 - targets)
-    loss = ce_loss * ((1.0 - p_t) ** gamma)
-
-    if alpha >= 0:
-        alpha_t = alpha * targets + (1.0 - alpha) * (1.0 - targets)
-        loss = alpha_t * loss
-
-    if reduction == "mean":
-        loss = loss.mean()
-
-    elif reduction == "sum":
-        loss = loss.sum()
-
-    return loss
-
-
 class Criterion(object):
     def __init__(self, 
                  cfg, 
@@ -42,9 +21,23 @@ class Criterion(object):
         self.loss_iou_weight = loss_iou_weight
 
 
-    def loss_heatmap(self, pred, target, num_bboxes):
-        loss = sigmoid_focal_loss(pred, target, reduction='none')
-        loss = loss.sum() / num_bboxes
+    def loss_heatmap(self, pred, target):
+        """
+        focal loss used for CenterNet, modified from focal loss.
+        but this function is a numeric stable version implementation.
+        """
+        pred = pred.sigmoid().clamp(min=1e-4, max=1.0 - 1e-4)
+
+        pos_inds = target.eq(1).float()
+        neg_inds = target.lt(1).float()
+        num_pos  = pos_inds.float().sum().clamp(1.0)
+
+        neg_weights = torch.pow(1.0 - target, 4)
+
+        pos_loss = torch.log(pred) * torch.pow(1 - pred, 2) * pos_inds
+        neg_loss = torch.log(1 - pred) * torch.pow(pred, 2) * neg_weights * neg_inds
+
+        loss = -(pos_loss + neg_loss).sum() / num_pos
 
         return loss
 
@@ -100,11 +93,7 @@ class Criterion(object):
         num_foreground = torch.clamp(num_foreground / get_world_size(), min=1).item()
 
         # heatmap loss
-        loss_hmp = self.loss_heatmap(
-            pred_hmp,
-            gt_heatmaps,
-            num_foreground
-            )
+        loss_hmp = self.loss_heatmap(pred_hmp, gt_heatmaps)
 
         # bboxes loss
         matched_pred_delta = pred_box[foreground_idxs]

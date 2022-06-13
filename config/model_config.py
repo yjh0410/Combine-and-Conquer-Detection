@@ -8,14 +8,18 @@ m_config = {
     'backbone': {'resnet18': {'pretrained': True},
                  'resnet50': {'pretrained': True},
                  'resnet101': {'pretrained': True},
+                 'cspdarknet53': {'pretrained': True}
                                 },
     # neck
     'neck': {'dilated_encoder': {'dilations': [2, 4, 6, 8],
                                  'expand_ratio': 0.5,
                                  'neck_act': 'relu',
                                  'neck_norm': 'BN'},
-                'SPP': {},
-                    },
+             'spp': {'kernel_sizes': [5, 9, 13],
+                     'expand_ratio': 0.5,
+                     'neck_act': 'relu',
+                     'neck_norm': 'BN'},
+                     },
     # feature aggregation
     'feat_aggr':{'basicfpn': {'fpn_dims': [128, 256, 512],
                                 'fpn_idx': ['layer2', 'layer3', 'layer4'],

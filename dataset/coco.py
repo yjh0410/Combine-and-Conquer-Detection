@@ -13,10 +13,10 @@ except:
 
 try:
     from utils.transforms import  mosaic_augment, mixup_augment
-    from utils.label_creator import LabelCreator
+    from utils.label_creator import HMPCreator
 except:
     from .utils.transforms import  mosaic_augment, mixup_augment
-    from .utils.label_creator import LabelCreator
+    from .utils.label_creator import HMPCreator
 
 
 coco_class_labels = ('background',
@@ -87,7 +87,7 @@ class COCODataset(Dataset):
             print('use Mixup Augmentation ...')
 
         self.is_train = is_train
-        self.gt_creator = LabelCreator(num_classes=80, stride=stride)
+        self.gt_creator = HMPCreator(num_classes=80, stride=stride)
 
 
     def __len__(self):
