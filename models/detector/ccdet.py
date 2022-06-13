@@ -110,8 +110,8 @@ class CCDet(nn.Module):
         anchors = self.anchors
 
         # topk
-        if scores.shape[0] > self.topk:
-            scores, indices = torch.topk(scores, self.topk)
+        if scores.shape[0] > self.topk_candidate:
+            scores, indices = torch.topk(scores, self.topk_candidate)
             labels = labels[indices]
             reg_pred = reg_pred[indices]
             anchors = anchors[indices]
