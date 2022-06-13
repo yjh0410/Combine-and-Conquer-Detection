@@ -36,14 +36,14 @@ Main results on COCO.
 | CCDet-R18     | ResNet-18     | 640  |       143          | 20 M  |  24 B | 33.0 | 53.6 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r18_33.0_53.6.pth) |
 | CCDet-R50     | ResNet-50     | 640  |        68          | 34 M  |  44 B | 37.7 | 60.0 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r50_38.0_60.0.pth) |
 | CCDet-R101    | ResNet-101    | 640  |        46          | 53 M  |  74 B | 40.0 | 61.3 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r101_40.0_61.3.pth)|
-| CCDet-E-R18   | ResNet-18     | 640  |                    | 21 M  |  24 B | 34.2 | 53.7 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_e_r18_34.2_53.7.pth) |
+| CCDet-E-R18   | ResNet-18     | 640  |                    | 21 M  |  24 B | 34.4 | 54.6 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_e_r18_34.4_54.6.pth) |
 | CCDet-E-R50   | ResNet-50     | 640  |                    | 34 M  |  44 B |      |      | [github]() |
 
 AP results on COCO
 
 | Model        |  Scale  |  AP      |  AP50      |  AP75      |  APs      |  APm      |  APl      |
 |--------------|---------|----------|------------|------------|-----------|-----------|-----------|
-| CCDet-E-R18  |  640    |   34.2   |    53.7    |    36.2    |    17.0   |    37.0   |   47.7    |
+| CCDet-E-R18  |  640    |   34.4   |    54.6    |    36.0    |    17.3   |    37.0   |   47.4    |
 
 ## Face Detection
 ### CCDet

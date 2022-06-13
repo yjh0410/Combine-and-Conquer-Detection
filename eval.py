@@ -106,7 +106,8 @@ if __name__ == '__main__':
         device=device,
         img_size=args.img_size,
         num_classes=d_cfg['num_classes'],
-        is_train=False
+        is_train=False,
+        eval_mode=True
         )
 
     # load weight

@@ -77,7 +77,7 @@ class Criterion(object):
         gt_bboxes = targets[..., self.num_classes:self.num_classes+4]
         gt_fg_mask = targets[..., self.num_classes+4:]
 
-        # [B, H, W, C] -> [BHW, C]
+        # [B, M, C] -> [BM, C]
         pred_hmp = outputs['pred_hmp'].view(-1, self.num_classes)
         pred_box = outputs['pred_box'].view(-1, 4)
         pred_iou = outputs['pred_iou'].view(-1)

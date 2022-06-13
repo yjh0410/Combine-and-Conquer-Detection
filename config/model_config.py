@@ -36,7 +36,8 @@ m_config = {
         'nms_kernel': 5,
         'nms_thresh': 0.5,
         'train_topk': 1000,
-        'test_topk': 100,
+        'inference_topk': 100,
+        'eval_topk': 1000,
         # loss
         'loss_hmp_weight': 1.0,
         'loss_reg_weight': 1.0,
@@ -90,7 +91,8 @@ m_config = {
         'nms_kernel': 5,
         'nms_thresh': 0.5,
         'train_topk': 1000,
-        'test_topk': 100,
+        'inference_topk': 100,
+        'eval_topk': 1000,
         # loss
         'loss_hmp_weight': 1.0,
         'loss_reg_weight': 1.0,
@@ -144,7 +146,8 @@ m_config = {
         'nms_kernel': 5,
         'nms_thresh': 0.5,
         'train_topk': 1000,
-        'test_topk': 100,
+        'inference_topk': 100,
+        'eval_topk': 1000,
         # loss
         'loss_hmp_weight': 1.0,
         'loss_reg_weight': 1.0,
@@ -199,7 +202,8 @@ m_config = {
         'nms_kernel': 5,
         'nms_thresh': 0.5,
         'train_topk': 1000,
-        'test_topk': 1000,
+        'inference_topk': 100,
+        'eval_topk': 1000,
         # loss
         'loss_hmp_weight': 1.0,
         'loss_reg_weight': 1.0,
@@ -253,7 +257,8 @@ m_config = {
         'nms_kernel': 5,
         'nms_thresh': 0.5,
         'train_topk': 1000,
-        'test_topk': 100,
+        'inference_topk': 100,
+        'eval_topk': 1000,
         # loss
         'loss_hmp_weight': 1.0,
         'loss_reg_weight': 1.0,
@@ -307,7 +312,8 @@ m_config = {
         'nms_kernel': 5,
         'nms_thresh': 0.5,
         'train_topk': 1000,
-        'test_topk': 100,
+        'inference_topk': 100,
+        'eval_topk': 1000,
         # loss
         'loss_hmp_weight': 1.0,
         'loss_reg_weight': 1.0,

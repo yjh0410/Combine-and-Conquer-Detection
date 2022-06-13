@@ -100,14 +100,11 @@ class CCDet(nn.Module):
         reg_pred = self.reg_pred(reg_feat)[0].permute(1, 2, 0).contiguous().view(-1, 4)
         iou_pred = self.iou_pred(reg_feat)[0].permute(1, 2, 0).contiguous().view(-1, 1)
 
-        # # scores
-        # scores = torch.sqrt(hmp_pred.sigmoid() * iou_pred.sigmoid())
-
         # scores
         scores, labels = torch.max(torch.sqrt(hmp_pred.sigmoid() * iou_pred.sigmoid()), dim=-1)
 
-        # [M, 4]
-        anchors = self.anchors.view(-1, 2)
+        # [M, 2]
+        anchors = self.anchors
 
         # topk
         if scores.shape[0] > self.topk_candidate:
@@ -119,28 +116,6 @@ class CCDet(nn.Module):
         # decode box: [M, 4]
         bboxes = self.decode_boxes(anchors, reg_pred) / self.img_size
         bboxes = bboxes.clamp(0., 1.)
-
-        # # simple nms
-        # scores_max = F.max_pool2d(
-        #     scores, kernel_size=self.nms_kernel,
-        #     padding=self.nms_kernel//2, stride=1
-        #     )
-        # keep = (scores_max == scores).float()
-        # scores *= keep
-
-        # # topk: [B, N]
-        # topk_scores, topk_inds, topk_labels = self.topk(scores)
-        # topk_scores = topk_scores[0]    # [N,]
-        # topk_inds = topk_inds[0]
-        # topk_labels = topk_labels[0]    # [N,]
-
-        # # decode box: [N, 4]
-        # reg_pred = reg_pred[0].permute(1, 2, 0).contiguous().view(-1, 4)
-        # anchors = self.anchors.view(-1, 2)
-        # topk_bboxes = self.decode_boxes(
-        #     anchors[topk_inds].unsqueeze(0), 
-        #     reg_pred[topk_inds]) / self.img_size
-        # topk_bboxes = topk_bboxes.clamp(0., 1.)
 
         # to cpu
         scores = scores.cpu().numpy()    # [N,]
@@ -171,6 +146,9 @@ class CCDet(nn.Module):
         if not self.trainable:
             return self.inference_single_image(x)
         else:
+            # batch size
+            B = x.size(0)
+
             # backbone
             bk_feats = self.backbone(x)
 
@@ -188,17 +166,17 @@ class CCDet(nn.Module):
             iou_pred = self.iou_pred(reg_feat)
         
             # [B, C, H, W] -> [B, H, W, C]
-            hmp_pred = hmp_pred.permute(0, 2, 3, 1).contiguous()
+            hmp_pred = hmp_pred.permute(0, 2, 3, 1).contiguous().view(B, -1, self.num_classes)
             # [B, 4, H, W] -> [B, H, W, 4]
-            reg_pred = reg_pred.permute(0, 2, 3, 1).contiguous()
+            reg_pred = reg_pred.permute(0, 2, 3, 1).contiguous().view(B, -1, 4)
             box_pred = self.decode_boxes(self.anchors[None], reg_pred)
-            # [B, 4, H, W] -> [B, H, W, 4]
-            iou_pred = iou_pred.permute(0, 2, 3, 1).contiguous()
+            # [B, 1, H, W] -> [B, H, W, 1]
+            iou_pred = iou_pred.permute(0, 2, 3, 1).contiguous().view(B, -1, 1)
 
             # output dict
-            outputs = {"pred_hmp": hmp_pred,        # [B, H, W, C]
-                       "pred_box": box_pred,        # [B, H, W, 4]
-                       "pred_iou": iou_pred,        # [B, H, W, 1]
+            outputs = {"pred_hmp": hmp_pred,        # [B, M, C]
+                       "pred_box": box_pred,        # [B, M, 4]
+                       "pred_iou": iou_pred,        # [B, M, 1]
                        'stride': self.stride}       # Int
 
             # loss
@@ -222,8 +200,9 @@ class CCDet(nn.Module):
         fmp_w, fmp_h = img_w // self.stride, img_h // self.stride
         anchors_y, anchors_x = torch.meshgrid([torch.arange(fmp_h), torch.arange(fmp_w)])
         anchors = torch.stack([anchors_x, anchors_y], dim=-1).float()
-        # [H, W, 2]
+        # [H, W, 2] -> [M, 2], M=HW
         anchors = anchors.to(self.device)
+        anchors = anchors.view(-1, 2)
         
         return anchors
 
@@ -246,34 +225,6 @@ class CCDet(nn.Module):
         output = output * self.stride
 
         return output
-
-
-    def gather_feat(self, feat, ind, mask=None):
-        dim  = feat.size(2)
-        ind  = ind.unsqueeze(2).expand(ind.size(0), ind.size(1), dim)
-        feat = feat.gather(1, ind)
-        if mask is not None:
-            mask = mask.unsqueeze(2).expand_as(feat)
-            feat = feat[mask]
-            feat = feat.view(-1, dim)
-        return feat
-
-
-    def topk(self, scores):
-        B, C, H, W = scores.size()
-        
-        topk_scores, topk_inds = torch.topk(scores.view(B, C, -1), self.topk_candidate)
-
-        topk_inds = topk_inds % (H * W)
-        
-        topk_score, topk_ind = torch.topk(topk_scores.view(B, -1), self.topk_candidate)
-        topk_clses = (topk_ind / self.topk_candidate).int()
-
-        # gather feature
-        topk_inds = self.gather_feat(topk_inds.view(B, -1, 1), topk_ind)
-        topk_inds = topk_inds.view(B, self.topk_candidate)
-
-        return topk_score, topk_inds, topk_clses
 
 
     def nms(self, dets, scores):

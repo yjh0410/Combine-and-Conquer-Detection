@@ -9,14 +9,24 @@ def build_model(cfg,
                 num_classes, 
                 is_train=False,
                 coco_pretrained=None,
-                resume=None):
+                resume=None,
+                eval_mode=False):
+    # topk candidate number
+    if is_train:
+        topk = cfg['train_topk']
+    else:
+        if eval_mode:
+            topk = cfg['eval_topk']
+        else:
+            topk = cfg['inference_topk']
+
     # build CC-Det    
     model = CCDet(
         cfg=cfg,
         device=device,
         img_size=img_size,
         num_classes=num_classes,
-        topk=cfg['train_topk'] if is_train else cfg['test_topk'],
+        topk=topk,
         nms_thresh=cfg['nms_thresh'],
         trainable=is_train) 
 
