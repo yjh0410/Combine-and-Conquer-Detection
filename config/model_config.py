@@ -31,7 +31,7 @@ m_config = {
                                'fpn_act': 'relu',
                                'fpn_norm': 'BN',
                                'fpn_dw': False,
-                               'depth': 2},
+                               'depth': 1},
                                },
     # head
     'head': {'decoupled_head': {'head_k': 3,
