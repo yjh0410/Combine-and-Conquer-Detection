@@ -92,6 +92,8 @@ class YoloPaFPN(nn.Module):
         nblocks = int(depth)
 
         self.proj_layers = nn.ModuleList()
+        self.deconv_layers = nn.ModuleList()
+        self.smooth_layers = nn.ModuleList()
 
         # input project layers
         for i in range(len(in_dims)):
@@ -130,9 +132,24 @@ class YoloPaFPN(nn.Module):
                                         norm_type=norm_type, act_type=act_type)
 
         # top-down
-        self.top_down_fpn = BasicFPN(
-            out_dims, out_dims,
-            act_type=act_type,
+        ## upsample layers
+        out_dims_ = out_dims[::-1]
+        for i in range(1, len(out_dims)):
+            # deconv layer
+            self.deconv_layers.append(
+                ResizeConv(
+                    out_dims_[i-1], out_dims_[i],
+                    act_type=act_type,
+                    norm_type=norm_type,
+                    scale_factor=2,
+                    mode='nearest')
+                    )
+
+        ## smooth layers
+        self.smooth_layers = Conv(
+            out_dims_[-1], out_dims_[-1],
+            k=3, p=1,
+            act_type=None,
             norm_type=norm_type,
             depthwise=depthwise
             )
@@ -164,7 +181,21 @@ class YoloPaFPN(nn.Module):
         c18 = torch.cat([c17, c6], dim=1)
         c19 = self.head_csp_3(c18)  # to det
 
-        out_feats = [c13, c16, c19] # [P3, P4, P5]
-        out_feats = self.top_down_fpn(out_feats)
+        pafpn_feats = [c13, c16, c19] # [P3, P4, P5]
 
-        return out_feats
+        # top-down feature aggregation
+        pymaid_feats = []
+        # [p3, p4, p5] -> [p5, p4, p3]
+        pafpn_feats = pafpn_feats[::-1]
+        top_level_feat = pafpn_feats[0]
+        prev_feat = top_level_feat
+        pymaid_feats.append(prev_feat)
+
+        for feat, deconv in zip(pafpn_feats[1:], self.deconv_layers):
+            top_down_feat = deconv(prev_feat)
+            prev_feat = feat + top_down_feat
+            pymaid_feats.insert(0, prev_feat)
+        # smooth
+        pymaid_feats[0] = self.smooth_layers(pymaid_feats[0])
+
+        return pymaid_feats
