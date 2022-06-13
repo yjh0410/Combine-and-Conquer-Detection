@@ -179,7 +179,7 @@ if __name__ == '__main__':
         device = torch.device("cpu")
 
     # config
-    d_cfg, m_cfg = build_config(args.dataset, args.version)
+    d_cfg, m_cfg = build_config(args.dataset)
 
     if args.dataset == 'voc':
         print('test on voc ...')
