@@ -117,7 +117,6 @@ class CCDet(nn.Module):
             anchors = anchors[indices]
 
         # decode box: [M, 4]
-        print(anchors.shape, reg_pred.shape)
         bboxes = self.decode_boxes(anchors, reg_pred) / self.img_size
         bboxes = bboxes.clamp(0., 1.)
 
