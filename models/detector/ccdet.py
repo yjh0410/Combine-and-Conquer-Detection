@@ -96,34 +96,51 @@ class CCDet(nn.Module):
         cls_feat, reg_feat = self.head(top_feat)
 
         # pred
-        hmp_pred = self.hmp_pred(cls_feat)
-        reg_pred = self.reg_pred(reg_feat)
-        iou_pred = self.iou_pred(reg_feat)
+        hmp_pred = self.hmp_pred(cls_feat)[0].contiguous().view(-1, self.num_classes)
+        reg_pred = self.reg_pred(reg_feat)[0].contiguous().view(-1, 4)
+        iou_pred = self.iou_pred(reg_feat)[0].permute(1, 2, 0).contiguous().view(-1, 1)
+
+        # # scores
+        # scores = torch.sqrt(hmp_pred.sigmoid() * iou_pred.sigmoid())
 
         # scores
-        scores = torch.sqrt(hmp_pred.sigmoid() * iou_pred.sigmoid())
+        scores, labels = torch.max(torch.sqrt(hmp_pred.sigmoid() * iou_pred.sigmoid()), dim=-1)
 
-        # simple nms
-        scores_max = F.max_pool2d(
-            scores, kernel_size=self.nms_kernel,
-            padding=self.nms_kernel//2, stride=1
-            )
-        keep = (scores_max == scores).float()
-        scores *= keep
+        # [M, 4]
+        anchors = self.anchors
 
-        # topk: [B, N]
-        topk_scores, topk_inds, topk_labels = self.topk(scores)
-        topk_scores = topk_scores[0]    # [N,]
-        topk_inds = topk_inds[0]
-        topk_labels = topk_labels[0]    # [N,]
+        # topk
+        if scores.shape[0] > self.topk:
+            scores, indices = torch.topk(scores, self.topk)
+            labels = labels[indices]
+            reg_pred = reg_pred[indices]
+            anchors = anchors[indices]
 
-        # decode box: [N, 4]
-        reg_pred = reg_pred[0].permute(1, 2, 0).contiguous().view(-1, 4)
-        anchors = self.anchors.view(-1, 2)
-        topk_bboxes = self.decode_boxes(
-            anchors[topk_inds].unsqueeze(0), 
-            reg_pred[topk_inds]) / self.img_size
-        topk_bboxes = topk_bboxes.clamp(0., 1.)
+        # decode box: [M, 4]
+        bboxes = self.decode_boxes(anchors, reg_pred) / self.img_size
+        bboxes = bboxes.clamp(0., 1.)
+
+        # # simple nms
+        # scores_max = F.max_pool2d(
+        #     scores, kernel_size=self.nms_kernel,
+        #     padding=self.nms_kernel//2, stride=1
+        #     )
+        # keep = (scores_max == scores).float()
+        # scores *= keep
+
+        # # topk: [B, N]
+        # topk_scores, topk_inds, topk_labels = self.topk(scores)
+        # topk_scores = topk_scores[0]    # [N,]
+        # topk_inds = topk_inds[0]
+        # topk_labels = topk_labels[0]    # [N,]
+
+        # # decode box: [N, 4]
+        # reg_pred = reg_pred[0].permute(1, 2, 0).contiguous().view(-1, 4)
+        # anchors = self.anchors.view(-1, 2)
+        # topk_bboxes = self.decode_boxes(
+        #     anchors[topk_inds].unsqueeze(0), 
+        #     reg_pred[topk_inds]) / self.img_size
+        # topk_bboxes = topk_bboxes.clamp(0., 1.)
 
         # to cpu
         scores = topk_scores.cpu().numpy()    # [N,]
