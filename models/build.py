@@ -3,8 +3,7 @@ import torch
 from .detector.ccdet import CCDet
 
 
-def build_model(args, 
-                cfg, 
+def build_model(model_cfg, 
                 device, 
                 img_size, 
                 num_classes, 
@@ -14,23 +13,22 @@ def build_model(args,
                 eval_mode=False):
     # topk candidate number
     if is_train:
-        topk = cfg['train_topk']
+        topk = model_cfg['train_topk']
     else:
         if eval_mode:
-            topk = cfg['eval_topk']
+            topk = model_cfg['eval_topk']
         else:
-            topk = cfg['inference_topk']
+            topk = model_cfg['inference_topk']
 
     # build CC-Det    
     model = CCDet(
-        args=args,
-        cfg=cfg,
+        cfg=model_cfg,
         device=device,
         img_size=img_size,
         num_classes=num_classes,
         topk=topk,
-        conf_thresh=cfg['conf_thresh'],
-        nms_thresh=cfg['nms_thresh'],
+        conf_thresh=model_cfg['conf_thresh'],
+        nms_thresh=model_cfg['nms_thresh'],
         trainable=is_train) 
 
     # Load COCO pretrained weight

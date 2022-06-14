@@ -18,7 +18,6 @@ DEFAULT_SCALE_CLAMP = np.log(1000.)
 # Combine-and-Conquer Detector
 class CCDet(nn.Module):
     def __init__(self,
-                 args,
                  cfg,
                  device,
                  img_size=640,
@@ -30,10 +29,6 @@ class CCDet(nn.Module):
         super(CCDet, self).__init__()
         # config
         self.cfg = cfg
-        self.bk_cfg = cfg['backbone'][args.backbone]
-        self.neck_cfg = cfg['neck'][args.neck]
-        self.fpn_cfg = cfg['feat_aggr'][args.fpn]
-        self.head_cfg = cfg['head'][args.head]
         # init
         self.device = device
         self.img_size = img_size
@@ -43,45 +38,47 @@ class CCDet(nn.Module):
         self.nms_thresh = nms_thresh
         self.topk = topk
         self.stride = self.cfg['stride']
-        self.fpn_idx = self.fpn_cfg['fpn_idx']
+        self.fpn_idx = cfg['fpn_idx']
 
         # generate anchors
         self.anchors = self.generate_anchors(img_size)
 
         # backbone
-        self.backbone, bk_dims = build_backbone(bk_name=args.backbone, bk_cfg=self.bk_cfg)
+        self.backbone, bk_dims = build_backbone(
+            bk_name=cfg['backbone'],
+            pretrained=cfg['pretrained']
+            )
         bk_dims = [bk_dims[layer_idx] for layer_idx in self.fpn_idx]
 
         # neck
         self.neck = build_neck(
-            neck_name=args.neck,
-            neck_cfg=self.neck_cfg,
+            neck_name=cfg['neck_name'],
+            neck_cfg=cfg,
             in_dim=bk_dims[-1],
-            out_dim=self.fpn_cfg['fpn_dims'][-1]
+            out_dim=cfg['fpn_dims'][-1]
             )
 
         # feat aggregation
-        bk_dims[-1] = self.fpn_cfg['fpn_dims'][-1]
+        bk_dims[-1] = cfg['fpn_dims'][-1]
         self.fpn = build_fpn(
-            fpn_name=args.fpn,
-            fpn_cfg=self.fpn_cfg,
+            fpn_name=cfg['fpn_name'],
+            fpn_cfg=cfg,
             in_dims=bk_dims,
-            out_dims=self.fpn_cfg['fpn_dims']
+            out_dims=cfg['fpn_dims']
             )
 
         # detection head
-        head_dim = self.head_cfg['head_dim']
         self.head = build_head(
-            head_name=args.head,
-            head_cfg=self.head_cfg,
-            in_dim=self.fpn_cfg['fpn_dims'][0], 
-            out_dim=head_dim
+            head_name=cfg['head_name'],
+            head_cfg=cfg,
+            in_dim=cfg['fpn_dims'][0], 
+            out_dim=cfg['head_dim']
             )
 
         # pred
-        self.hmp_pred = nn.Conv2d(head_dim, self.num_classes, kernel_size=1)
-        self.reg_pred = nn.Conv2d(head_dim, 4, kernel_size=1)
-        self.iou_pred = nn.Conv2d(head_dim, 1, kernel_size=1)
+        self.hmp_pred = nn.Conv2d(cfg['head_dim'], self.num_classes, kernel_size=1)
+        self.reg_pred = nn.Conv2d(cfg['head_dim'], 4, kernel_size=1)
+        self.iou_pred = nn.Conv2d(cfg['head_dim'], 1, kernel_size=1)
 
         if trainable:
             # init bias

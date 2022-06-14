@@ -36,16 +36,8 @@ def parse_args():
                         help='voc, coco.')
 
     # model
-    parser.add_argument('-v', '--version', default='ccdet', type=str,
+    parser.add_argument('-v', '--version', default='ccdet_r18', type=str,
                         help='build ccdet')
-    parser.add_argument('-bk', '--backbone', default='r18', type=str,
-                        help='build backbone')
-    parser.add_argument('-nk', '--neck', default='dilated_encoder', type=str,
-                        help='build neck')
-    parser.add_argument('-fp', '--fpn', default='basicfpn', type=str,
-                        help='build feat aggregation')
-    parser.add_argument('-hd', '--head', default='decoupled_head', type=str,
-                        help='build detection head')
     parser.add_argument('--weight', default='weight/',
                         type=str, help='Trained state_dict file path to open')
                         
@@ -179,7 +171,7 @@ if __name__ == '__main__':
         device = torch.device("cpu")
 
     # config
-    d_cfg, m_cfg = build_config(args.dataset)
+    d_cfg, m_cfg = build_config(args.dataset, args.version)
 
     if args.dataset == 'voc':
         print('test on voc ...')
@@ -241,8 +233,7 @@ if __name__ == '__main__':
 
     # build model
     model = build_model(
-        args=args,
-        cfg=m_cfg,
+        model_cfg=m_cfg,
         device=device,
         img_size=args.img_size,
         num_classes=num_classes,
