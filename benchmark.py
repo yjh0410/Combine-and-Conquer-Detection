@@ -35,10 +35,6 @@ def parse_args():
     # basic
     parser.add_argument('-size', '--img_size', default=640, type=int,
                         help='the min size of input image')
-    parser.add_argument('--weight', default=None,
-                        type=str, help='Trained state_dict file path to open')
-
-    # cuda
     parser.add_argument('--cuda', action='store_true', default=False, 
                         help='use cuda.')
 
