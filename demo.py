@@ -34,16 +34,8 @@ def parse_args():
     parser.add_argument('--show', action='store_true', default=False,
                         help='show the visualization results.')
     # model
-    parser.add_argument('-v', '--version', default='ccdet', type=str,
+    parser.add_argument('-v', '--version', default='ccdet_r18', type=str,
                         help='build ccdet')
-    parser.add_argument('-bk', '--backbone', default='r18', type=str,
-                        help='build backbone')
-    parser.add_argument('-nk', '--neck', default='dilated_encoder', type=str,
-                        help='build neck')
-    parser.add_argument('-fp', '--fpn', default='basicfpn', type=str,
-                        help='build feat aggregation')
-    parser.add_argument('-hd', '--head', default='decoupled_head', type=str,
-                        help='build detection head')
     parser.add_argument('--weight', default='weights/',
                         type=str, help='Trained state_dict file path to open')
     
@@ -232,12 +224,11 @@ def run():
         device = torch.device("cpu")
 
     # config
-    d_cfg, m_cfg = build_config('coco')
+    d_cfg, m_cfg = build_config('coco', args.version)
     
     # build model
     model = build_model(
-        args=args,
-        cfg=m_cfg,
+        model_cfg=m_cfg,
         device=device,
         img_size=args.img_size,
         num_classes=80,
