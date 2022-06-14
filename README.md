@@ -29,22 +29,22 @@ PyTorch >= 1.9.1 and Torchvision >= 0.10.1
 
 Main results on COCO.
 
-|  Model      |  Backbone     | Neck |    FPN    | Size | FPS<sup><br>2080ti |  Param  |  FLOPs  |  AP  | AP50 |  Weight  |
-|-------------|---------------|------|-----------|------|--------------------|---------|---------|------|------|----------|
-| CCDet-R18   | ResNet-18     | DE   | BasicFPN  | 640  |     165            | 19.7 M  |  27.7 B | 34.4 | 54.6 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_e_r18_34.4_54.6.pth) |
-| CCDet-R18   | ResNet-18     | DE   | YoloPaFPN | 640  |     132            | 21.9 M  |  29.5 B |      |      | [github]() |
-| CCDet-R50   | ResNet-50     | DE   | YoloPaFPN | 640  |                    | 35.3 M  |  49.1 B |      |      | [github]() |
-| CCDet-R101  | ResNet-101    | DE   | YoloPaFPN | 640  |                    | 54.3 M  |  79.5 B |      |      | [github]() |
-| CCDet-CD53  | CSPDarkNet-53 | DE   | YoloPaFPN | 640  |                    | 37.7 M  |  55.9 B |      |      | [github]() |
+|  Model      |  Backbone     | Neck |    FPN    | Size | FPS<sup><br>2080ti |  Param  |  FLOPs  |  AP  | AP50 |
+|-------------|---------------|------|-----------|------|--------------------|---------|---------|------|------|
+| CCDet-R18   | ResNet-18     | DE   | BasicFPN  | 640  |     165            | 19.7 M  |  27.7 B | 34.4 | 54.6 |
+| CCDet-R18   | ResNet-18     | DE   | YoloPaFPN | 640  |     132            | 21.9 M  |  29.5 B |      |      |
+| CCDet-R50   | ResNet-50     | DE   | YoloPaFPN | 640  |                    | 35.3 M  |  49.1 B |      |      |
+| CCDet-R101  | ResNet-101    | DE   | YoloPaFPN | 640  |                    | 54.3 M  |  79.5 B |      |      | 
+| CCDet-CD53  | CSPDarkNet-53 | DE   | YoloPaFPN | 640  |                    | 37.7 M  |  55.9 B |      |      |
 
 AP results on COCO
 
-| Model      |  Scale  |  AP      |  AP50      |  AP75      |  APs      |  APm      |  APl      |
-|------------|---------|----------|------------|------------|-----------|-----------|-----------|
-| CCDet-R18  |  640    |          |            |            |           |           |           |
-| CCDet-R50  |  640    |          |            |            |           |           |           |
-| CCDet-R101 |  640    |          |            |            |           |           |           |
-| CCDet-CD53 |  640    |          |            |            |           |           |           |
+| Model      |  Scale  |  AP      |  AP50      |  AP75      |  APs      |  APm      |  APl      |   Weight   |
+|------------|---------|----------|------------|------------|-----------|-----------|-----------|------------|
+| CCDet-R18  |  640    |          |            |            |           |           |           | [github]() |
+| CCDet-R50  |  640    |          |            |            |           |           |           | [github]() |
+| CCDet-R101 |  640    |          |            |            |           |           |           | [github]() |
+| CCDet-CD53 |  640    |          |            |            |           |           |           | [github]() |
 
 ## Face Detection
 ### CCDet
