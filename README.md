@@ -50,11 +50,11 @@ AP results on COCO
 ### CCDet
 Main results on WiderFace.
 
-|  Model      | Size | FPS<sup><br>2080ti | AP50 |  Weight  |
-|-------------|------|--------------------|------|----------|
-| CCDet-R18   | 640  |                    |      | [github] |
-| CCDet-R50   | 640  |                    |      | [github] |
-| CCDet-R101  | 640  |                    |      | [github] |
+|  Model      | Size | FPS<sup><br>2080ti | Easy | Medium | Hard |  Weight  |
+|-------------|------|--------------------|------|--------|------|----------|
+| CCDet-R18   | 640  |                    |      |        |      | [github] |
+| CCDet-R50   | 640  |                    |      |        |      | [github] |
+| CCDet-R101  | 640  |                    |      |        |      | [github] |
 
 ## Person Detection
 ### CCDet
