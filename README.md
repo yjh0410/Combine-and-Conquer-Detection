@@ -18,29 +18,33 @@ pip install -r requirements.txt
 ```
 PyTorch >= 1.9.1 and Torchvision >= 0.10.1
 
+# Network
+- Backbone: [ResNet](https://github.com/yjh0410/FreeYOLO/blob/master/models/backbone/resnet.py) / [CSPDarkNet53](https://github.com/yjh0410/FreeYOLO/blob/master/models/neck/cspdarknet.py)
+- Neck: [Dilated Encoder](https://github.com/yjh0410/FreeYOLO/blob/master/models/neck/dilated_encoder.py)
+- FPN: [YoloPaFPN](https://github.com/yjh0410/FreeYOLO/blob/master/models/neck/fpn.py)
+- Head: [DecoupledHead](https://github.com/yjh0410/FreeYOLO/blob/master/models/head/decoupled_head.py)
 
 # Experiments
 ## Object Detection
-Main results on VOC.
-
-|  Model      | Size | AP50 |  Weight  |
-|-------------|------|------|----------|
-| CCDet-R18   | 640  | 81.0 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r18_81.0.pth) |
-| CCDet-R50   | 640  | 84.0 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r50_84.0.pth) |
-| CCDet-R101  | 640  | 85.3 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_r101_85.3.pth) |
 
 Main results on COCO.
 
-|  Model      |  Backbone     | Size | FPS<sup><br>2080ti | Param | FLOPs |  AP  | AP50 |  Weight  |
-|-------------|---------------|------|--------------------|-------|-------|------|------|----------|
-| CCDet-R18   | ResNet-18     | 640  |                    | 21 M  |  24 B | 34.4 | 54.6 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_e_r18_34.4_54.6.pth) |
-| CCDet-R50   | ResNet-50     | 640  |                    | 34 M  |  44 B |      |      | [github]() |
+|  Model      |  Backbone     | Neck |    FPN    | Size | FPS<sup><br>2080ti |  Param  |  FLOPs  |  AP  | AP50 |  Weight  |
+|-------------|---------------|------|-----------|------|--------------------|---------|---------|------|------|----------|
+| CCDet-R18   | ResNet-18     | DE   | BasicFPN  | 640  |     165            | 21.9 M  |  29.5 B | 34.4 | 54.6 | [github](https://github.com/yjh0410/FreeDet/releases/download/ccdet_weights/ccdet_e_r18_34.4_54.6.pth) |
+| CCDet-R18   | ResNet-18     | DE   | YoloPaFPN | 640  |     132            | 35.3 M  |  49.1 B |      |      | [github]() |
+| CCDet-R50   | ResNet-50     | DE   | YoloPaFPN | 640  |                    | 35.3 M  |  49.1 B |      |      | [github]() |
+| CCDet-R101  | ResNet-101    | DE   | YoloPaFPN | 640  |                    | 54.3 M  |  79.5 B |      |      | [github]() |
+| CCDet-CD53  | CSPDarkNet-53 | DE   | YoloPaFPN | 640  |                    | 37.7 M  |  55.9 B |      |      | [github]() |
 
 AP results on COCO
 
 | Model      |  Scale  |  AP      |  AP50      |  AP75      |  APs      |  APm      |  APl      |
 |------------|---------|----------|------------|------------|-----------|-----------|-----------|
-| CCDet-R18  |  640    |   34.4   |    54.6    |    36.0    |    17.3   |    37.0   |   47.4    |
+| CCDet-R18  |  640    |          |            |            |           |           |           |
+| CCDet-R50  |  640    |          |            |            |           |           |           |
+| CCDet-R101 |  640    |          |            |            |           |           |           |
+| CCDet-CD53 |  640    |          |            |            |           |           |           |
 
 ## Face Detection
 ### CCDet
