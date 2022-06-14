@@ -3,8 +3,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 
-import cv2
-
 from ..backbone import build_backbone
 from ..neck import build_fpn, build_neck
 from ..head import build_head
