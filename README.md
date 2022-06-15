@@ -1,5 +1,5 @@
-# Combine-and-Conquer Object Detector
-A Simple Baseline for Object Detection.
+# Combine-and-Conquer Detection Framework
+A Simple yet Effective Object Detection Framework.
 
 # Requirements
 - We recommend you to use Anaconda to create a conda environment:
