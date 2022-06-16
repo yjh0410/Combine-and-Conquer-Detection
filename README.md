@@ -86,7 +86,7 @@ Main results on COCO.
 | CCDet-R18   | ResNet-18     | DE   | YoloPaFPN | 640  |     132            | 21.9 M  |  29.5 B | 37.6 | 57.0 |
 | CCDet-R50   | ResNet-50     | DE   | YoloPaFPN | 640  |      68            | 36.3 M  |  50.1 B |      |      |
 | CCDet-R101  | ResNet-101    | DE   | YoloPaFPN | 640  |      45            | 56.3 M  |  81.2 B |      |      | 
-| CCDet-CD53  | CSPDarkNet-53 | DE   | YoloPaFPN | 640  |                    | 39.7 M  |  58.1 B |      |      |
+| CCDet-CD53  | CSPDarkNet-53 | DE   | YoloPaFPN | 640  |      56            | 39.7 M  |  58.1 B |      |      |
 
 AP results on COCO
 
