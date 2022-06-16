@@ -63,6 +63,7 @@ class TestTimeAugmentation(object):
             # reset anchors
             model.generate_anchors(s)
             # inference
+            print(x_scale.shape)
             scores, labels, bboxes = model(x_scale)
 
             bboxes_list.append(bboxes)
