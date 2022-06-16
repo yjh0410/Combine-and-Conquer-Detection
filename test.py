@@ -186,7 +186,7 @@ if __name__ == '__main__':
         num_classes = 20
         # test augmentation
         ta_nms = 0.4
-        scale_range = [320, 1280, 128]
+        scale_range = [320, 800, 32]
 
     elif args.dataset == 'coco':
         print('test on coco-val ...')
@@ -199,7 +199,7 @@ if __name__ == '__main__':
         num_classes = 80
         # test augmentation
         ta_nms = 0.4
-        scale_range = [320, 1280, 128]
+        scale_range = [320, 800, 32]
 
     elif args.dataset == 'widerface':
         print('test on widerface ...')

@@ -1,5 +1,6 @@
 import numpy as np
 import torch
+import torch.nn.functional as F
 
 
 # Test Time Augmentation (TTA)
@@ -53,22 +54,29 @@ class TestTimeAugmentation(object):
             if x.size(-1) == s and x.size(-2) == s:
                 x_scale = x
             else:
-                x_scale =torch.nn.functional.interpolate(
-                                        input=x, 
-                                        size=(s, s), 
-                                        mode='bilinear', 
-                                        align_corners=False)
-            model.set_grid(s)
-            bboxes, scores, labels = model(x_scale)
+                x_scale = F.interpolate(
+                    input=x, 
+                    size=(s, s), 
+                    mode='bilinear', 
+                    align_corners=False
+                    )
+            # reset anchors
+            model.generate_anchors(s)
+            # inference
+            scores, labels, bboxes = model(x_scale)
+
             bboxes_list.append(bboxes)
             scores_list.append(scores)
             labels_list.append(labels)
 
             # Flip
             x_flip = torch.flip(x_scale, [-1])
-            bboxes, scores, labels = model(x_flip)
+            # inference
+            scores, labels, bboxes = model(x_flip)
+            # reflip bboxes
             bboxes = bboxes.copy()
             bboxes[:, 0::2] = 1.0 - bboxes[:, 2::-2]
+            
             bboxes_list.append(bboxes)
             scores_list.append(scores)
             labels_list.append(labels)
@@ -93,4 +101,4 @@ class TestTimeAugmentation(object):
         scores = scores[keep]
         labels = labels[keep]
 
-        return bboxes, scores, labels
+        return scores, labels, bboxes

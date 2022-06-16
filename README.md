@@ -90,13 +90,13 @@ Main results on COCO.
 
 AP results on COCO
 
-| Model      |  Scale  |  AP      |  AP50      |  AP75      |  APs      |  APm      |  APl      |   Weight   |
-|------------|---------|----------|------------|------------|-----------|-----------|-----------|------------|
-| CCDet-R18* |  640    |  35.7    |   55.1     |   37.8     |    19.0   |   38.5    |   47.8    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r18_fpn_35.7_55.1.pth) |
-| CCDet-R18  |  640    |  37.7    |   57.0     |   40.4     |    21.4   |   41.2    |   49.3    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r18_37.7_57.0.pth) |
-| CCDet-R50  |  640    |          |            |            |           |           |           | [github]() |
-| CCDet-R101 |  640    |          |            |            |           |           |           | [github]() |
-| CCDet-CD53 |  640    |          |            |            |           |           |           | [github]() |
+| Model      |  Scale  |   TTA    |  AP      |  AP50      |  AP75      |  APs      |  APm      |  APl      |   Weight   |
+|------------|---------|----------|----------|------------|-----------|-----------|-----------|------------|------------|
+| CCDet-R18* |  640    |    ×     |  35.7    |   55.1     |   37.8     |    19.0   |   38.5    |   47.8    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r18_fpn_35.7_55.1.pth) |
+| CCDet-R18  |  640    |    ×     |  37.7    |   57.0     |   40.4     |    21.4   |   41.2    |   49.3    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r18_37.7_57.0.pth) |
+| CCDet-R50  |  640    |    ×     |          |            |            |           |           |           | [github]() |
+| CCDet-R101 |  640    |    ×     |          |            |            |           |           |           | [github]() |
+| CCDet-CD53 |  640    |    ×     |          |            |            |           |           |           | [github]() |
 
 `CCDet-R18*` indicates that we use `BasicFPN` to aggregate multi-level features into a one-level feature.
 
