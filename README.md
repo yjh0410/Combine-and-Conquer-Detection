@@ -1,6 +1,57 @@
 # Combine-and-Conquer Detection Framework
 A Simple yet Effective Object Detection Framework.
 
+For a long time, it has been believed that the **Divide-and-Conquer** detection framework is the key to the success of
+modern detectors (SSD, RetinaNet, YOLOv4, et al.). Despite the great success, **Divide-and-Conquer** detection framework
+has some disadvantages:
+
+- **Divide-and-Conquer** detection framework exacerbates the imbalance between positive and negative samples in the
+  training phase. An extremely large number of negative samples are introduced.
+
+- **Divide-and-Conquer** detection framework requires detection head to be deployed on each level of feature, increasing
+  model's parameters and FLOPs and impairing the detection speed.
+
+- **Divide-and-Conquer** detection framework suffers from hand-designed hyperparameters for multi-level label assignment,
+  such as anchor boxes or scale ranges of interest. However, both of them are empirical and dataset-dependent, impairing
+    the model's generalization.
+
+`CornerNet`, `CenterNet` and `YOLOF` have proved that one-level feature map can also achieve excellent performance, but they
+did not delve into the advantages of one-level feature, nor did they build a systematic framework for subsequent researchers
+to improve the technical framework of one-level.
+
+Therefore, I inherit their ideas and propose a new simple and efficient object detection framework, **Combine-and-Conquer**,
+to explore a new efficient detection framework with a one-level feature map. To verity the power of **Combine-and-Conquer**
+framework, I design a simple yet effective detector, **CC-Det**. I just deploy existing modules such as `ResNet`, `DilatedEncoder`
+and `YoloPaFPN` to construct this simple CC-Det. Designing a most powerful detector is not my purpose and beyond my capabilities.
+I just leverage CC-Det to show the effectiveness and potential of this framework. Compared with **Divide-and-Conquer**
+framework, it has the following advantages:
+
+- Combine-and-Conquer is a general detection framework. It is modularized into four parts, `Backbone`, `Neck`,
+  `Feat Aggregation` and `Detection Head` to make designing new detectors easy.
+
+- I follow the proposed framework to design **CC-Det** detector with a simple network structure and anchor-free
+  mechanism. Thanks to the one-level feature, the hassle of carefully designing multi-level label assignment
+  like scale range of interest is avoided. Objects of all scales can be detected by this high resolution one-level
+  feature. 
+
+- Without any bells and whistles, CC-Det achieves state-of-the-art performance, surpassing previous powerful
+  baseline models of multi-level detection framework. In addition to excellent performance, CC-Det has fewer
+  model's parameters, lower FLOPs and faster detection speed.
+  
+- CC-Det is evaluated on multiple datasets, COCO, VOC, WiderFace and CrowdHuman of different detection tasks
+  and achieves excellent performance, demonstrating the versatility of the propose detection framework.
+
+Following figure shows a simple example of **Combine-and-Conquer** framework. It looks like Hourglass or CenterNet,
+but it is more powerful and fast.
+
+![CCDet with BasicFPN](https://github.com/yjh0410/FreeYOLO/blob/master/img_files/ccdet.png)
+
+Note that `CC-Det` is just a concrete example of **Combine-and-Conquer** framework and has not been carefully
+designed. Such a simple model still exhibits strong performance (see the experimental results below.), proving
+the potential of the framework. I believe that CC-Det could still be evolved by deploying more novel and powerful
+modules. In addition, besides CC-Det, more powerfule and efficient detectors are expected to be designed,
+following this framework.
+
 # Requirements
 - We recommend you to use Anaconda to create a conda environment:
 ```Shell
@@ -41,8 +92,8 @@ AP results on COCO
 
 | Model      |  Scale  |  AP      |  AP50      |  AP75      |  APs      |  APm      |  APl      |   Weight   |
 |------------|---------|----------|------------|------------|-----------|-----------|-----------|------------|
-| CCDet-R18* |  640    |  35.7    |   55.1     |   37.8     |    19.0   |   38.5    |   47.8    | [github]() |
-| CCDet-R18  |  640    |  37.7    |   57.0     |   40.4     |    21.4   |   41.2    |   49.3    | [github]() |
+| CCDet-R18* |  640    |  35.7    |   55.1     |   37.8     |    19.0   |   38.5    |   47.8    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r18_fpn_35.7_55.1.pth) |
+| CCDet-R18  |  640    |  37.7    |   57.0     |   40.4     |    21.4   |   41.2    |   49.3    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r18_37.7_57.0.pth) |
 | CCDet-R50  |  640    |          |            |            |           |           |           | [github]() |
 | CCDet-R101 |  640    |          |            |            |           |           |           | [github]() |
 | CCDet-CD53 |  640    |          |            |            |           |           |           | [github]() |
