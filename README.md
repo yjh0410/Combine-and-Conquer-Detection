@@ -44,7 +44,7 @@ framework, it has the following advantages:
 Following figure shows a simple example of **Combine-and-Conquer** framework. It looks like Hourglass or CenterNet,
 but it is more powerful and fast.
 
-![CCDet with BasicFPN](https://github.com/yjh0410/FreeYOLO/blob/master/img_files/ccdet.png)
+![CCDet with BasicFPN](https://github.com/yjh0410/Combine-and-Conquer-Detection/tree/master/img_files/ccdet.png)
 
 Note that `CC-Det` is just a concrete example of **Combine-and-Conquer** framework and has not been carefully
 designed. Such a simple model still exhibits strong performance (see the experimental results below.), proving
