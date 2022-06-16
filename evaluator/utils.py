@@ -61,7 +61,7 @@ class TestTimeAugmentation(object):
                     align_corners=False
                     )
             # reset anchors
-            model.generate_anchors(s)
+            model.reset_anchors(s)
             # inference
             scores, labels, bboxes = model(x_scale)
 
@@ -69,13 +69,13 @@ class TestTimeAugmentation(object):
             scores_list.append(scores)
             labels_list.append(labels)
 
-            # # Flip
-            # x_flip = torch.flip(x_scale, [-1])
-            # # inference
-            # scores, labels, bboxes = model(x_flip)
-            # # reflip bboxes
-            # bboxes = bboxes.copy()
-            # bboxes[:, 0::2] = 1.0 - bboxes[:, 2::-2]
+            # Flip
+            x_flip = torch.flip(x_scale, [-1])
+            # inference
+            scores, labels, bboxes = model(x_flip)
+            # reflip bboxes
+            bboxes = bboxes.copy()
+            bboxes[:, 0::2] = 1.0 - bboxes[:, 2::-2]
             
             bboxes_list.append(bboxes)
             scores_list.append(scores)

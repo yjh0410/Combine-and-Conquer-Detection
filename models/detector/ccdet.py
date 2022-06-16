@@ -228,6 +228,11 @@ class CCDet(nn.Module):
         return anchors
 
 
+    def reset_anchors(self, img_size):
+        self.img_size = img_size
+        self.anchors = self.generate_anchors(img_size)
+
+
     def decode_boxes(self, anchors, reg_pred):
         """
         input box :  [wl, ht, wr, hb]
