@@ -31,7 +31,7 @@ Main results on COCO.
 
 |  Model      |  Backbone     | Neck |    FPN    | Size | FPS<sup><br>2080ti |  Param  |  FLOPs  |  AP  | AP50 |
 |-------------|---------------|------|-----------|------|--------------------|---------|---------|------|------|
-| CCDet-R18   | ResNet-18     | DE   | BasicFPN  | 640  |     165            | 19.7 M  |  27.7 B | 35.5 | 54.7 |
+| CCDet-R18   | ResNet-18     | DE   | BasicFPN  | 640  |     165            | 19.7 M  |  27.7 B | 35.7 | 55.1 |
 | CCDet-R18   | ResNet-18     | DE   | YoloPaFPN | 640  |     132            | 21.9 M  |  29.5 B | 37.6 | 57.0 |
 | CCDet-R50   | ResNet-50     | DE   | YoloPaFPN | 640  |                    | 35.3 M  |  49.1 B |      |      |
 | CCDet-R101  | ResNet-101    | DE   | YoloPaFPN | 640  |                    | 54.3 M  |  79.5 B |      |      | 
@@ -41,7 +41,7 @@ AP results on COCO
 
 | Model      |  Scale  |  AP      |  AP50      |  AP75      |  APs      |  APm      |  APl      |   Weight   |
 |------------|---------|----------|------------|------------|-----------|-----------|-----------|------------|
-| CCDet-R18* |  640    |  35.5    |   54.7     |   37.6     |    19.0   |   38.3    |   47.1    | [github]() |
+| CCDet-R18* |  640    |  35.7    |   55.1     |   37.8     |    19.0   |   38.5    |   47.8    | [github]() |
 | CCDet-R18  |  640    |  37.6    |   57.0     |   40.4     |    21.4   |   41.2    |   48.7    | [github]() |
 | CCDet-R50  |  640    |          |            |            |           |           |           | [github]() |
 | CCDet-R101 |  640    |          |            |            |           |           |           | [github]() |
