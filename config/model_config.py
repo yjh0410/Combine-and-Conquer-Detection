@@ -185,7 +185,7 @@ m_config = {
         'fpn_act': 'relu',
         'fpn_norm': 'BN',
         'fpn_dw': False,
-        'depth': 1,
+        'depth': 3,
         # Detection Head
         'head_name': 'decoupled_head',
         'head_k': 3,
