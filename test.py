@@ -199,7 +199,7 @@ if __name__ == '__main__':
         num_classes = 80
         # test augmentation
         ta_nms = 0.4
-        scale_range = [320, 800, 32]
+        scale_range = [320, 640, 32]
 
     elif args.dataset == 'widerface':
         print('test on widerface ...')
