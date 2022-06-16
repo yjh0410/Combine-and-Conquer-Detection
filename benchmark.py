@@ -112,12 +112,12 @@ if __name__ == '__main__':
         eval_mode=False
         )
 
-    # # load trained weight
-    # model = load_weight(
-    #     device=device, 
-    #     model=model, 
-    #     path_to_ckpt=args.weight
-    #     )
+    # load trained weight
+    model = load_weight(
+        device=device, 
+        model=model, 
+        path_to_ckpt=args.weight
+        )
 
     # to eval
     model = model.to(device).eval()
