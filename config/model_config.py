@@ -69,7 +69,7 @@ m_config = {
         'neck_act': 'relu',
         'neck_norm': 'BN',
         # Feat Aggregation
-        'fpn_name': 'yolopafpn',
+        'fpn_name': 'pafpn',
         'fpn_dims': [128, 256, 512],
         'fpn_idx': ['layer2', 'layer3', 'layer4'],
         'fpn_act': 'relu',
@@ -124,7 +124,7 @@ m_config = {
         'neck_act': 'relu',
         'neck_norm': 'BN',
         # Feat Aggregation
-        'fpn_name': 'yolopafpn',
+        'fpn_name': 'pafpn',
         'fpn_dims': [128, 256, 512],
         'fpn_idx': ['layer2', 'layer3', 'layer4'],
         'fpn_act': 'relu',
@@ -179,7 +179,7 @@ m_config = {
         'neck_act': 'relu',
         'neck_norm': 'BN',
         # Feat Aggregation
-        'fpn_name': 'yolopafpn',
+        'fpn_name': 'pafpn',
         'fpn_dims': [128, 256, 512],
         'fpn_idx': ['layer2', 'layer3', 'layer4'],
         'fpn_act': 'relu',
@@ -234,7 +234,7 @@ m_config = {
         'neck_act': 'lrelu',
         'neck_norm': 'BN',
         # Feat Aggregation
-        'fpn_name': 'yolopafpn',
+        'fpn_name': 'pafpn',
         'fpn_dims': [128, 256, 512],
         'fpn_idx': ['layer2', 'layer3', 'layer4'],
         'fpn_act': 'lrelu',

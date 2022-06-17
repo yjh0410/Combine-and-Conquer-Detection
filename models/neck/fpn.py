@@ -77,8 +77,8 @@ class BasicFPN(nn.Module):
         return pymaid_feats
 
 
-# YoloPaFPN
-class YoloPaFPN(nn.Module):
+# PaFPN
+class PaFPN(nn.Module):
     def __init__(self, 
                  in_dims=[256, 512, 1024], # [c3, c4, c5]
                  out_dims=[128, 256, 512], # [p3, p4, p5]
@@ -86,7 +86,7 @@ class YoloPaFPN(nn.Module):
                  norm_type='BN',
                  act_type='relu',
                  depthwise=False):
-        super(YoloPaFPN, self).__init__()
+        super(PaFPN, self).__init__()
         self.in_dims = in_dims
         self.out_dims = out_dims
         nblocks = int(depth)

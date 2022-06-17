@@ -1,4 +1,4 @@
-from .fpn import BasicFPN, YoloPaFPN
+from .fpn import BasicFPN, PaFPN
 from .spp import SPP
 from .dilated_encoder import DilateEncoder
 
@@ -18,8 +18,8 @@ def build_fpn(fpn_name,
             norm_type=fpn_cfg['fpn_norm'], 
             depthwise=fpn_cfg['fpn_dw']
             )
-    elif fpn_name == 'yolopafpn':
-        return YoloPaFPN(
+    elif fpn_name == 'pafpn':
+        return PaFPN(
             in_dims=in_dims,
             out_dims=out_dims,
             depth=fpn_cfg['depth'],
