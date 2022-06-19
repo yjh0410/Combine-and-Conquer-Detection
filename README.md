@@ -99,6 +99,14 @@ AP results on COCO
 | CCDet-CD53 |  640    |    ×     |          |            |            |           |           |           | [github]() |
 
 
+| Model   |  Scale  |  AP      |  AP50      |  AP75      |  APs      |  APm      |  APl      |  Param  |  FLOPs  |   Weight   |
+|---------|---------|----------|------------|------------|-----------|-----------|-----------|---------|---------|------------|
+| CCDet-T |  640    |          |            |            |           |           |           |         |         | [github]() |
+| CCDet-S |  640    |          |            |            |           |           |           |         |         | [github]() |
+| CCDet-M |  640    |          |            |            |           |           |           |         |         | [github]() |
+| CCDet-L |  640    |          |            |            |           |           |           |         |         | [github]() |
+| CCDet-X |  640    |          |            |            |           |           |           |         |         | [github]() |
+
 ## Face Detection
 ### CCDet
 Main results on WiderFace.
