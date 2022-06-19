@@ -83,29 +83,29 @@ Main results on COCO.
 |  Model      |  Backbone     | Neck | Feat. Aggr. | Size | FPS<sup><br>2080ti |  Param  |  FLOPs  |  AP  | AP50 |
 |-------------|---------------|------|-------------|------|--------------------|---------|---------|------|------|
 | CCDet-R18*  | ResNet-18     | DE   |   BasicFPN  | 640  |     165            | 19.7 M  |  27.7 B | 35.7 | 55.1 |
-| CCDet-R18   | ResNet-18     | DE   |     PaFPN   | 640  |     132            | 21.9 M  |  29.5 B | 37.6 | 57.0 |
+| CCDet-R18   | ResNet-18     | DE   |     PaFPN   | 640  |     132            | 21.9 M  |  29.5 B | 37.7 | 57.0 |
 | CCDet-R50   | ResNet-50     | DE   |     PaFPN   | 640  |      68            | 36.3 M  |  50.1 B |      |      |
 | CCDet-R101  | ResNet-101    | DE   |     PaFPN   | 640  |      45            | 56.3 M  |  81.2 B |      |      | 
 | CCDet-CD53  | CSPDarkNet-53 | DE   |     PaFPN   | 640  |      56            | 39.7 M  |  58.1 B |      |      |
 
 AP results on COCO
 
-| Model      |  Scale  |   TTA    |  AP      |  AP50      |  AP75      |  APs      |  APm      |  APl      |   Weight   |
-|------------|---------|----------|----------|------------|------------|-----------|-----------|-----------|------------|
-| CCDet-R18* |  640    |    ×     |  35.7    |   55.1     |   37.8     |    19.0   |   38.5    |   47.8    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r18_fpn_35.7_55.1.pth) |
-| CCDet-R18  |  640    |    ×     |  37.7    |   57.0     |   40.4     |    21.4   |   41.2    |   49.3    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r18_37.7_57.0.pth) |
-| CCDet-R50  |  640    |    ×     |          |            |            |           |           |           | [github]() |
-| CCDet-R101 |  640    |    ×     |          |            |            |           |           |           | [github]() |
-| CCDet-CD53 |  640    |    ×     |          |            |            |           |           |           | [github]() |
+| Model      |  Scale  |  AP      |  AP50      |  AP75      |  APs      |  APm      |  APl      |   Weight   |
+|------------|---------|----------|------------|------------|-----------|-----------|-----------|------------|
+| CCDet-R18* |  640    |  35.7    |   55.1     |   37.8     |    19.0   |   38.5    |   47.8    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r18_fpn_35.7_55.1.pth) |
+| CCDet-R18  |  640    |  37.7    |   57.0     |   40.4     |    21.4   |   41.2    |   49.3    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r18_37.7_57.0.pth) |
+| CCDet-R50  |  640    |          |            |            |           |           |           | [github]() |
+| CCDet-R101 |  640    |          |            |            |           |           |           | [github]() |
+| CCDet-CD53 |  640    |          |            |            |           |           |           | [github]() |
 
 
-| Model   |  Scale  |  AP      |  AP50      |  AP75      |  APs      |  APm      |  APl      |  Param  |  FLOPs  |   Weight   |
-|---------|---------|----------|------------|------------|-----------|-----------|-----------|---------|---------|------------|
-| CCDet-T |  640    |          |            |            |           |           |           |         |         | [github]() |
-| CCDet-S |  640    |          |            |            |           |           |           |         |         | [github]() |
-| CCDet-M |  640    |          |            |            |           |           |           |         |         | [github]() |
-| CCDet-L |  640    |          |            |            |           |           |           |         |         | [github]() |
-| CCDet-X |  640    |          |            |            |           |           |           |         |         | [github]() |
+| Model   |  Scale  | FPS<sup><br>2080ti | AP<sup><br>val | AP50<sup><br>val | AP<sup><br>test-dev | AP50<sup><br>test-dev |  Param  |  FLOPs  |   Weight   |
+|---------|---------|--------------------|----------------|------------------|---------------------|-----------------------|---------|---------|------------|
+| CCDet-T |  640    |                    |                |                  |                     |                       |         |         | [github]() |
+| CCDet-S |  640    |                    |                |                  |                     |                       |         |         | [github]() |
+| CCDet-M |  640    |                    |                |                  |                     |                       |         |         | [github]() |
+| CCDet-L |  640    |                    |                |                  |                     |                       |         |         | [github]() |
+| CCDet-X |  640    |                    |                |                  |                     |                       |         |         | [github]() |
 
 ## Face Detection
 ### CCDet
