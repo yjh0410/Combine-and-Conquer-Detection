@@ -78,16 +78,6 @@ PyTorch >= 1.9.1 and Torchvision >= 0.10.1
 # Experiments
 ## Object Detection
 
-Main results on COCO.
-
-|  Model      | Size | FPS<sup><br>2080ti |  Param  |  FLOPs  |  AP<sup>val  | AP50<sup>val | AP<sup>test  | AP50<sup>test |
-|-------------|------|--------------------|---------|---------|--------------|--------------|--------------|---------------|
-| CCDet-R18*  | 640  |     165            | 19.7 M  |  27.7 B |     35.7     |     55.1     |          |           |
-| CCDet-R18   | 640  |     132            | 21.9 M  |  29.5 B |     37.7     |     57.0     |          |           |
-| CCDet-R50   | 640  |      68            | 36.3 M  |  50.1 B |              |              |          |           |
-| CCDet-R101  | 640  |      45            | 56.3 M  |  81.2 B |              |              |          |           |
-| CCDet-CD53  | 640  |      56            | 39.7 M  |  58.1 B |              |              |          |           |
-
 AP results on COCO
 
 | Model      |  Scale  |  AP      |  AP50      |  AP75      |  APs      |  APm      |  APl      |   Weight   |
@@ -98,6 +88,16 @@ AP results on COCO
 | CCDet-R101 |  640    |          |            |            |           |           |           | [github]() |
 | CCDet-CD53 |  640    |          |            |            |           |           |           | [github]() |
 
+
+Main results on COCO.
+
+|  Model      | Size | FPS<sup><br>2080ti |  Param  |  FLOPs  |  AP<sup>val  | AP50<sup>val | AP<sup>test  | AP50<sup>test |
+|-------------|------|--------------------|---------|---------|--------------|--------------|--------------|---------------|
+| CCDet-R18*  | 640  |     165            | 19.7 M  |  27.7 B |     35.7     |     55.1     |          |           |
+| CCDet-R18   | 640  |     132            | 21.9 M  |  29.5 B |     37.7     |     57.0     |          |           |
+| CCDet-R50   | 640  |      68            | 36.3 M  |  50.1 B |              |              |          |           |
+| CCDet-R101  | 640  |      45            | 56.3 M  |  81.2 B |              |              |          |           |
+| CCDet-CD53  | 640  |      56            | 39.7 M  |  58.1 B |              |              |          |           |
 
 ## Face Detection
 ### CCDet
