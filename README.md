@@ -84,7 +84,7 @@ AP results on COCO
 |------------|---------|----------|------------|------------|-----------|-----------|-----------|------------|
 | CCDet-R18* |  640    |  35.7    |   55.1     |   37.8     |    19.0   |   38.5    |   47.8    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r18_fpn_35.7_55.1.pth) |
 | CCDet-R18  |  640    |  37.7    |   57.0     |   40.4     |    21.4   |   41.2    |   49.3    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r18_37.7_57.0.pth) |
-| CCDet-R50  |  640    |  41.8    |   61.8     |   44.5     |    24.2   |   46.7    |   54.3    | [github]() |
+| CCDet-R50  |  640    |  41.8    |   61.8     |   44.5     |    24.2   |   46.7    |   54.3    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r50_41.8_61.8.pth) |
 | CCDet-R101 |  640    |          |            |            |           |           |           | [github]() |
 | CCDet-CD53 |  640    |          |            |            |           |           |           | [github]() |
 
