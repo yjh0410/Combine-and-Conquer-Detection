@@ -243,6 +243,9 @@ def run():
         path_to_ckpt=args.weight
         )
 
+    # to eval
+    model = model.to(device).eval()
+
     # transform
     transform = ValTransforms(
         img_size=args.img_size,
