@@ -85,7 +85,7 @@ AP results on COCO
 | CCDet-R18* |  640    |  35.7    |   55.1     |   37.8     |    19.0   |   38.5    |   47.8    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r18_fpn_35.7_55.1.pth) |
 | CCDet-R18  |  640    |  37.7    |   57.0     |   40.4     |    21.4   |   41.2    |   49.3    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r18_37.7_57.0.pth) |
 | CCDet-R50  |  640    |  41.8    |   61.8     |   44.5     |    24.2   |   46.7    |   54.3    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r50_41.8_61.8.pth) |
-| CCDet-R101 |  640    |  42.6    |   62.5     |   45.4     |    24.3   |   47.8    |   57.1    | [github]() |
+| CCDet-R101 |  640    |  42.6    |   62.5     |   45.4     |    24.3   |   47.8    |   57.1    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r101_42.6_62.5.pth) |
 
 
 Main results on COCO.
@@ -95,7 +95,7 @@ Main results on COCO.
 | CCDet-R18*  | 640  |     165            | 19.7 M  |  27.7 B |     35.7     |     55.1     |          |           |
 | CCDet-R18   | 640  |     132            | 21.9 M  |  29.5 B |     37.7     |     57.0     |          |           |
 | CCDet-R50   | 640  |      68            | 36.3 M  |  50.1 B |     41.8     |     61.8     |          |           |
-| CCDet-R101  | 640  |      45            | 56.3 M  |  81.2 B |              |              |          |           |
+| CCDet-R101  | 640  |      45            | 56.3 M  |  81.2 B |     42.6     |     62.5     |          |           |
 
 ## Face Detection
 ### CCDet
