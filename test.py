@@ -201,6 +201,19 @@ if __name__ == '__main__':
         ta_nms = 0.4
         scale_range = [320, 800, 32]
 
+    elif args.dataset == 'coco-test':
+        print('test on coco-test ...')
+        dataset = COCODataset(
+                    img_size=d_cfg['test_size'],
+                    data_root=d_cfg['data_root'],
+                    image_set='test2017')
+        class_names = coco_class_labels
+        class_indexs = coco_class_index
+        num_classes = 80
+        # test augmentation
+        ta_nms = 0.4
+        scale_range = [320, 800, 32]
+
     elif args.dataset == 'widerface':
         print('test on widerface ...')
         data_dir = os.path.join(args.root, 'WiderFace')
