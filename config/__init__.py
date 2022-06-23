@@ -5,8 +5,11 @@ from .model_config import m_config
 def build_config(dataset, version):
     # build dataset config
     if dataset is not None:
-        dataset_config = d_config[dataset]
-        print(dataset_config)
+        if dataset == 'coco-test':
+            dataset_config = d_config['coco']
+            print(dataset_config)
+        else:
+            dataset_config = d_config[dataset]
     else:
         dataset_config == None
 
