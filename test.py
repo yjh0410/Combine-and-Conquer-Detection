@@ -170,10 +170,11 @@ if __name__ == '__main__':
     else:
         device = torch.device("cpu")
 
-    # config
-    d_cfg, m_cfg = build_config(args.dataset, args.version)
 
     if args.dataset == 'voc':
+        # config
+        d_cfg, m_cfg = build_config('voc', args.version)
+        # dataset
         print('test on voc ...')
         dataset = VOCDetection(
             img_size=d_cfg['test_size'],
@@ -189,6 +190,9 @@ if __name__ == '__main__':
         scale_range = [320, 800, 32]
 
     elif args.dataset == 'coco':
+        # config
+        d_cfg, m_cfg = build_config('coco', args.version)
+        # dataset
         print('test on coco-val ...')
         dataset = COCODataset(
                     img_size=d_cfg['test_size'],
@@ -201,7 +205,26 @@ if __name__ == '__main__':
         ta_nms = 0.4
         scale_range = [320, 800, 32]
 
+    elif args.dataset == 'coco-test':
+        # config
+        d_cfg, m_cfg = build_config('coco', args.version)
+        # dataset
+        print('test on coco-test ...')
+        dataset = COCODataset(
+                    img_size=d_cfg['test_size'],
+                    data_root=d_cfg['data_root'],
+                    image_set='test2017')
+        class_names = coco_class_labels
+        class_indexs = coco_class_index
+        num_classes = 80
+        # test augmentation
+        ta_nms = 0.4
+        scale_range = [320, 800, 32]
+
     elif args.dataset == 'widerface':
+        # config
+        d_cfg, m_cfg = build_config('widerface', args.version)
+        # dataset
         print('test on widerface ...')
         data_dir = os.path.join(args.root, 'WiderFace')
         dataset = WIDERFaceDetection(root=data_dir, 
