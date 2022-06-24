@@ -253,8 +253,8 @@ class WIDERFaceDetection(data.Dataset):
         '''
         img_id = self.img_ids[index]
         anno = self.label_ids[index]
-        gt = self.target_transform(anno, 1, 1)
-        return img_id.split("/")[-1], gt
+
+        return img_id.split("/")[-1], anno
 
 
 if __name__ == "__main__":
@@ -291,6 +291,7 @@ if __name__ == "__main__":
 
     for i in range(1000):
         image, target= dataset[i]
+        print(dataset.pull_anno(i))
         # to numpy
         image = image.permute(1, 2, 0).numpy()
         # to BGR format
