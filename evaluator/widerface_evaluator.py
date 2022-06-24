@@ -337,7 +337,7 @@ class WiderFaceEvaluator():
         scale = np.array([[w, h, w, h]])
 
         # to tensor
-        x = torch.from_numpy(self.transform(image)[0][:, :, (2, 1, 0)]).permute(2, 0, 1)
+        x = self.transform(image)[0]
         x = x.unsqueeze(0).to(self.device)
         
         # test augmentation:
