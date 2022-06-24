@@ -319,9 +319,9 @@ class WiderFaceEvaluator():
         self.image_set = image_set
         # create dataset
         self.dataset = WIDERFaceDetection(
-            root=data_root, 
+            data_root=data_root, 
             is_train=False,
-            image_sets=image_set
+            image_set=image_set
             )
         if test_aug:
             print('Use Test Augmentation Trick ...')

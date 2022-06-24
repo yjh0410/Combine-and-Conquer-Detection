@@ -91,7 +91,7 @@ def build_dataset(d_cfg, m_cfg, args, device):
             data_root=d_cfg['data_root'],
             img_size=d_cfg['train_size'],
             stride=m_cfg['stride'],
-            image_sets='train',
+            image_set='train',
             transform=train_transform,
             color_augment=color_augment,
             mosaic_prob=d_cfg['mosaic_prob'],

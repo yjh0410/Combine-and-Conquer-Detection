@@ -44,7 +44,7 @@ class WIDERFaceDetection(data.Dataset):
                  data_root=None,
                  img_size=640,
                  stride=4,
-                 image_sets='train',
+                 image_set='train',
                  transform=None,
                  color_augment=None, 
                  mosaic_prob=0.0,
@@ -54,7 +54,7 @@ class WIDERFaceDetection(data.Dataset):
         self.data_root = data_root
         self.img_size = img_size
         self.stride = stride
-        self.image_set = image_sets
+        self.image_set = image_set
         self.transform = transform
 
         # augmentation
