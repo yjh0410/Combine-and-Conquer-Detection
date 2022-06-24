@@ -279,7 +279,7 @@ if __name__ == "__main__":
                                 format=format)
 
     dataset = WIDERFaceDetection(
-                           data_root='E:\\python_work\\object_detection\\dataset\\WiderFace',
+                           data_root='/mnt/share/ssd2/dataset/WiderFace',
                            img_size=img_size,
                            transform=transform,
                            color_augment=BaseTransforms(),
@@ -287,10 +287,6 @@ if __name__ == "__main__":
                            mixup_prob=0.5,
                            is_train=is_train)
     
-    np.random.seed(0)
-    class_colors = [(np.random.randint(255),
-                     np.random.randint(255),
-                     np.random.randint(255)) for _ in range(20)]
     print('Data length: ', len(dataset))
 
     for i in range(1000):
@@ -332,7 +328,7 @@ if __name__ == "__main__":
             for box, label in zip(boxes, labels):
                 x1, y1, x2, y2 = box
                 cls_id = int(label)
-                color = class_colors[cls_id]
+                color = [0, 0, 255]
                 # class name
                 label = 'face'
                 image = cv2.rectangle(image, (int(x1), int(y1)), (int(x2), int(y2)), (0,0,255), 2)
