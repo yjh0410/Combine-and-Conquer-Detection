@@ -68,7 +68,7 @@ class WIDERFaceDetection(data.Dataset):
             print('use Mixup Augmentation ...')
 
         self.is_train = is_train
-        self.gt_creator = HMPCreator(num_classes=20, stride=stride)
+        self.gt_creator = HMPCreator(num_classes=1, stride=stride)
 
         self.img_ids = list()
         self.label_ids = list()
