@@ -291,7 +291,6 @@ if __name__ == "__main__":
 
     for i in range(1000):
         image, target= dataset[i]
-        print(dataset.pull_anno(i))
         # to numpy
         image = image.permute(1, 2, 0).numpy()
         # to BGR format
