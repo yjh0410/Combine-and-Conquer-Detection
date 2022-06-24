@@ -1,6 +1,6 @@
 python train.py \
             --cuda \
-            -d voc \
+            -d widerface \
             -v ccdet_r18 \
             --ema \
             --fp16 \
