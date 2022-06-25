@@ -217,10 +217,11 @@ if __name__ == '__main__':
     elif args.dataset == 'widerface':
         print('test on widerface ...')
         data_dir = os.path.join(args.root, 'WiderFace')
-        dataset = WIDERFaceDetection(root=data_dir, 
-                                     train=False,
-                                     image_sets='val', 
-                                     transform=None)
+        dataset = WIDERFaceDetection(
+            data_root=data_dir, 
+            train=False,
+            image_set='val', 
+            transform=None)
         class_names = ['face']
         class_indexs = None
         num_classes = 1
