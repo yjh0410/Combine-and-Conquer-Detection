@@ -216,7 +216,6 @@ if __name__ == '__main__':
 
     elif args.dataset == 'widerface':
         print('test on widerface ...')
-        data_dir = os.path.join(args.root, 'WiderFace')
         dataset = WIDERFaceDetection(
             data_root=d_cfg['data_root'],
             img_size=d_cfg['test_size'],
