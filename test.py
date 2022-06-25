@@ -179,8 +179,8 @@ if __name__ == '__main__':
             img_size=d_cfg['test_size'],
             data_root=d_cfg['data_root'],
             image_sets=[('2007', 'test')],
-            is_train=False)
-        
+            is_train=False
+            )
         class_names = VOC_CLASSES
         class_indexs = None
         num_classes = 20
@@ -191,9 +191,10 @@ if __name__ == '__main__':
     elif args.dataset == 'coco':
         print('test on coco-val ...')
         dataset = COCODataset(
-                    img_size=d_cfg['test_size'],
-                    data_root=d_cfg['data_root'],
-                    image_set='val2017')
+            img_size=d_cfg['test_size'],
+            data_root=d_cfg['data_root'],
+            image_set='val2017'
+            )
         class_names = coco_class_labels
         class_indexs = coco_class_index
         num_classes = 80
@@ -204,9 +205,10 @@ if __name__ == '__main__':
     elif args.dataset == 'coco-test':
         print('test on coco-test ...')
         dataset = COCODataset(
-                    img_size=d_cfg['test_size'],
-                    data_root=d_cfg['data_root'],
-                    image_set='test2017')
+            img_size=d_cfg['test_size'],
+            data_root=d_cfg['data_root'],
+            image_set='test2017'
+            )
         class_names = coco_class_labels
         class_indexs = coco_class_index
         num_classes = 80
@@ -219,9 +221,9 @@ if __name__ == '__main__':
         dataset = WIDERFaceDetection(
             data_root=d_cfg['data_root'],
             img_size=d_cfg['test_size'],
-            train=False,
             image_set='val', 
-            transform=None)
+            transform=None
+            )
         class_names = ['face']
         class_indexs = None
         num_classes = 1
