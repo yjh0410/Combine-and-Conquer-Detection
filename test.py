@@ -232,10 +232,12 @@ if __name__ == '__main__':
         scale_range = [512, 1536, 128]
 
     elif args.dataset == 'crowdhuman':
-        data_dir = os.path.join(args.root, 'CrowdHuman')
-        dataset = CrowdHumanDetection(root=data_dir, 
-                                     train=False,
-                                     transform=None)
+        dataset = CrowdHumanDetection(
+            data_root=d_cfg['data_root'],
+            img_size=d_cfg['test_size'],
+            is_train=False,
+            transform=None
+            )
         class_names = ['person']
         class_indexs = None
         num_classes = 1
