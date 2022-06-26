@@ -52,9 +52,11 @@ class COCOEvaluator():
         self.transform = transform
         if test_aug:
             print('Use Test Augmentation Trick ...')
-            self.test_aug = TestTimeAugmentation(num_classes=80,
-                                                 nms_thresh=0.4,
-                                                 scale_range=[512, 1280, 128])
+            self.test_aug = TestTimeAugmentation(
+                num_classes=80,
+                nms_thresh=0.4,
+                scale_range=[320, 800, 32]
+                )
         else:
             self.test_aug = None
 

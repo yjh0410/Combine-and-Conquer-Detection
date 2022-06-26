@@ -100,21 +100,21 @@ Main results on COCO.
 ### CCDet
 Main results on WiderFace.
 
-|  Model      | Size | FPS<sup><br>2080ti | Easy | Medium | Hard |  Weight  |
-|-------------|------|--------------------|------|--------|------|----------|
-| CCDet-R18   | 640  |                    |      |        |      | [github] |
-| CCDet-R50   | 640  |                    |      |        |      | [github] |
-| CCDet-R101  | 640  |                    |      |        |      | [github] |
+|  Model      | Size | Easy | Medium | Hard |  Weight  |
+|-------------|------|------|--------|------|----------|
+| CCDet-R18   | 640  | 93.8 |  92.5  | 77.7 | [github] |
+| CCDet-R50   | 640  | 94.5 |  93.0  | 79.2 | [github] |
+| CCDet-R101  | 640  |      |        |      | [github] |
 
 ## Person Detection
 ### CCDet
 Main results on CrowdHuman.
 
-|  Model      | Size | FPS<sup><br>2080ti |  AP  | MR-2 |  JI  |  Weight  |
-|-------------|------|--------------------|------|------|------|----------|
-| CCDet-R18   | 640  |                    |      |      |      | [github] |
-| CCDet-R50   | 640  |                    |      |      |      | [github] |
-| CCDet-R101  | 640  |                    |      |      |      | [github] |
+|  Model      | Size |  AP  | MR-2 |  JI  |  Weight  |
+|-------------|------|------|------|------|----------|
+| CCDet-R18   | 640  |      |      |      | [github] |
+| CCDet-R50   | 640  |      |      |      | [github] |
+| CCDet-R101  | 640  |      |      |      | [github] |
 
 # Dataset
 ## MSCOCO Dataset
