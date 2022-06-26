@@ -120,22 +120,24 @@ class CrowdHumanDetection(torch.utils.data.Dataset):
         record = self.records[index]
         # load a image
         image_path = osp.join(self.img_folder, record['ID']+'.jpg')
-        img = cv2.imread(image_path, cv2.IMREAD_COLOR)
-        height, width = img.shape[:2]
+        image = cv2.imread(image_path, cv2.IMREAD_COLOR)
+        height, width = image.shape[:2]
         # load a target
-        target = self.load_bbox(record, 'gtboxes', 'fbox')
+        anno = self.load_bbox(record, 'gtboxes', 'fbox')
         
         # Normalize bbox
-        target[:, [0, 2]] = np.clip(target[:, [0, 2]], width)
-        target[:, [1, 3]] = np.clip(target[:, [1, 3]], height)
+        anno[:, [0, 2]] = np.clip(anno[:, [0, 2]], width)
+        anno[:, [1, 3]] = np.clip(anno[:, [1, 3]], height)
 
-        # check target
-        if len(target) == 0:
-            target = np.zeros([1, 5])
-        else:
-            target = np.array(target)
+        # guard against no boxes via resizing
+        anno = np.array(anno).reshape(-1, 5)
+        target = {
+            "boxes": anno[:, :4],
+            "labels": anno[:, 4],
+            "orig_size": [height, width]
+        }
 
-        return img, target, height, width
+        return image, target
 
 
     def load_mosaic(self, index):
