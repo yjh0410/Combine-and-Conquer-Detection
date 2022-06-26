@@ -140,9 +140,9 @@ class CrowdHumanDetection(torch.utils.data.Dataset):
 
     def load_mosaic(self, index):
         # load a mosaic image
-        ids_list_ = self.ids[:index] + self.ids[index+1:]
+        ids_list_ = self.records[:index] + self.records[index+1:]
         # random sample other indexs
-        id1 = self.ids[index]
+        id1 = self.records[index]
         id2, id3, id4 = random.sample(ids_list_, 3)
         ids = [id1, id2, id3, id4]
 
@@ -230,8 +230,8 @@ if __name__ == "__main__":
                            img_size=img_size,
                            transform=transform,
                            color_augment=BaseTransforms(),
-                           mosaic_prob=0.5,
-                           mixup_prob=0.5,
+                           mosaic_prob=0.0,
+                           mixup_prob=0.0,
                            is_train=is_train,
                            ignore_label=-1)
     
