@@ -327,7 +327,7 @@ class WiderFaceEvaluator():
             print('Use Test Augmentation Trick ...')
             self.test_aug = TestTimeAugmentation(
                 num_classes=1,
-                nms_thresh=0.4,
+                nms_thresh=0.3,
                 scale_range=[512, 1536, 128]
                 )
         else:

@@ -55,7 +55,7 @@ class COCOEvaluator():
             self.test_aug = TestTimeAugmentation(
                 num_classes=80,
                 nms_thresh=0.4,
-                scale_range=[320, 800, 32]
+                scale_range=[320, 1280, 32]
                 )
         else:
             self.test_aug = None
