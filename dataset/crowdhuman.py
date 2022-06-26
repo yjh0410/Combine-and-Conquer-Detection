@@ -226,7 +226,7 @@ if __name__ == "__main__":
                                 format=format)
 
     dataset = CrowdHumanDetection(
-                           data_root='D:\\python_work\\object-detection\\dataset\\CrowdHuman',
+                           data_root='/mnt/share/ssd2/dataset/CrowdHuman',
                            img_size=img_size,
                            transform=transform,
                            color_augment=BaseTransforms(),
