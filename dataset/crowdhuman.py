@@ -126,8 +126,8 @@ class CrowdHumanDetection(torch.utils.data.Dataset):
         anno = self.load_bbox(record, 'gtboxes', 'fbox')
         
         # Normalize bbox
-        anno[:, [0, 2]] = np.clip(anno[:, [0, 2]], width)
-        anno[:, [1, 3]] = np.clip(anno[:, [1, 3]], height)
+        anno[:, [0, 2]] = np.clip(anno[:, [0, 2]], a_min=0., a_max=width)
+        anno[:, [1, 3]] = np.clip(anno[:, [1, 3]], a_min=0., a_max=height)
 
         # guard against no boxes via resizing
         anno = np.array(anno).reshape(-1, 5)
