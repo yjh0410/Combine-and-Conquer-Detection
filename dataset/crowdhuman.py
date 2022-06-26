@@ -176,7 +176,7 @@ class CrowdHumanDetection(torch.utils.data.Dataset):
             
         # load an image and target
         else:
-            img_id = self.ids[index]
+            img_id = self.records[index]
             image, target = self.load_image_target(img_id)
 
             # augment
