@@ -70,7 +70,7 @@ pip install -r requirements.txt
 PyTorch >= 1.9.1 and Torchvision >= 0.10.1
 
 # Network
-- Backbone: [ResNet](https://github.com/yjh0410/FreeYOLO/blob/master/models/backbone/resnet.py) / [CSPDarkNet53](https://github.com/yjh0410/FreeYOLO/blob/master/models/neck/cspdarknet.py)
+- Backbone: [ResNet](https://github.com/yjh0410/FreeYOLO/blob/master/models/backbone/resnet.py)
 - Neck: [Dilated Encoder](https://github.com/yjh0410/FreeYOLO/blob/master/models/neck/dilated_encoder.py)
 - Feature Aggregation: [PaFPN](https://github.com/yjh0410/FreeYOLO/blob/master/models/neck/fpn.py)
 - Head: [DecoupledHead](https://github.com/yjh0410/FreeYOLO/blob/master/models/head/decoupled_head.py)
