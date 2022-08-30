@@ -44,7 +44,7 @@ framework, it has the following advantages:
 Following figure shows a simple example of **Combine-and-Conquer** framework. It looks like Hourglass or CenterNet,
 but it is more powerful and fast.
 
-![CCDet with BasicFPN](https://github.com/yjh0410/Combine-and-Conquer-Detection/tree/master/img_files/ccdet.png)
+![CCDet with BasicFPN](./img_files/ccdet.png)
 
 Note that `CC-Det` is just a concrete example of **Combine-and-Conquer** framework and has not been carefully
 designed. Such a simple model still exhibits strong performance (see the experimental results below.), proving
@@ -78,43 +78,13 @@ PyTorch >= 1.9.1 and Torchvision >= 0.10.1
 # Experiments
 ## Object Detection
 
-AP results on COCO
-
-| Model      |  Scale  |  AP      |  AP50      |  AP75      |  APs      |  APm      |  APl      |   Weight   |
-|------------|---------|----------|------------|------------|-----------|-----------|-----------|------------|
-| CCDet-R18* |  640    |  35.7    |   55.1     |   37.8     |    19.0   |   38.5    |   47.8    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r18_fpn_35.7_55.1.pth) |
-| CCDet-R18  |  640    |  37.7    |   57.0     |   40.4     |    21.4   |   41.2    |   49.3    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r18_37.7_57.0.pth) |
-| CCDet-R50  |  640    |  41.8    |   61.8     |   44.5     |    24.2   |   46.7    |   54.3    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r50_41.8_61.8.pth) |
-| CCDet-R101 |  640    |  42.6    |   62.5     |   45.4     |    24.3   |   47.8    |   57.1    | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r101_42.6_62.5.pth) |
-
-
 Main results on COCO.
 
-|  Model      | Size | FPS<sup><br>2080ti |  Param  |  FLOPs  |  AP<sup>val  | AP50<sup>val | AP<sup>test  | AP50<sup>test |
-|-------------|------|--------------------|---------|---------|--------------|--------------|--------------|---------------|
-| CCDet-R18   | 640  |     132            | 21.9 M  |  29.5 B |     37.7     |     57.0     |    37.7      |    57.0       |
-| CCDet-R50   | 640  |      68            | 36.3 M  |  50.1 B |     41.8     |     61.8     |    41.8      |    61.8       |
-| CCDet-R101  | 640  |      45            | 56.3 M  |  81.2 B |     42.6     |     62.5     |    42.6      |    62.5       |
-
-## Face Detection
-### CCDet
-Main results on WiderFace.
-
-|  Model      | Size | Easy | Medium | Hard |  Weight  |
-|-------------|------|------|--------|------|----------|
-| CCDet-R18   | 640  | 93.8 |  92.5  | 77.7 | [github] |
-| CCDet-R50   | 640  | 94.5 |  93.0  | 79.2 | [github] |
-| CCDet-R101  | 640  |      |        |      | [github] |
-
-## Person Detection
-### CCDet
-Main results on CrowdHuman.
-
-|  Model      | Size |  AP  | MR-2 |  JI  |  Weight  |
-|-------------|------|------|------|------|----------|
-| CCDet-R18   | 640  |      |      |      | [github] |
-| CCDet-R50   | 640  |      |      |      | [github] |
-| CCDet-R101  | 640  |      |      |      | [github] |
+|  Model      | Size | FPS<sup><br>2080ti |  Param  |  FLOPs  |  AP<sup>val  | AP<sup>test  |    weight     |
+|-------------|------|--------------------|---------|---------|--------------|--------------|---------------|
+| CCDet-R18   | 640  |     132            | 21.9 M  |  29.5 B |     37.7     |    37.7      | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r18_37.7_57.0.pth) |
+| CCDet-R50   | 640  |      68            | 36.3 M  |  50.1 B |     41.8     |    41.8      | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r50_41.8_61.8.pth) |
+| CCDet-R101  | 640  |      45            | 56.3 M  |  81.2 B |     42.6     |    42.6      | [github](https://github.com/yjh0410/Combine-and-Conquer-Detection/releases/download/ccdet_weights/ccdet_r101_42.6_62.5.pth) |
 
 # Dataset
 ## MSCOCO Dataset
