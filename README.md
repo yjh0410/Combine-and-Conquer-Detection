@@ -1,6 +1,10 @@
 # Combine-and-Conquer Detection Framework
 A Simple yet Effective Object Detection Framework.
 
+Paper link: Coming soon ...
+
+# Motivation
+
 For a long time, it has been believed that the **Divide-and-Conquer** detection framework is the key to the success of
 modern detectors (SSD, RetinaNet, YOLOv4, et al.). Despite the great success, **Divide-and-Conquer** detection framework
 has some disadvantages:
