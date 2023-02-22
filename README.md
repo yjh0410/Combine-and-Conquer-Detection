@@ -1,4 +1,5 @@
 # Combine-and-Conquer Detection Framework
+We release the code of our CC-Det-v2 proposed in our paper.
 
 ## Requirements
 - We recommend you to use Anaconda to create a conda environment:
